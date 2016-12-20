@@ -1,0 +1,36 @@
+query: EXPLAIN
+SHOW PARTITIONS srcpart
+ABSTRACT SYNTAX TREE:
+  (TOK_SHOWPARTITIONS srcpart)
+
+STAGE DEPENDENCIES:
+  Stage-0
+    type:root stage;
+  Stage-1
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-0
+      Show Partitions Operator:
+        Show Partitions
+          table: srcpart
+
+  Stage: Stage-1
+    Fetch Operator
+      limit: -1
+
+query: SHOW PARTITIONS srcpart
+pri partitions:
+p0
+p1
+sub partitions:
+sp1
+sp2
+query: SHOW PARTITIONS srcpart
+query: SHOW PARTITIONS srcpart
+query: SHOW PARTITIONS srcpart
+query: SHOW PARTITIONS srcpart
+query: SHOW PARTITIONS srcpart
+query: SHOW PARTITIONS srcpart
+query: SHOW PARTITIONS srcpart
+query: SHOW PARTITIONS srcpart

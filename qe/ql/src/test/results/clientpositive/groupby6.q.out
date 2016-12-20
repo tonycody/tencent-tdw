@@ -1,0 +1,135 @@
+query: CREATE TABLE dest1(c1 STRING) STORED AS TEXTFILE
+query: EXPLAIN
+FROM src
+INSERT OVERWRITE TABLE dest1 SELECT DISTINCT substr(src.value,5,1)
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB src))) (TOK_INSERT (TOK_DESTINATION (TOK_TABDEST (TOK_TAB dest1))) (TOK_SELECTDI (TOK_SELEXPR (TOK_FUNCTION substr (. (TOK_TABLE_OR_COL src) value) 5 1)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-2
+    type:;depends on:Stage-1;
+  Stage-0
+    type:;depends on:Stage-2;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/src 
+          Operator:          TableScan
+            alias: default_db/src
+            Operator:            Select Operator
+              expressions:
+                    expr: value
+                    type: string
+              outputColumnNames: value
+              Operator:              Reduce Output Operator
+                key expressions:
+                      expr: substr(value, 5, 1)
+                      type: string
+                key serialize infos:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                sort order: +
+                output key names: _col0
+                Map-reduce partition columns:
+                      expr: rand()
+                      type: double
+                tag: -1
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src [default_db/src]
+      Reduce Operator Tree:
+        Operator:        Group By Operator
+          keys:
+                expr: KEY._col0
+                type: string
+          mode: partial1
+          outputColumnNames: _col0
+          Operator:          File Output Operator
+            compressed: false
+            GlobalTableId: 0
+            table:
+              table descs
+                input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+
+  Stage: Stage-2
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1999552180/10002 
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: _col0
+                    type: string
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: _col0
+              Map-reduce partition columns:
+                    expr: _col0
+                    type: string
+              tag: -1
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1999552180/10002 [file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1999552180/10002]
+      Reduce Operator Tree:
+        Operator:        Group By Operator
+          keys:
+                expr: KEY._col0
+                type: string
+          mode: final
+          outputColumnNames: _col0
+          Operator:          Select Operator
+            expressions:
+                  expr: _col0
+                  type: string
+            outputColumnNames: _col0
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 1
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.TextInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                  serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                  name: dest1
+
+  Stage: Stage-0
+    Move Operator
+      tables:
+          replace: true
+          table:
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: dest1
+
+query: FROM src
+INSERT OVERWRITE TABLE dest1 SELECT DISTINCT substr(src.value,5,1)
+Output: default_db/dest1
+query: SELECT dest1.* FROM dest1
+Input: default_db/dest1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1797247316/10000
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+query: SELECT dest1.* FROM dest1
+query: SELECT dest1.* FROM dest1
+query: SELECT dest1.* FROM dest1
+query: SELECT dest1.* FROM dest1
+query: SELECT dest1.* FROM dest1
+query: SELECT dest1.* FROM dest1
+query: SELECT dest1.* FROM dest1
+query: SELECT dest1.* FROM dest1

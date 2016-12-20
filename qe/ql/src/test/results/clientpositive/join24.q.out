@@ -1,0 +1,16 @@
+query: create table tst1(key STRING, cnt INT)
+query: INSERT OVERWRITE TABLE tst1
+SELECT a.key, count(1) FROM src a group by a.key
+Output: default_db/tst1
+query: SELECT sum(a.cnt)  FROM tst1 a JOIN tst1 b ON a.key = b.key
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/664886319/10000
+500
+query: drop table tst1
+query: drop table tst1
+query: drop table tst1
+query: drop table tst1
+query: drop table tst1
+query: drop table tst1
+query: drop table tst1
+query: drop table tst1
+query: drop table tst1

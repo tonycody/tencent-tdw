@@ -1,0 +1,26 @@
+query: DROP TABLE nulltest
+query: CREATE TABLE nulltest(int_data1 INT, int_data2 INT, boolean_data BOOLEAN, double_data DOUBLE, string_data STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/nulltest.txt' INTO TABLE nulltest
+query: SELECT sum(int_data1),int_data2,boolean_data from nulltest where int_data2 in(1,2) and boolean_data in (true, false) group by int_data2,boolean_data
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/347754846/10000
+1	1	false
+3	1	true
+0	2	false
+query: SELECT sum(int_data1),int_data2, boolean_data from nulltest where boolean_data not in (null) group by int_data2,boolean_data having sum(int_data1) not in(cast(0 as bigint))
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/260389080/10000
+4	NULL	false
+1	0	false
+2	0	true
+1	1	false
+3	1	true
+2	3	true
+4	5	true
+query: DROP TABLE nulltest
+query: DROP TABLE nulltest
+query: DROP TABLE nulltest
+query: DROP TABLE nulltest
+query: DROP TABLE nulltest
+query: DROP TABLE nulltest
+query: DROP TABLE nulltest
+query: DROP TABLE nulltest
+query: DROP TABLE nulltest

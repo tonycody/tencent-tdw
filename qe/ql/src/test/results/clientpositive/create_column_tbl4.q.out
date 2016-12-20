@@ -1,0 +1,30 @@
+query: explain create table testColumn(a int, b int, c int, d int) stored as columnfile
+ABSTRACT SYNTAX TREE:
+  (TOK_CREATETABLE testColumn TOK_LIKETABLE (TOK_TABCOLLIST (TOK_TABCOL a TOK_INT) (TOK_TABCOL b TOK_INT) (TOK_TABCOL c TOK_INT) (TOK_TABCOL d TOK_INT)) TOK_TBLCOLUMNFILE)
+
+STAGE DEPENDENCIES:
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-0
+      Create Table Operator:
+        Create Table
+          columns: a int, b int, c int, d int
+          if compressed: false
+          if not exists: false
+          input format: StorageEngineClient.ColumnStorageInputFormat
+          # buckets: -1
+          output format: StorageEngineClient.ColumnStorageHiveOutputFormat
+          serde name: StorageEngineClient.FormatStorageSerDe
+          name: testColumn
+          isExternal: false
+
+query: explain create table testColumn(a int, b int, c int, d int) stored as columnfile
+query: explain create table testColumn(a int, b int, c int, d int) stored as columnfile
+query: explain create table testColumn(a int, b int, c int, d int) stored as columnfile
+query: explain create table testColumn(a int, b int, c int, d int) stored as columnfile
+query: explain create table testColumn(a int, b int, c int, d int) stored as columnfile
+query: explain create table testColumn(a int, b int, c int, d int) stored as columnfile
+query: explain create table testColumn(a int, b int, c int, d int) stored as columnfile
+query: explain create table testColumn(a int, b int, c int, d int) stored as columnfile

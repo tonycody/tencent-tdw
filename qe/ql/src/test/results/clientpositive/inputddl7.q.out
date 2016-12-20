@@ -1,0 +1,53 @@
+query: -- test for loading into tables with the correct file format
+-- test for loading into partitions with the correct file format
+
+DROP TABLE T1
+query: CREATE TABLE T1(name STRING) STORED AS TEXTFILE
+query: LOAD DATA LOCAL INPATH '../data/files/kv1.txt' INTO TABLE T1
+query: SELECT COUNT(1) FROM T1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/922685796/10000
+500
+query: DROP TABLE T2
+query: CREATE TABLE T2(name STRING) STORED AS SEQUENCEFILE
+query: LOAD DATA LOCAL INPATH '../data/files/kv1.seq' INTO TABLE T2
+query: SELECT COUNT(1) FROM T2
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/2031782424/10000
+500
+query: DROP TABLE T3
+query: CREATE TABLE T3(name STRING, ds STRING) PARTITION BY list(ds) 
+(PARTITION p0 VALUES IN ('2008-04-09'))
+STORED AS TEXTFILE
+query: INSERT OVERWRITE TABLE T3 SELECT key, '2008-04-09' FROM src
+Output: default_db/t3
+query: SELECT COUNT(1) FROM T3 where T3.ds='2008-04-09'
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/979722267/10000
+500
+query: DROP TABLE T4
+query: CREATE TABLE T4(name STRING, ds STRING) PARTITION BY list(ds) 
+(PARTITION p0 VALUES IN ('2008-04-09'))
+STORED AS SEQUENCEFILE
+query: INSERT OVERWRITE TABLE T3 SELECT key, '2008-04-09' FROM src
+Output: default_db/t3
+query: SELECT COUNT(1) FROM T4 where T4.ds='2008-04-09'
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1751153641/10000
+0
+query: DESCRIBE EXTENDED T1
+name	string	
+	 	 
+Detailed Table Information	Table(tableName:t1, dbName:default_db, owner:root, createTime:1329299542, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:name, type:string, comment:null)], location:file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/t1, inputFormat:org.apache.hadoop.mapred.TextInputFormat, outputFormat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe, parameters:{serialization.format=1}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, vtables:null)	
+query: DESCRIBE EXTENDED T2
+name	string	
+	 	 
+Detailed Table Information	Table(tableName:t2, dbName:default_db, owner:root, createTime:1329299545, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:name, type:string, comment:null)], location:file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/t2, inputFormat:org.apache.hadoop.mapred.SequenceFileInputFormat, outputFormat:org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe, parameters:{serialization.format=1}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, vtables:null)	
+query: DROP TABLE T1
+query: DROP TABLE T2
+query: DROP TABLE T3
+query: DROP TABLE T4
+query: DROP TABLE T4
+query: DROP TABLE T4
+query: DROP TABLE T4
+query: DROP TABLE T4
+query: DROP TABLE T4
+query: DROP TABLE T4
+query: DROP TABLE T4
+query: DROP TABLE T4

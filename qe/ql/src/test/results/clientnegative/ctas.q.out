@@ -1,0 +1,2 @@
+query: drop table nzhang_ctas4
+FAILED: Error in semantic analysis: CREATE-TABLE-AS-SELECT cannot create external table.

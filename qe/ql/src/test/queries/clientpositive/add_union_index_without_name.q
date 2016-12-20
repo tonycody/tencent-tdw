@@ -1,0 +1,1 @@
+explain alter table altertable add index (a,b);

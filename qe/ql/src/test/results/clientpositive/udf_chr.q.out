@@ -1,0 +1,41 @@
+query: CREATE TABLE test_chr (tchr INT) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/test_udf_chr' OVERWRITE INTO TABLE test_chr
+query: SELECT * 
+FROM test_chr
+Input: default_db/test_chr
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1925795984/10000
+116
+84
+77
+89
+102
+-1
+128
+500
+108
+-2444
+38748
+query: SELECT 
+  chr(test_chr.tchr)
+FROM test_chr
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/765574906/10000
+t
+T
+M
+Y
+f
+NULL
+NULL
+NULL
+l
+NULL
+NULL
+query: DROP TABLE test_chr
+query: DROP TABLE test_chr
+query: DROP TABLE test_chr
+query: DROP TABLE test_chr
+query: DROP TABLE test_chr
+query: DROP TABLE test_chr
+query: DROP TABLE test_chr
+query: DROP TABLE test_chr
+query: DROP TABLE test_chr

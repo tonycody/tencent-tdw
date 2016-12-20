@@ -1,0 +1,5 @@
+query: -- Can't update view to have a view cycle
+drop view v
+query: create view v1 as select * from srcpart
+Output: file:/data/brant/trunk/build/ql/tmp/529519567/10000
+FAILED: Error in semantic analysis: Recursive view default_db::v1 detected (cycle: default_db::v1 -> default_db::v1).

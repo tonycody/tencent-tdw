@@ -1,0 +1,45 @@
+query: -- test for describe extended table
+-- test for describe extended table partition
+-- test for alter table drop partition
+-- test for describe table where column_name contains 'reg'
+
+DROP TABLE INPUTDDL6
+query: CREATE TABLE INPUTDDL6(KEY STRING, VALUE STRING, ds STRING) PARTITION BY list(ds)
+(PARTITION p0 VALUES IN ('2008-04-09'),
+PARTITION p1 VALUES IN ('2008-04-08')) 
+STORED AS TEXTFILE
+query: INSERT OVERWRITE TABLE INPUTDDL6 SELECT key, value, '2008-04-09' FROM src
+Output: default_db/inputddl6
+query: INSERT OVERWRITE TABLE INPUTDDL6 SELECT key, value, '2008-04-08' FROM src
+Output: default_db/inputddl6
+query: DESCRIBE EXTENDED INPUTDDL6
+key	string	
+value	string	
+ds	string	
+	 	 
+Detailed Table Information	Table(tableName:inputddl6, dbName:default_db, owner:root, createTime:1329299534, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:key, type:string, comment:null), FieldSchema(name:value, type:string, comment:null), FieldSchema(name:ds, type:string, comment:null)], location:file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/inputddl6, inputFormat:org.apache.hadoop.mapred.TextInputFormat, outputFormat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe, parameters:{serialization.format=1}), bucketCols:[], sortCols:[], parameters:{}), priPartition:Partition(dbName:default_db, tableName:inputddl6, level:0, parType:list, parKey:FieldSchema(name:ds, type:string, comment:null), parSpaces:{p0=[2008-04-09], p1=[2008-04-08]}), subPartition:null, parameters:{}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, vtables:null)	
+query: SHOW PARTITIONS INPUTDDL6
+pri partitions:
+p0
+p1
+query: ALTER TABLE INPUTDDL6 DROP PARTITION (p0)
+query: SHOW PARTITIONS INPUTDDL6
+pri partitions:
+p1
+query: DESCRIBE INPUTDDL6 WHERE COLUMN_NAME CONTAINS 'KEY'
+key	string	
+query: DESCRIBE INPUTDDL6 WHERE COLUMN_NAME CONTAINS "key"
+key	string	
+query: DESCRIBE EXTENDED INPUTDDL6 WHERE COLUMN_NAME CONTAINS '.*'
+key	string	
+value	string	
+ds	string	
+query: DROP TABLE INPUTDDL6
+query: DROP TABLE INPUTDDL6
+query: DROP TABLE INPUTDDL6
+query: DROP TABLE INPUTDDL6
+query: DROP TABLE INPUTDDL6
+query: DROP TABLE INPUTDDL6
+query: DROP TABLE INPUTDDL6
+query: DROP TABLE INPUTDDL6
+query: DROP TABLE INPUTDDL6

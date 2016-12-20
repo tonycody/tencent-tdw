@@ -1,0 +1,30 @@
+query: create table regexp_instr_test(domain_id string)
+query: LOAD DATA LOCAL INPATH '../data/files/domain_id.txt' OVERWRITE INTO TABLE regexp_instr_test
+query: select least('abc', 'abcd', 'abcde', 'abcdf', null)
+,least('abc', 'abc') 
+,least('abc', 'abcd')
+,least('abc', 'abcd', 'abcde', 'abcdf')
+,least(1, 1)
+,least(1, 1000)
+,least(1, 1000, null)
+,least(cast(1 as smallint), 1000)
+,least(6, 6.1)
+,least(6, 5.9) 
+,least(cast (5 as tinyint), cast(6 as smallint), cast(7 as int), cast(8 as bigint))
+,least(cast (5 as tinyint), cast(6 as smallint), cast(7 as int), cast(8 as bigint), 7.1) 
+,least(1, 2, greatest(3, 4, 5.0), 4)
+,least(1, 2, greatest(3, 4, 5), 4)
+,least(6, 5, least(3, 4, 5), 4) from regexp_instr_test limit 1
+Output: file:/data/tdwadmin/weily/qe_trunk/build/ql/tmp/1177269165/10000
+NULL	abc	abc	abc	1	1	NULL	1	6.0	5.9	5	5.0	1.0	1	3
+query: drop table regexp_instr_test
+query: CREATE TABLE test_least_mix(tstr_1 bigint, tstr_2 int, tstr_3 smallint, tstr_4 tinyint) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/test_udf_greatest_mix' OVERWRITE INTO TABLE test_least_mix
+query: select least(tstr_1,tstr_2,tstr_3, tstr_4),tstr_1,tstr_2,tstr_3, tstr_4 from test_least_mix order by tstr_1
+Output: file:/data/tdwadmin/weily/qe_trunk/build/ql/tmp/269928318/10000
+1	1	2	3	4
+NULL	2	NULL	NULL	NULL
+NULL	32	NULL	NULL	NULL
+NULL	33	NULL	80	NULL
+NULL	35	NULL	NULL	NULL
+query: DROP TABLE test_least_mix

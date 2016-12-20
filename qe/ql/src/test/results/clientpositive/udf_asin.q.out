@@ -1,0 +1,16 @@
+query: SELECT asin(null)
+FROM src LIMIT 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/1869399560/10000
+NULL
+query: SELECT asin(0)
+FROM src LIMIT 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/1866736601/10000
+0.0
+query: SELECT asin(-0.5), asin(0.66)
+FROM src LIMIT 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/1521915280/10000
+-0.5235987755982989	0.7208187608700897
+query: SELECT asin(2)
+FROM src LIMIT 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/1130703331/10000
+NaN

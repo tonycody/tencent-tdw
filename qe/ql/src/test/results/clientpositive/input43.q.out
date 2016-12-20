@@ -1,0 +1,1605 @@
+query: drop table table1
+query: create table table1  (col_name1 string, col_name2 string) partition by range(col_name1) subpartition by hashkey(col_name2) (partition par_name1 values less than (200), partition par_name2 values less than (300), partition default)
+query: explain
+insert overwrite table table1 select * from src
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB src))) (TOK_INSERT (TOK_DESTINATION (TOK_TABDEST (TOK_TAB table1))) (TOK_SELECT (TOK_SELEXPR TOK_ALLCOLREF))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:;depends on:Stage-1;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/src 
+          Operator:          TableScan
+            alias: default_db/src
+            Operator:            Select Operator
+              expressions:
+                    expr: key
+                    type: string
+                    expr: value
+                    type: string
+              outputColumnNames: _col0, _col1
+              Operator:              Reduce Output Operator
+                key expressions:
+                      expr: _col1
+                      type: string
+                key serialize infos:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                sort order: +
+                output key names: reducesinkkey0
+                output value names: _col0, _col1
+                Map-reduce partition columns:
+                      expr: _col1
+                      type: string
+                tag: -1
+                value expressions:
+                      expr: _col0
+                      type: string
+                      expr: _col1
+                      type: string
+      Path -> Alias:
+        file:/data/allison/tdw_src/src/qe/build/ql/test/data/warehouse/default_db/src [default_db/src]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          Partition Output Operator
+            compressed: false
+            GlobalTableId: 1
+            partition keys:
+                  expr: _col0
+                  type: string
+                  expr: _col1
+                  type: string
+            partition values:
+                Partition Space Spec
+                  Partition space:
+                    par_name1 
+                      Partition values list
+                        values list: 200
+                    par_name2 
+                      Partition values list
+                        values list: 300
+                    default 
+                      Partition values list
+                Partition Space Spec
+                  Partition space:
+                    Hash_0000 
+                      Partition values list
+                    Hash_0001 
+                      Partition values list
+                    Hash_0002 
+                      Partition values list
+                    Hash_0003 
+                      Partition values list
+                    Hash_0004 
+                      Partition values list
+                    Hash_0005 
+                      Partition values list
+                    Hash_0006 
+                      Partition values list
+                    Hash_0007 
+                      Partition values list
+                    Hash_0008 
+                      Partition values list
+                    Hash_0009 
+                      Partition values list
+                    Hash_0010 
+                      Partition values list
+                    Hash_0011 
+                      Partition values list
+                    Hash_0012 
+                      Partition values list
+                    Hash_0013 
+                      Partition values list
+                    Hash_0014 
+                      Partition values list
+                    Hash_0015 
+                      Partition values list
+                    Hash_0016 
+                      Partition values list
+                    Hash_0017 
+                      Partition values list
+                    Hash_0018 
+                      Partition values list
+                    Hash_0019 
+                      Partition values list
+                    Hash_0020 
+                      Partition values list
+                    Hash_0021 
+                      Partition values list
+                    Hash_0022 
+                      Partition values list
+                    Hash_0023 
+                      Partition values list
+                    Hash_0024 
+                      Partition values list
+                    Hash_0025 
+                      Partition values list
+                    Hash_0026 
+                      Partition values list
+                    Hash_0027 
+                      Partition values list
+                    Hash_0028 
+                      Partition values list
+                    Hash_0029 
+                      Partition values list
+                    Hash_0030 
+                      Partition values list
+                    Hash_0031 
+                      Partition values list
+                    Hash_0032 
+                      Partition values list
+                    Hash_0033 
+                      Partition values list
+                    Hash_0034 
+                      Partition values list
+                    Hash_0035 
+                      Partition values list
+                    Hash_0036 
+                      Partition values list
+                    Hash_0037 
+                      Partition values list
+                    Hash_0038 
+                      Partition values list
+                    Hash_0039 
+                      Partition values list
+                    Hash_0040 
+                      Partition values list
+                    Hash_0041 
+                      Partition values list
+                    Hash_0042 
+                      Partition values list
+                    Hash_0043 
+                      Partition values list
+                    Hash_0044 
+                      Partition values list
+                    Hash_0045 
+                      Partition values list
+                    Hash_0046 
+                      Partition values list
+                    Hash_0047 
+                      Partition values list
+                    Hash_0048 
+                      Partition values list
+                    Hash_0049 
+                      Partition values list
+                    Hash_0050 
+                      Partition values list
+                    Hash_0051 
+                      Partition values list
+                    Hash_0052 
+                      Partition values list
+                    Hash_0053 
+                      Partition values list
+                    Hash_0054 
+                      Partition values list
+                    Hash_0055 
+                      Partition values list
+                    Hash_0056 
+                      Partition values list
+                    Hash_0057 
+                      Partition values list
+                    Hash_0058 
+                      Partition values list
+                    Hash_0059 
+                      Partition values list
+                    Hash_0060 
+                      Partition values list
+                    Hash_0061 
+                      Partition values list
+                    Hash_0062 
+                      Partition values list
+                    Hash_0063 
+                      Partition values list
+                    Hash_0064 
+                      Partition values list
+                    Hash_0065 
+                      Partition values list
+                    Hash_0066 
+                      Partition values list
+                    Hash_0067 
+                      Partition values list
+                    Hash_0068 
+                      Partition values list
+                    Hash_0069 
+                      Partition values list
+                    Hash_0070 
+                      Partition values list
+                    Hash_0071 
+                      Partition values list
+                    Hash_0072 
+                      Partition values list
+                    Hash_0073 
+                      Partition values list
+                    Hash_0074 
+                      Partition values list
+                    Hash_0075 
+                      Partition values list
+                    Hash_0076 
+                      Partition values list
+                    Hash_0077 
+                      Partition values list
+                    Hash_0078 
+                      Partition values list
+                    Hash_0079 
+                      Partition values list
+                    Hash_0080 
+                      Partition values list
+                    Hash_0081 
+                      Partition values list
+                    Hash_0082 
+                      Partition values list
+                    Hash_0083 
+                      Partition values list
+                    Hash_0084 
+                      Partition values list
+                    Hash_0085 
+                      Partition values list
+                    Hash_0086 
+                      Partition values list
+                    Hash_0087 
+                      Partition values list
+                    Hash_0088 
+                      Partition values list
+                    Hash_0089 
+                      Partition values list
+                    Hash_0090 
+                      Partition values list
+                    Hash_0091 
+                      Partition values list
+                    Hash_0092 
+                      Partition values list
+                    Hash_0093 
+                      Partition values list
+                    Hash_0094 
+                      Partition values list
+                    Hash_0095 
+                      Partition values list
+                    Hash_0096 
+                      Partition values list
+                    Hash_0097 
+                      Partition values list
+                    Hash_0098 
+                      Partition values list
+                    Hash_0099 
+                      Partition values list
+                    Hash_0100 
+                      Partition values list
+                    Hash_0101 
+                      Partition values list
+                    Hash_0102 
+                      Partition values list
+                    Hash_0103 
+                      Partition values list
+                    Hash_0104 
+                      Partition values list
+                    Hash_0105 
+                      Partition values list
+                    Hash_0106 
+                      Partition values list
+                    Hash_0107 
+                      Partition values list
+                    Hash_0108 
+                      Partition values list
+                    Hash_0109 
+                      Partition values list
+                    Hash_0110 
+                      Partition values list
+                    Hash_0111 
+                      Partition values list
+                    Hash_0112 
+                      Partition values list
+                    Hash_0113 
+                      Partition values list
+                    Hash_0114 
+                      Partition values list
+                    Hash_0115 
+                      Partition values list
+                    Hash_0116 
+                      Partition values list
+                    Hash_0117 
+                      Partition values list
+                    Hash_0118 
+                      Partition values list
+                    Hash_0119 
+                      Partition values list
+                    Hash_0120 
+                      Partition values list
+                    Hash_0121 
+                      Partition values list
+                    Hash_0122 
+                      Partition values list
+                    Hash_0123 
+                      Partition values list
+                    Hash_0124 
+                      Partition values list
+                    Hash_0125 
+                      Partition values list
+                    Hash_0126 
+                      Partition values list
+                    Hash_0127 
+                      Partition values list
+                    Hash_0128 
+                      Partition values list
+                    Hash_0129 
+                      Partition values list
+                    Hash_0130 
+                      Partition values list
+                    Hash_0131 
+                      Partition values list
+                    Hash_0132 
+                      Partition values list
+                    Hash_0133 
+                      Partition values list
+                    Hash_0134 
+                      Partition values list
+                    Hash_0135 
+                      Partition values list
+                    Hash_0136 
+                      Partition values list
+                    Hash_0137 
+                      Partition values list
+                    Hash_0138 
+                      Partition values list
+                    Hash_0139 
+                      Partition values list
+                    Hash_0140 
+                      Partition values list
+                    Hash_0141 
+                      Partition values list
+                    Hash_0142 
+                      Partition values list
+                    Hash_0143 
+                      Partition values list
+                    Hash_0144 
+                      Partition values list
+                    Hash_0145 
+                      Partition values list
+                    Hash_0146 
+                      Partition values list
+                    Hash_0147 
+                      Partition values list
+                    Hash_0148 
+                      Partition values list
+                    Hash_0149 
+                      Partition values list
+                    Hash_0150 
+                      Partition values list
+                    Hash_0151 
+                      Partition values list
+                    Hash_0152 
+                      Partition values list
+                    Hash_0153 
+                      Partition values list
+                    Hash_0154 
+                      Partition values list
+                    Hash_0155 
+                      Partition values list
+                    Hash_0156 
+                      Partition values list
+                    Hash_0157 
+                      Partition values list
+                    Hash_0158 
+                      Partition values list
+                    Hash_0159 
+                      Partition values list
+                    Hash_0160 
+                      Partition values list
+                    Hash_0161 
+                      Partition values list
+                    Hash_0162 
+                      Partition values list
+                    Hash_0163 
+                      Partition values list
+                    Hash_0164 
+                      Partition values list
+                    Hash_0165 
+                      Partition values list
+                    Hash_0166 
+                      Partition values list
+                    Hash_0167 
+                      Partition values list
+                    Hash_0168 
+                      Partition values list
+                    Hash_0169 
+                      Partition values list
+                    Hash_0170 
+                      Partition values list
+                    Hash_0171 
+                      Partition values list
+                    Hash_0172 
+                      Partition values list
+                    Hash_0173 
+                      Partition values list
+                    Hash_0174 
+                      Partition values list
+                    Hash_0175 
+                      Partition values list
+                    Hash_0176 
+                      Partition values list
+                    Hash_0177 
+                      Partition values list
+                    Hash_0178 
+                      Partition values list
+                    Hash_0179 
+                      Partition values list
+                    Hash_0180 
+                      Partition values list
+                    Hash_0181 
+                      Partition values list
+                    Hash_0182 
+                      Partition values list
+                    Hash_0183 
+                      Partition values list
+                    Hash_0184 
+                      Partition values list
+                    Hash_0185 
+                      Partition values list
+                    Hash_0186 
+                      Partition values list
+                    Hash_0187 
+                      Partition values list
+                    Hash_0188 
+                      Partition values list
+                    Hash_0189 
+                      Partition values list
+                    Hash_0190 
+                      Partition values list
+                    Hash_0191 
+                      Partition values list
+                    Hash_0192 
+                      Partition values list
+                    Hash_0193 
+                      Partition values list
+                    Hash_0194 
+                      Partition values list
+                    Hash_0195 
+                      Partition values list
+                    Hash_0196 
+                      Partition values list
+                    Hash_0197 
+                      Partition values list
+                    Hash_0198 
+                      Partition values list
+                    Hash_0199 
+                      Partition values list
+                    Hash_0200 
+                      Partition values list
+                    Hash_0201 
+                      Partition values list
+                    Hash_0202 
+                      Partition values list
+                    Hash_0203 
+                      Partition values list
+                    Hash_0204 
+                      Partition values list
+                    Hash_0205 
+                      Partition values list
+                    Hash_0206 
+                      Partition values list
+                    Hash_0207 
+                      Partition values list
+                    Hash_0208 
+                      Partition values list
+                    Hash_0209 
+                      Partition values list
+                    Hash_0210 
+                      Partition values list
+                    Hash_0211 
+                      Partition values list
+                    Hash_0212 
+                      Partition values list
+                    Hash_0213 
+                      Partition values list
+                    Hash_0214 
+                      Partition values list
+                    Hash_0215 
+                      Partition values list
+                    Hash_0216 
+                      Partition values list
+                    Hash_0217 
+                      Partition values list
+                    Hash_0218 
+                      Partition values list
+                    Hash_0219 
+                      Partition values list
+                    Hash_0220 
+                      Partition values list
+                    Hash_0221 
+                      Partition values list
+                    Hash_0222 
+                      Partition values list
+                    Hash_0223 
+                      Partition values list
+                    Hash_0224 
+                      Partition values list
+                    Hash_0225 
+                      Partition values list
+                    Hash_0226 
+                      Partition values list
+                    Hash_0227 
+                      Partition values list
+                    Hash_0228 
+                      Partition values list
+                    Hash_0229 
+                      Partition values list
+                    Hash_0230 
+                      Partition values list
+                    Hash_0231 
+                      Partition values list
+                    Hash_0232 
+                      Partition values list
+                    Hash_0233 
+                      Partition values list
+                    Hash_0234 
+                      Partition values list
+                    Hash_0235 
+                      Partition values list
+                    Hash_0236 
+                      Partition values list
+                    Hash_0237 
+                      Partition values list
+                    Hash_0238 
+                      Partition values list
+                    Hash_0239 
+                      Partition values list
+                    Hash_0240 
+                      Partition values list
+                    Hash_0241 
+                      Partition values list
+                    Hash_0242 
+                      Partition values list
+                    Hash_0243 
+                      Partition values list
+                    Hash_0244 
+                      Partition values list
+                    Hash_0245 
+                      Partition values list
+                    Hash_0246 
+                      Partition values list
+                    Hash_0247 
+                      Partition values list
+                    Hash_0248 
+                      Partition values list
+                    Hash_0249 
+                      Partition values list
+                    Hash_0250 
+                      Partition values list
+                    Hash_0251 
+                      Partition values list
+                    Hash_0252 
+                      Partition values list
+                    Hash_0253 
+                      Partition values list
+                    Hash_0254 
+                      Partition values list
+                    Hash_0255 
+                      Partition values list
+                    Hash_0256 
+                      Partition values list
+                    Hash_0257 
+                      Partition values list
+                    Hash_0258 
+                      Partition values list
+                    Hash_0259 
+                      Partition values list
+                    Hash_0260 
+                      Partition values list
+                    Hash_0261 
+                      Partition values list
+                    Hash_0262 
+                      Partition values list
+                    Hash_0263 
+                      Partition values list
+                    Hash_0264 
+                      Partition values list
+                    Hash_0265 
+                      Partition values list
+                    Hash_0266 
+                      Partition values list
+                    Hash_0267 
+                      Partition values list
+                    Hash_0268 
+                      Partition values list
+                    Hash_0269 
+                      Partition values list
+                    Hash_0270 
+                      Partition values list
+                    Hash_0271 
+                      Partition values list
+                    Hash_0272 
+                      Partition values list
+                    Hash_0273 
+                      Partition values list
+                    Hash_0274 
+                      Partition values list
+                    Hash_0275 
+                      Partition values list
+                    Hash_0276 
+                      Partition values list
+                    Hash_0277 
+                      Partition values list
+                    Hash_0278 
+                      Partition values list
+                    Hash_0279 
+                      Partition values list
+                    Hash_0280 
+                      Partition values list
+                    Hash_0281 
+                      Partition values list
+                    Hash_0282 
+                      Partition values list
+                    Hash_0283 
+                      Partition values list
+                    Hash_0284 
+                      Partition values list
+                    Hash_0285 
+                      Partition values list
+                    Hash_0286 
+                      Partition values list
+                    Hash_0287 
+                      Partition values list
+                    Hash_0288 
+                      Partition values list
+                    Hash_0289 
+                      Partition values list
+                    Hash_0290 
+                      Partition values list
+                    Hash_0291 
+                      Partition values list
+                    Hash_0292 
+                      Partition values list
+                    Hash_0293 
+                      Partition values list
+                    Hash_0294 
+                      Partition values list
+                    Hash_0295 
+                      Partition values list
+                    Hash_0296 
+                      Partition values list
+                    Hash_0297 
+                      Partition values list
+                    Hash_0298 
+                      Partition values list
+                    Hash_0299 
+                      Partition values list
+                    Hash_0300 
+                      Partition values list
+                    Hash_0301 
+                      Partition values list
+                    Hash_0302 
+                      Partition values list
+                    Hash_0303 
+                      Partition values list
+                    Hash_0304 
+                      Partition values list
+                    Hash_0305 
+                      Partition values list
+                    Hash_0306 
+                      Partition values list
+                    Hash_0307 
+                      Partition values list
+                    Hash_0308 
+                      Partition values list
+                    Hash_0309 
+                      Partition values list
+                    Hash_0310 
+                      Partition values list
+                    Hash_0311 
+                      Partition values list
+                    Hash_0312 
+                      Partition values list
+                    Hash_0313 
+                      Partition values list
+                    Hash_0314 
+                      Partition values list
+                    Hash_0315 
+                      Partition values list
+                    Hash_0316 
+                      Partition values list
+                    Hash_0317 
+                      Partition values list
+                    Hash_0318 
+                      Partition values list
+                    Hash_0319 
+                      Partition values list
+                    Hash_0320 
+                      Partition values list
+                    Hash_0321 
+                      Partition values list
+                    Hash_0322 
+                      Partition values list
+                    Hash_0323 
+                      Partition values list
+                    Hash_0324 
+                      Partition values list
+                    Hash_0325 
+                      Partition values list
+                    Hash_0326 
+                      Partition values list
+                    Hash_0327 
+                      Partition values list
+                    Hash_0328 
+                      Partition values list
+                    Hash_0329 
+                      Partition values list
+                    Hash_0330 
+                      Partition values list
+                    Hash_0331 
+                      Partition values list
+                    Hash_0332 
+                      Partition values list
+                    Hash_0333 
+                      Partition values list
+                    Hash_0334 
+                      Partition values list
+                    Hash_0335 
+                      Partition values list
+                    Hash_0336 
+                      Partition values list
+                    Hash_0337 
+                      Partition values list
+                    Hash_0338 
+                      Partition values list
+                    Hash_0339 
+                      Partition values list
+                    Hash_0340 
+                      Partition values list
+                    Hash_0341 
+                      Partition values list
+                    Hash_0342 
+                      Partition values list
+                    Hash_0343 
+                      Partition values list
+                    Hash_0344 
+                      Partition values list
+                    Hash_0345 
+                      Partition values list
+                    Hash_0346 
+                      Partition values list
+                    Hash_0347 
+                      Partition values list
+                    Hash_0348 
+                      Partition values list
+                    Hash_0349 
+                      Partition values list
+                    Hash_0350 
+                      Partition values list
+                    Hash_0351 
+                      Partition values list
+                    Hash_0352 
+                      Partition values list
+                    Hash_0353 
+                      Partition values list
+                    Hash_0354 
+                      Partition values list
+                    Hash_0355 
+                      Partition values list
+                    Hash_0356 
+                      Partition values list
+                    Hash_0357 
+                      Partition values list
+                    Hash_0358 
+                      Partition values list
+                    Hash_0359 
+                      Partition values list
+                    Hash_0360 
+                      Partition values list
+                    Hash_0361 
+                      Partition values list
+                    Hash_0362 
+                      Partition values list
+                    Hash_0363 
+                      Partition values list
+                    Hash_0364 
+                      Partition values list
+                    Hash_0365 
+                      Partition values list
+                    Hash_0366 
+                      Partition values list
+                    Hash_0367 
+                      Partition values list
+                    Hash_0368 
+                      Partition values list
+                    Hash_0369 
+                      Partition values list
+                    Hash_0370 
+                      Partition values list
+                    Hash_0371 
+                      Partition values list
+                    Hash_0372 
+                      Partition values list
+                    Hash_0373 
+                      Partition values list
+                    Hash_0374 
+                      Partition values list
+                    Hash_0375 
+                      Partition values list
+                    Hash_0376 
+                      Partition values list
+                    Hash_0377 
+                      Partition values list
+                    Hash_0378 
+                      Partition values list
+                    Hash_0379 
+                      Partition values list
+                    Hash_0380 
+                      Partition values list
+                    Hash_0381 
+                      Partition values list
+                    Hash_0382 
+                      Partition values list
+                    Hash_0383 
+                      Partition values list
+                    Hash_0384 
+                      Partition values list
+                    Hash_0385 
+                      Partition values list
+                    Hash_0386 
+                      Partition values list
+                    Hash_0387 
+                      Partition values list
+                    Hash_0388 
+                      Partition values list
+                    Hash_0389 
+                      Partition values list
+                    Hash_0390 
+                      Partition values list
+                    Hash_0391 
+                      Partition values list
+                    Hash_0392 
+                      Partition values list
+                    Hash_0393 
+                      Partition values list
+                    Hash_0394 
+                      Partition values list
+                    Hash_0395 
+                      Partition values list
+                    Hash_0396 
+                      Partition values list
+                    Hash_0397 
+                      Partition values list
+                    Hash_0398 
+                      Partition values list
+                    Hash_0399 
+                      Partition values list
+                    Hash_0400 
+                      Partition values list
+                    Hash_0401 
+                      Partition values list
+                    Hash_0402 
+                      Partition values list
+                    Hash_0403 
+                      Partition values list
+                    Hash_0404 
+                      Partition values list
+                    Hash_0405 
+                      Partition values list
+                    Hash_0406 
+                      Partition values list
+                    Hash_0407 
+                      Partition values list
+                    Hash_0408 
+                      Partition values list
+                    Hash_0409 
+                      Partition values list
+                    Hash_0410 
+                      Partition values list
+                    Hash_0411 
+                      Partition values list
+                    Hash_0412 
+                      Partition values list
+                    Hash_0413 
+                      Partition values list
+                    Hash_0414 
+                      Partition values list
+                    Hash_0415 
+                      Partition values list
+                    Hash_0416 
+                      Partition values list
+                    Hash_0417 
+                      Partition values list
+                    Hash_0418 
+                      Partition values list
+                    Hash_0419 
+                      Partition values list
+                    Hash_0420 
+                      Partition values list
+                    Hash_0421 
+                      Partition values list
+                    Hash_0422 
+                      Partition values list
+                    Hash_0423 
+                      Partition values list
+                    Hash_0424 
+                      Partition values list
+                    Hash_0425 
+                      Partition values list
+                    Hash_0426 
+                      Partition values list
+                    Hash_0427 
+                      Partition values list
+                    Hash_0428 
+                      Partition values list
+                    Hash_0429 
+                      Partition values list
+                    Hash_0430 
+                      Partition values list
+                    Hash_0431 
+                      Partition values list
+                    Hash_0432 
+                      Partition values list
+                    Hash_0433 
+                      Partition values list
+                    Hash_0434 
+                      Partition values list
+                    Hash_0435 
+                      Partition values list
+                    Hash_0436 
+                      Partition values list
+                    Hash_0437 
+                      Partition values list
+                    Hash_0438 
+                      Partition values list
+                    Hash_0439 
+                      Partition values list
+                    Hash_0440 
+                      Partition values list
+                    Hash_0441 
+                      Partition values list
+                    Hash_0442 
+                      Partition values list
+                    Hash_0443 
+                      Partition values list
+                    Hash_0444 
+                      Partition values list
+                    Hash_0445 
+                      Partition values list
+                    Hash_0446 
+                      Partition values list
+                    Hash_0447 
+                      Partition values list
+                    Hash_0448 
+                      Partition values list
+                    Hash_0449 
+                      Partition values list
+                    Hash_0450 
+                      Partition values list
+                    Hash_0451 
+                      Partition values list
+                    Hash_0452 
+                      Partition values list
+                    Hash_0453 
+                      Partition values list
+                    Hash_0454 
+                      Partition values list
+                    Hash_0455 
+                      Partition values list
+                    Hash_0456 
+                      Partition values list
+                    Hash_0457 
+                      Partition values list
+                    Hash_0458 
+                      Partition values list
+                    Hash_0459 
+                      Partition values list
+                    Hash_0460 
+                      Partition values list
+                    Hash_0461 
+                      Partition values list
+                    Hash_0462 
+                      Partition values list
+                    Hash_0463 
+                      Partition values list
+                    Hash_0464 
+                      Partition values list
+                    Hash_0465 
+                      Partition values list
+                    Hash_0466 
+                      Partition values list
+                    Hash_0467 
+                      Partition values list
+                    Hash_0468 
+                      Partition values list
+                    Hash_0469 
+                      Partition values list
+                    Hash_0470 
+                      Partition values list
+                    Hash_0471 
+                      Partition values list
+                    Hash_0472 
+                      Partition values list
+                    Hash_0473 
+                      Partition values list
+                    Hash_0474 
+                      Partition values list
+                    Hash_0475 
+                      Partition values list
+                    Hash_0476 
+                      Partition values list
+                    Hash_0477 
+                      Partition values list
+                    Hash_0478 
+                      Partition values list
+                    Hash_0479 
+                      Partition values list
+                    Hash_0480 
+                      Partition values list
+                    Hash_0481 
+                      Partition values list
+                    Hash_0482 
+                      Partition values list
+                    Hash_0483 
+                      Partition values list
+                    Hash_0484 
+                      Partition values list
+                    Hash_0485 
+                      Partition values list
+                    Hash_0486 
+                      Partition values list
+                    Hash_0487 
+                      Partition values list
+                    Hash_0488 
+                      Partition values list
+                    Hash_0489 
+                      Partition values list
+                    Hash_0490 
+                      Partition values list
+                    Hash_0491 
+                      Partition values list
+                    Hash_0492 
+                      Partition values list
+                    Hash_0493 
+                      Partition values list
+                    Hash_0494 
+                      Partition values list
+                    Hash_0495 
+                      Partition values list
+                    Hash_0496 
+                      Partition values list
+                    Hash_0497 
+                      Partition values list
+                    Hash_0498 
+                      Partition values list
+                    Hash_0499 
+                      Partition values list
+            partition field typeinfos: string, string
+            partition types: range, hash
+            table:
+              table descs
+                input format: org.apache.hadoop.mapred.TextInputFormat
+                output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                name: table1
+
+  Stage: Stage-0
+    Move Operator
+      tables:
+          replace: true
+          table:
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: table1
+
+query: insert overwrite table table1 select * from src
+Output: default_db/table1
+query: select * from table1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405071152_0.1749152599491296_-1_203733090/10000
+219	val_219
+219	val_219
+218	val_218
+217	val_217
+217	val_217
+216	val_216
+216	val_216
+214	val_214
+213	val_213
+213	val_213
+209	val_209
+209	val_209
+208	val_208
+208	val_208
+208	val_208
+207	val_207
+207	val_207
+205	val_205
+205	val_205
+203	val_203
+203	val_203
+202	val_202
+201	val_201
+200	val_200
+200	val_200
+298	val_298
+298	val_298
+298	val_298
+296	val_296
+292	val_292
+291	val_291
+289	val_289
+288	val_288
+288	val_288
+287	val_287
+286	val_286
+285	val_285
+284	val_284
+283	val_283
+282	val_282
+282	val_282
+281	val_281
+281	val_281
+280	val_280
+280	val_280
+278	val_278
+278	val_278
+277	val_277
+277	val_277
+277	val_277
+277	val_277
+275	val_275
+274	val_274
+273	val_273
+273	val_273
+273	val_273
+272	val_272
+272	val_272
+266	val_266
+265	val_265
+265	val_265
+263	val_263
+262	val_262
+260	val_260
+258	val_258
+257	val_257
+256	val_256
+256	val_256
+255	val_255
+255	val_255
+252	val_252
+30	val_30
+249	val_249
+248	val_248
+247	val_247
+28	val_28
+27	val_27
+244	val_244
+26	val_26
+26	val_26
+24	val_24
+24	val_24
+242	val_242
+242	val_242
+241	val_241
+239	val_239
+239	val_239
+238	val_238
+238	val_238
+237	val_237
+237	val_237
+235	val_235
+233	val_233
+233	val_233
+230	val_230
+230	val_230
+230	val_230
+230	val_230
+230	val_230
+229	val_229
+229	val_229
+228	val_228
+226	val_226
+224	val_224
+224	val_224
+223	val_223
+223	val_223
+222	val_222
+221	val_221
+221	val_221
+105	val_105
+104	val_104
+104	val_104
+103	val_103
+103	val_103
+100	val_100
+100	val_100
+199	val_199
+199	val_199
+199	val_199
+197	val_197
+197	val_197
+196	val_196
+195	val_195
+195	val_195
+194	val_194
+193	val_193
+193	val_193
+193	val_193
+192	val_192
+191	val_191
+191	val_191
+190	val_190
+189	val_189
+187	val_187
+187	val_187
+187	val_187
+186	val_186
+183	val_183
+181	val_181
+180	val_180
+179	val_179
+179	val_179
+178	val_178
+177	val_177
+176	val_176
+176	val_176
+175	val_175
+175	val_175
+174	val_174
+174	val_174
+172	val_172
+172	val_172
+170	val_170
+169	val_169
+169	val_169
+169	val_169
+169	val_169
+168	val_168
+167	val_167
+167	val_167
+167	val_167
+166	val_166
+165	val_165
+165	val_165
+164	val_164
+164	val_164
+163	val_163
+162	val_162
+160	val_160
+158	val_158
+157	val_157
+156	val_156
+2	val_2
+155	val_155
+0	val_0
+0	val_0
+0	val_0
+153	val_153
+152	val_152
+152	val_152
+150	val_150
+149	val_149
+149	val_149
+146	val_146
+146	val_146
+145	val_145
+143	val_143
+138	val_138
+138	val_138
+138	val_138
+138	val_138
+137	val_137
+137	val_137
+136	val_136
+134	val_134
+134	val_134
+133	val_133
+131	val_131
+20	val_20
+129	val_129
+129	val_129
+128	val_128
+128	val_128
+128	val_128
+126	val_126
+125	val_125
+125	val_125
+120	val_120
+120	val_120
+19	val_19
+18	val_18
+18	val_18
+17	val_17
+15	val_15
+15	val_15
+12	val_12
+12	val_12
+11	val_11
+10	val_10
+119	val_119
+119	val_119
+119	val_119
+118	val_118
+118	val_118
+116	val_116
+114	val_114
+113	val_113
+113	val_113
+111	val_111
+336	val_336
+335	val_335
+333	val_333
+333	val_333
+332	val_332
+331	val_331
+331	val_331
+449	val_449
+448	val_448
+446	val_446
+444	val_444
+443	val_443
+327	val_327
+327	val_327
+327	val_327
+325	val_325
+325	val_325
+323	val_323
+322	val_322
+322	val_322
+321	val_321
+321	val_321
+439	val_439
+439	val_439
+438	val_438
+438	val_438
+438	val_438
+437	val_437
+436	val_436
+435	val_435
+432	val_432
+431	val_431
+431	val_431
+431	val_431
+430	val_430
+430	val_430
+430	val_430
+318	val_318
+318	val_318
+318	val_318
+317	val_317
+317	val_317
+316	val_316
+316	val_316
+316	val_316
+315	val_315
+311	val_311
+311	val_311
+311	val_311
+429	val_429
+429	val_429
+310	val_310
+427	val_427
+424	val_424
+424	val_424
+421	val_421
+309	val_309
+309	val_309
+308	val_308
+307	val_307
+307	val_307
+306	val_306
+305	val_305
+302	val_302
+419	val_419
+418	val_418
+417	val_417
+417	val_417
+417	val_417
+414	val_414
+414	val_414
+413	val_413
+413	val_413
+411	val_411
+409	val_409
+409	val_409
+409	val_409
+407	val_407
+406	val_406
+406	val_406
+406	val_406
+406	val_406
+404	val_404
+404	val_404
+403	val_403
+403	val_403
+403	val_403
+402	val_402
+401	val_401
+401	val_401
+401	val_401
+401	val_401
+401	val_401
+400	val_400
+98	val_98
+98	val_98
+97	val_97
+97	val_97
+96	val_96
+95	val_95
+95	val_95
+92	val_92
+90	val_90
+90	val_90
+90	val_90
+87	val_87
+86	val_86
+85	val_85
+84	val_84
+84	val_84
+83	val_83
+83	val_83
+82	val_82
+80	val_80
+78	val_78
+77	val_77
+76	val_76
+76	val_76
+74	val_74
+72	val_72
+72	val_72
+70	val_70
+70	val_70
+70	val_70
+69	val_69
+67	val_67
+67	val_67
+66	val_66
+65	val_65
+64	val_64
+399	val_399
+399	val_399
+397	val_397
+397	val_397
+396	val_396
+396	val_396
+396	val_396
+395	val_395
+395	val_395
+394	val_394
+393	val_393
+392	val_392
+58	val_58
+58	val_58
+57	val_57
+54	val_54
+389	val_389
+53	val_53
+51	val_51
+51	val_51
+386	val_386
+384	val_384
+384	val_384
+384	val_384
+382	val_382
+382	val_382
+498	val_498
+498	val_498
+498	val_498
+497	val_497
+496	val_496
+9	val_9
+495	val_495
+8	val_8
+494	val_494
+493	val_493
+492	val_492
+492	val_492
+5	val_5
+5	val_5
+5	val_5
+4	val_4
+491	val_491
+490	val_490
+47	val_47
+44	val_44
+379	val_379
+43	val_43
+378	val_378
+42	val_42
+42	val_42
+377	val_377
+41	val_41
+375	val_375
+374	val_374
+373	val_373
+489	val_489
+489	val_489
+489	val_489
+489	val_489
+487	val_487
+485	val_485
+484	val_484
+483	val_483
+482	val_482
+481	val_481
+480	val_480
+480	val_480
+480	val_480
+37	val_37
+37	val_37
+35	val_35
+35	val_35
+35	val_35
+34	val_34
+33	val_33
+369	val_369
+369	val_369
+369	val_369
+368	val_368
+367	val_367
+367	val_367
+366	val_366
+365	val_365
+364	val_364
+362	val_362
+479	val_479
+360	val_360
+478	val_478
+478	val_478
+477	val_477
+475	val_475
+472	val_472
+470	val_470
+356	val_356
+353	val_353
+353	val_353
+351	val_351
+469	val_469
+469	val_469
+469	val_469
+469	val_469
+469	val_469
+468	val_468
+468	val_468
+468	val_468
+468	val_468
+467	val_467
+466	val_466
+466	val_466
+466	val_466
+463	val_463
+463	val_463
+462	val_462
+462	val_462
+460	val_460
+348	val_348
+348	val_348
+348	val_348
+348	val_348
+348	val_348
+345	val_345
+344	val_344
+344	val_344
+342	val_342
+342	val_342
+341	val_341
+459	val_459
+459	val_459
+458	val_458
+458	val_458
+457	val_457
+455	val_455
+454	val_454
+454	val_454
+454	val_454
+453	val_453
+452	val_452
+339	val_339
+338	val_338
+query: drop table table1
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 

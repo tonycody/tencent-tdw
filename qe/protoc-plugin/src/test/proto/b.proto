@@ -1,0 +1,33 @@
+package b;
+import "c.proto";
+message mb {
+  message mb1 {
+    required float x1 = 1 [default=nan];
+    repeated double x2 = 2 [packed=true];
+    optional double x3 = 3 [ default=inf];
+    optional double x4 = 4 [ default=2.3];
+  }
+  enum PhoneType {
+    MOBILE = 0;
+    HOME = 1;
+    WORK = 2;
+  }
+  message mb2 {
+    repeated mb1 x1 = 1;
+  }
+
+  required string x1 = 1;
+  required string x2 = 2 [default="adsfasdf\"asdf"];
+  required int32 x3 = 3 [default=234];
+  required PhoneType x4 = 4 [default=HOME];
+  optional mb1 x5 = 5;
+  repeated mbb.mbb1 x6 = 6;
+  required MC  x7 = 7;
+}
+
+message mbb {
+  message mbb1 {
+    required int32 x1=1;
+  }
+  required float x1=1;
+}

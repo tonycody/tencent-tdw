@@ -1,0 +1,6 @@
+query: DROP TABLE nulltest1
+query: DROP TABLE nulltest2
+query: CREATE TABLE nulltest1(int_data1 INT, int_data2 INT, boolean_data BOOLEAN, double_data DOUBLE, string_data STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/nulltest.txt' INTO TABLE nulltest1
+query: CREATE TABLE nulltest2 as SELECT int_data1,int_data2 FROM nulltest1
+FAILED: Error in semantic analysis: Unknown column: Unknown Column int_data3 in on clause

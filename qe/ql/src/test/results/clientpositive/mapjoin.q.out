@@ -1,0 +1,16 @@
+query: DROP TABLE nulltest
+query: CREATE TABLE nulltest(int_data1 INT, int_data2 INT, boolean_data BOOLEAN, double_data DOUBLE, string_data STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/nulltest.txt' INTO TABLE nulltest
+query: SELECT COUNT(*) FROM (SELECT j.* FROM nulltest k left join nulltest j on (k.int_data2 = j.int_data1)) tmp
+Output: file:/data/tdwadmin/testroach/V1.0R070/qe/build/ql/tmp/635587112/10000
+66
+query: SELECT COUNT(*) FROM (SELECT /*+mapjoin(j)*/ j.* FROM nulltest k left join nulltest j on (k.int_data2 = j.int_data1)) tmp
+Output: file:/data/tdwadmin/testroach/V1.0R070/qe/build/ql/tmp/1244395041/10000
+66
+query: SELECT COUNT(*) FROM (SELECT k.* FROM nulltest k right join nulltest j on (k.int_data1 = j.int_data2)) tmp
+Output: file:/data/tdwadmin/testroach/V1.0R070/qe/build/ql/tmp/130028041/10000
+66
+query: SELECT COUNT(*) FROM (SELECT /*+mapjoin(k)*/ k.* FROM nulltest k right join nulltest j on (k.int_data1 = j.int_data2)) tmp
+Output: file:/data/tdwadmin/testroach/V1.0R070/qe/build/ql/tmp/314600780/10000
+66
+query: DROP TABLE nulltest

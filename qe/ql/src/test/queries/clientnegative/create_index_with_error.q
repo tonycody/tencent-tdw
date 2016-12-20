@@ -1,0 +1,1 @@
+explain create table testindex(a int, b int) index;

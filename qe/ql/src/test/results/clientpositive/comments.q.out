@@ -1,0 +1,37 @@
+query: create table innertab (col1 bigint, col2 string, col3 smallint comment 'smallinteger', col4 string comment 'oldtablecomment') comment 'table:inner'
+query: desc extended innertab
+col1	bigint	
+col2	string	
+col3	smallint	smallinteger
+col4	string	oldtablecomment
+	 	 
+Detailed Table Information	Table(tableName:innertab, dbName:default_db, owner:root, createTime:1337157031, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:col1, type:bigint, comment:null), FieldSchema(name:col2, type:string, comment:null), FieldSchema(name:col3, type:smallint, comment:smallinteger), FieldSchema(name:col4, type:string, comment:oldtablecomment)], location:file:/data/brant/trunk/trunk/build/ql/test/data/warehouse/default_db/innertab, inputFormat:org.apache.hadoop.mapred.TextInputFormat, outputFormat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe, parameters:{serialization.format=1}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{comment=table:inner}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, vtables:null)	
+query: comment on table innertab is 'new table comment'
+query: desc extended innertab
+col1	bigint	
+col2	string	
+col3	smallint	smallinteger
+col4	string	oldtablecomment
+	 	 
+Detailed Table Information	Table(tableName:innertab, dbName:default_db, owner:root, createTime:1337157031, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:col1, type:bigint, comment:null), FieldSchema(name:col2, type:string, comment:null), FieldSchema(name:col3, type:smallint, comment:smallinteger), FieldSchema(name:col4, type:string, comment:oldtablecomment)], location:file:/data/brant/trunk/trunk/build/ql/test/data/warehouse/default_db/innertab, inputFormat:org.apache.hadoop.mapred.TextInputFormat, outputFormat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe, parameters:{serialization.format=1}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{comment=new table comment}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, vtables:null)	
+query: comment on table default_db::innertab is null
+query: desc extended innertab
+col1	bigint	
+col2	string	
+col3	smallint	smallinteger
+col4	string	oldtablecomment
+	 	 
+Detailed Table Information	Table(tableName:innertab, dbName:default_db, owner:root, createTime:1337157031, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:col1, type:bigint, comment:null), FieldSchema(name:col2, type:string, comment:null), FieldSchema(name:col3, type:smallint, comment:smallinteger), FieldSchema(name:col4, type:string, comment:oldtablecomment)], location:file:/data/brant/trunk/trunk/build/ql/test/data/warehouse/default_db/innertab, inputFormat:org.apache.hadoop.mapred.TextInputFormat, outputFormat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe, parameters:{serialization.format=1}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, vtables:null)	
+query: comment on column innertab.col1 is 'col1 comment'
+query: desc innertab
+col1	bigint	col1 comment
+col2	string	
+col3	smallint	smallinteger
+col4	string	oldtablecomment
+query: comment on column default_db::innertab.col3 is null
+query: desc innertab
+col1	bigint	col1 comment
+col2	string	
+col3	smallint	
+col4	string	oldtablecomment
+query: drop table innertab

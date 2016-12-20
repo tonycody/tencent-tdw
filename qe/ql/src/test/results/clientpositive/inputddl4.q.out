@@ -1,0 +1,44 @@
+query: -- a simple test to test sorted/clustered syntax
+
+DROP TABLE INPUTDDL4
+query: CREATE TABLE INPUTDDL4(viewTime STRING, userid INT,
+                       page_url STRING, referrer_url STRING, 
+                       friends ARRAY<BIGINT>, properties MAP<STRING, STRING>,
+                       ip STRING COMMENT 'IP Address of the User',
+                       ds STRING, country STRING) 
+    COMMENT 'This is the page view table' 
+    PARTITION BY list(ds) SUBPARTITION BY list(country)
+    (SUBPARTITION sp0 VALUES IN ('CHINA'))
+    (PARTITION p0 VALUES IN ('2008-01-01')) 
+    CLUSTERED BY(userid) SORTED BY(viewTime) INTO 32 BUCKETS
+query: DESCRIBE INPUTDDL4
+viewtime	string	
+userid	int	
+page_url	string	
+referrer_url	string	
+friends	array<bigint>	
+properties	map<string,string>	
+ip	string	IP Address of the User
+ds	string	
+country	string	
+query: DESCRIBE EXTENDED INPUTDDL4
+viewtime	string	
+userid	int	
+page_url	string	
+referrer_url	string	
+friends	array<bigint>	
+properties	map<string,string>	
+ip	string	IP Address of the User
+ds	string	
+country	string	
+	 	 
+Detailed Table Information	Table(tableName:inputddl4, dbName:default_db, owner:root, createTime:1329299526, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:viewtime, type:string, comment:null), FieldSchema(name:userid, type:int, comment:null), FieldSchema(name:page_url, type:string, comment:null), FieldSchema(name:referrer_url, type:string, comment:null), FieldSchema(name:friends, type:array<bigint>, comment:null), FieldSchema(name:properties, type:map<string,string>, comment:null), FieldSchema(name:ip, type:string, comment:IP Address of the User), FieldSchema(name:ds, type:string, comment:null), FieldSchema(name:country, type:string, comment:null)], location:file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/inputddl4, inputFormat:org.apache.hadoop.mapred.TextInputFormat, outputFormat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat, compressed:false, numBuckets:32, serdeInfo:SerDeInfo(name:null, serializationLib:org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe, parameters:{serialization.format=1}), bucketCols:[userid], sortCols:[Order(col:viewtime, order:1)], parameters:{}), priPartition:Partition(dbName:default_db, tableName:inputddl4, level:0, parType:list, parKey:FieldSchema(name:ds, type:string, comment:null), parSpaces:{p0=[2008-01-01]}), subPartition:Partition(dbName:default_db, tableName:inputddl4, level:1, parType:list, parKey:FieldSchema(name:country, type:string, comment:null), parSpaces:{sp0=[CHINA]}), parameters:{comment=This is the page view table}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, vtables:null)	
+query: DROP TABLE INPUTDDL4
+query: DROP TABLE INPUTDDL4
+query: DROP TABLE INPUTDDL4
+query: DROP TABLE INPUTDDL4
+query: DROP TABLE INPUTDDL4
+query: DROP TABLE INPUTDDL4
+query: DROP TABLE INPUTDDL4
+query: DROP TABLE INPUTDDL4
+query: DROP TABLE INPUTDDL4

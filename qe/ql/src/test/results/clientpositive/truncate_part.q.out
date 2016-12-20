@@ -1,0 +1,15 @@
+query: create table testtable like srcpart
+query: insert overwrite table testtable select * from srcpart
+Output: default_db/testtable
+query: alter table testtable truncate partition(p0)
+query: select * from testtable partition(p0) x
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1196903277/10000
+query: drop table testtable
+query: drop table testtable
+query: drop table testtable
+query: drop table testtable
+query: drop table testtable
+query: drop table testtable
+query: drop table testtable
+query: drop table testtable
+query: drop table testtable

@@ -1,0 +1,77 @@
+query: SELECT
+  trunc(3.1415926),
+  trunc(3.1415926,3),
+  trunc(233.1415926,-1),
+  trunc(3.14,null),
+  trunc(null,null),
+  trunc("2010-1-1 10:12:13",null),
+  trunc("2010-12-24 11:05:22"),
+  trunc("2010-12-24 11:05:22","YY"),
+  trunc("2010-12-24 11:05:22","MM"),
+  trunc("2010-12-27 11:05:22","WW"),
+  trunc("2010-12-24 11:05:22","W"),
+  trunc("2010-12-27 11:05:22","DAY"),
+  trunc("2010-12-24 11:05:22","DDD"),
+  trunc("2010-12-24 11:05:22","HH"),
+  trunc("2010-12-24 11:05:22","MI")
+FROM src LIMIT 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/273012573/10000
+3.0	3.141	230.0	NULL	NULL	NULL	2010-12-24 00:00:00	2010-01-01 00:00:00	2010-12-01 00:00:00	2010-12-24 00:00:00	2010-12-22 00:00:00	2010-12-26 00:00:00	2010-12-24 00:00:00	2010-12-24 11:00:00	2010-12-24 11:05:00
+query: CREATE TABLE test_trunc_num(td DOUBLE, tac INT) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/test_udf_num_trunc' OVERWRITE INTO TABLE test_trunc_num
+query: SELECT * 
+FROM test_trunc_num
+Input: default_db/test_trunc_num
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1551584970/10000
+3.215454	3
+-4.5643434545E7	-4
+NULL	4
+2324.1515	654
+455454.121	-3478
+query: SELECT 
+  trunc(test_trunc_num.td,test_trunc_num.tac)
+FROM test_trunc_num
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1286763578/10000
+3.215
+-4.564E7
+NULL
+2324.1515
+0.0
+query: DROP TABLE test_trunc_num
+query: CREATE TABLE test_trunc_date(tdate STRING, tac STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/test_udf_date_trunc' OVERWRITE INTO TABLE test_trunc_date
+query: SELECT * 
+FROM test_trunc_date
+Input: default_db/test_trunc_date
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1871863397/10000
+2011-01-15 10:10:10	YY
+2011-01-12 09:23:45	MM
+2011-01-13 12:12:34	W
+2011-01-14 18:34:12	WW
+2011-01-16 15:01:32	DDD
+2011-01-17 02:14:06	DAY
+2011-01-28 12:54:07	HH
+2011-01-23 13:45:46	MI
+	NULL
+query: SELECT 
+  trunc(test_trunc_date.tdate,test_trunc_date.tac)
+FROM test_trunc_date
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1559115429/10000
+2011-01-01 00:00:00
+2011-01-01 00:00:00
+2011-01-08 12:00:00
+2011-01-08 12:00:00
+2011-01-16 00:00:00
+2011-01-16 00:00:00
+2011-01-28 12:00:00
+2011-01-23 13:45:00
+NULL
+query: DROP TABLE test_trunc_date
+query: DROP TABLE test_trunc_date
+query: DROP TABLE test_trunc_date
+query: DROP TABLE test_trunc_date
+query: DROP TABLE test_trunc_date
+query: DROP TABLE test_trunc_date
+query: DROP TABLE test_trunc_date
+query: DROP TABLE test_trunc_date
+query: DROP TABLE test_trunc_date

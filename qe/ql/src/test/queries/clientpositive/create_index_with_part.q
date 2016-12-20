@@ -1,0 +1,1 @@
+explain create table part(a int, b int) partition by range(a) (partition p1 values less than(2), partition p2 values less than(10)) index(a) stored as formatfile;

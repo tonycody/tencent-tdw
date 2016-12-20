@@ -1,0 +1,607 @@
+query: DROP TABLE srcmd
+query: CREATE TABLE srcmd(key STRING, value STRING, ds STRING, hr STRING)
+query: LOAD DATA LOCAL INPATH '../data/files/kv6.txt' INTO TABLE srcmd
+query: DROP TABLE dest_mt1
+query: CREATE TABLE dest_mt1(hr STRING, keynum INT, dsnum INT) STORED AS TEXTFILE
+query: EXPLAIN FROM srcmd INSERT OVERWRITE TABLE dest_mt1 SELECT srcmd.hr, count(distinct srcmd.key), count(distinct srcmd.ds) group by srcmd.hr
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB srcmd))) (TOK_INSERT (TOK_DESTINATION (TOK_TABDEST (TOK_TAB dest_mt1))) (TOK_SELECT (TOK_SELEXPR (. (TOK_TABLE_OR_COL srcmd) hr)) (TOK_SELEXPR (TOK_FUNCTIONDI count (. (TOK_TABLE_OR_COL srcmd) key))) (TOK_SELEXPR (TOK_FUNCTIONDI count (. (TOK_TABLE_OR_COL srcmd) ds)))) (TOK_GROUPBY (. (TOK_TABLE_OR_COL srcmd) hr))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:;depends on:Stage-1;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/srcmd 
+          Operator:          TableScan
+            alias: default_db/srcmd
+            Operator:            Select Operator
+              expressions:
+                    expr: hr
+                    type: string
+                    expr: key
+                    type: string
+                    expr: ds
+                    type: string
+              outputColumnNames: hr, key, ds
+              Operator:              Reduce Output Operator
+                key expressions:
+                      expr: hr
+                      type: string
+                      expr: key
+                      type: string
+                      expr: ds
+                      type: string
+                key serialize infos:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                sort order: +++
+                output key names: _col0, _col1
+                Map-reduce partition columns:
+                      expr: hr
+                      type: string
+                tag: -1
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcmd [default_db/srcmd]
+      Reduce Operator Tree:
+        Operator:        Group By Operator
+          aggregations:
+                expr: count(DISTINCT KEY._col1:0._col0)
+                expr: count(DISTINCT KEY._col1:1._col0)
+          keys:
+                expr: KEY._col0
+                type: string
+          mode: complete
+          outputColumnNames: _col0, _col1, _col2
+          Operator:          Select Operator
+            expressions:
+                  expr: _col0
+                  type: string
+                  expr: _col1
+                  type: bigint
+                  expr: _col2
+                  type: bigint
+            outputColumnNames: _col0, _col1, _col2
+            Operator:            Select Operator
+              expressions:
+                    expr: _col0
+                    type: string
+                    expr: UDFToInteger(_col1)
+                    type: int
+                    expr: UDFToInteger(_col2)
+                    type: int
+              outputColumnNames: _col0, _col1, _col2
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 1
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.TextInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                    serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                    name: dest_mt1
+
+  Stage: Stage-0
+    Move Operator
+      tables:
+          replace: true
+          table:
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: dest_mt1
+
+query: FROM srcmd INSERT OVERWRITE TABLE dest_mt1 SELECT srcmd.hr, count(distinct srcmd.key), count(distinct srcmd.ds) group by srcmd.hr
+Output: default_db/dest_mt1
+query: SELECT dest_mt1.* FROM dest_mt1
+Input: default_db/dest_mt1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1303237443/10000
+0	10	1
+1	10	1
+12	127	1
+13	25	1
+14	50	1
+18	19	1
+2	36	1
+21	16	1
+22	16	1
+4	43	1
+5	43	1
+7	26	1
+9	47	2
+query: EXPLAIN FROM srcmd INSERT OVERWRITE TABLE dest_mt1 SELECT srcmd.hr, count(distinct srcmd.key), count(distinct srcmd.ds) group by srcmd.hr
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB srcmd))) (TOK_INSERT (TOK_DESTINATION (TOK_TABDEST (TOK_TAB dest_mt1))) (TOK_SELECT (TOK_SELEXPR (. (TOK_TABLE_OR_COL srcmd) hr)) (TOK_SELEXPR (TOK_FUNCTIONDI count (. (TOK_TABLE_OR_COL srcmd) key))) (TOK_SELEXPR (TOK_FUNCTIONDI count (. (TOK_TABLE_OR_COL srcmd) ds)))) (TOK_GROUPBY (. (TOK_TABLE_OR_COL srcmd) hr))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:;depends on:Stage-1;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/srcmd 
+          Operator:          TableScan
+            alias: default_db/srcmd
+            Operator:            Select Operator
+              expressions:
+                    expr: hr
+                    type: string
+                    expr: key
+                    type: string
+                    expr: ds
+                    type: string
+              outputColumnNames: hr, key, ds
+              Operator:              Group By Operator
+                aggregations:
+                      expr: count(DISTINCT key)
+                      expr: count(DISTINCT ds)
+                keys:
+                      expr: hr
+                      type: string
+                      expr: key
+                      type: string
+                      expr: ds
+                      type: string
+                mode: hash
+                outputColumnNames: _col0, _col1, _col2, _col3, _col4
+                Operator:                Reduce Output Operator
+                  key expressions:
+                        expr: _col0
+                        type: string
+                        expr: _col1
+                        type: string
+                        expr: _col2
+                        type: string
+                  key serialize infos:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                  sort order: +++
+                  output key names: _col0, _col1
+                  output value names: _col0, _col1
+                  Map-reduce partition columns:
+                        expr: _col0
+                        type: string
+                  tag: -1
+                  value expressions:
+                        expr: _col3
+                        type: bigint
+                        expr: _col4
+                        type: bigint
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcmd [default_db/srcmd]
+      Reduce Operator Tree:
+        Operator:        Group By Operator
+          aggregations:
+                expr: count(DISTINCT KEY._col1:0._col0)
+                expr: count(DISTINCT KEY._col1:1._col0)
+          keys:
+                expr: KEY._col0
+                type: string
+          mode: mergepartial
+          outputColumnNames: _col0, _col1, _col2
+          Operator:          Select Operator
+            expressions:
+                  expr: _col0
+                  type: string
+                  expr: _col1
+                  type: bigint
+                  expr: _col2
+                  type: bigint
+            outputColumnNames: _col0, _col1, _col2
+            Operator:            Select Operator
+              expressions:
+                    expr: _col0
+                    type: string
+                    expr: UDFToInteger(_col1)
+                    type: int
+                    expr: UDFToInteger(_col2)
+                    type: int
+              outputColumnNames: _col0, _col1, _col2
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 1
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.TextInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                    serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                    name: dest_mt1
+
+  Stage: Stage-0
+    Move Operator
+      tables:
+          replace: true
+          table:
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: dest_mt1
+
+query: FROM srcmd INSERT OVERWRITE TABLE dest_mt1 SELECT srcmd.hr, count(distinct srcmd.key), count(distinct srcmd.ds) group by srcmd.hr
+Output: default_db/dest_mt1
+query: SELECT dest_mt1.* FROM dest_mt1
+Input: default_db/dest_mt1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/774421552/10000
+0	10	1
+1	10	1
+12	127	1
+13	25	1
+14	50	1
+18	19	1
+2	36	1
+21	16	1
+22	16	1
+4	43	1
+5	43	1
+7	26	1
+9	47	2
+query: DROP TABLE dest_mt1
+query: CREATE TABLE dest_mt1(hr STRING, keynum INT, dsnum INT) STORED AS TEXTFILE
+query: EXPLAIN FROM srcmd INSERT OVERWRITE TABLE dest_mt1 SELECT srcmd.hr, count(distinct srcmd.key), count(distinct srcmd.ds) group by srcmd.hr
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB srcmd))) (TOK_INSERT (TOK_DESTINATION (TOK_TABDEST (TOK_TAB dest_mt1))) (TOK_SELECT (TOK_SELEXPR (. (TOK_TABLE_OR_COL srcmd) hr)) (TOK_SELEXPR (TOK_FUNCTIONDI count (. (TOK_TABLE_OR_COL srcmd) key))) (TOK_SELEXPR (TOK_FUNCTIONDI count (. (TOK_TABLE_OR_COL srcmd) ds)))) (TOK_GROUPBY (. (TOK_TABLE_OR_COL srcmd) hr))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-2
+    type:;depends on:Stage-1;
+  Stage-0
+    type:;depends on:Stage-2;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/srcmd 
+          Operator:          TableScan
+            alias: default_db/srcmd
+            Operator:            Select Operator
+              expressions:
+                    expr: hr
+                    type: string
+                    expr: key
+                    type: string
+                    expr: ds
+                    type: string
+              outputColumnNames: hr, key, ds
+              Operator:              Reduce Output Operator
+                key expressions:
+                      expr: hr
+                      type: string
+                      expr: key
+                      type: string
+                      expr: ds
+                      type: string
+                key serialize infos:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                sort order: +++
+                output key names: _col0, _col1
+                Map-reduce partition columns:
+                      expr: hr
+                      type: string
+                      expr: key
+                      type: string
+                      expr: ds
+                      type: string
+                tag: -1
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcmd [default_db/srcmd]
+      Reduce Operator Tree:
+        Operator:        Group By Operator
+          aggregations:
+                expr: count(DISTINCT KEY._col1:0._col0)
+                expr: count(DISTINCT KEY._col1:1._col0)
+          keys:
+                expr: KEY._col0
+                type: string
+          mode: partial1
+          outputColumnNames: _col0, _col1, _col2
+          Operator:          File Output Operator
+            compressed: false
+            GlobalTableId: 0
+            table:
+              table descs
+                input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+
+  Stage: Stage-2
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/358212353/10002 
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: _col0
+                    type: string
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: _col0
+              output value names: _col0, _col1
+              Map-reduce partition columns:
+                    expr: _col0
+                    type: string
+              tag: -1
+              value expressions:
+                    expr: _col1
+                    type: bigint
+                    expr: _col2
+                    type: bigint
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/358212353/10002 [file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/358212353/10002]
+      Reduce Operator Tree:
+        Operator:        Group By Operator
+          aggregations:
+                expr: count(VALUE._col0)
+                expr: count(VALUE._col1)
+          keys:
+                expr: KEY._col0
+                type: string
+          mode: final
+          outputColumnNames: _col0, _col1, _col2
+          Operator:          Select Operator
+            expressions:
+                  expr: _col0
+                  type: string
+                  expr: _col1
+                  type: bigint
+                  expr: _col2
+                  type: bigint
+            outputColumnNames: _col0, _col1, _col2
+            Operator:            Select Operator
+              expressions:
+                    expr: _col0
+                    type: string
+                    expr: UDFToInteger(_col1)
+                    type: int
+                    expr: UDFToInteger(_col2)
+                    type: int
+              outputColumnNames: _col0, _col1, _col2
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 1
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.TextInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                    serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                    name: dest_mt1
+
+  Stage: Stage-0
+    Move Operator
+      tables:
+          replace: true
+          table:
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: dest_mt1
+
+query: FROM srcmd INSERT OVERWRITE TABLE dest_mt1 SELECT srcmd.hr, count(distinct srcmd.key), count(distinct srcmd.ds) group by srcmd.hr
+Output: default_db/dest_mt1
+query: SELECT dest_mt1.* FROM dest_mt1
+Input: default_db/dest_mt1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1711176298/10000
+0	10	1
+1	10	1
+12	127	1
+13	25	1
+14	50	1
+18	19	1
+2	36	1
+21	16	1
+22	16	1
+4	43	1
+5	43	1
+7	26	1
+9	47	2
+query: EXPLAIN FROM srcmd INSERT OVERWRITE TABLE dest_mt1 SELECT srcmd.hr, count(distinct srcmd.key), count(distinct srcmd.ds) group by srcmd.hr
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB srcmd))) (TOK_INSERT (TOK_DESTINATION (TOK_TABDEST (TOK_TAB dest_mt1))) (TOK_SELECT (TOK_SELEXPR (. (TOK_TABLE_OR_COL srcmd) hr)) (TOK_SELEXPR (TOK_FUNCTIONDI count (. (TOK_TABLE_OR_COL srcmd) key))) (TOK_SELEXPR (TOK_FUNCTIONDI count (. (TOK_TABLE_OR_COL srcmd) ds)))) (TOK_GROUPBY (. (TOK_TABLE_OR_COL srcmd) hr))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-2
+    type:;depends on:Stage-1;
+  Stage-0
+    type:;depends on:Stage-2;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/srcmd 
+          Operator:          TableScan
+            alias: default_db/srcmd
+            Operator:            Select Operator
+              expressions:
+                    expr: hr
+                    type: string
+                    expr: key
+                    type: string
+                    expr: ds
+                    type: string
+              outputColumnNames: hr, key, ds
+              Operator:              Group By Operator
+                aggregations:
+                      expr: count(DISTINCT key)
+                      expr: count(DISTINCT ds)
+                keys:
+                      expr: hr
+                      type: string
+                      expr: key
+                      type: string
+                      expr: ds
+                      type: string
+                mode: hash
+                outputColumnNames: _col0, _col1, _col2, _col3, _col4
+                Operator:                Reduce Output Operator
+                  key expressions:
+                        expr: _col0
+                        type: string
+                        expr: _col1
+                        type: string
+                        expr: _col2
+                        type: string
+                  key serialize infos:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                  sort order: +++
+                  output key names: _col0, _col1
+                  output value names: _col0, _col1
+                  Map-reduce partition columns:
+                        expr: _col0
+                        type: string
+                        expr: _col1
+                        type: string
+                        expr: _col2
+                        type: string
+                  tag: -1
+                  value expressions:
+                        expr: _col3
+                        type: bigint
+                        expr: _col4
+                        type: bigint
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcmd [default_db/srcmd]
+      Reduce Operator Tree:
+        Operator:        Group By Operator
+          aggregations:
+                expr: count(DISTINCT KEY._col1:0._col0)
+                expr: count(DISTINCT KEY._col1:1._col0)
+          keys:
+                expr: KEY._col0
+                type: string
+          mode: partials
+          outputColumnNames: _col0, _col1, _col2
+          Operator:          File Output Operator
+            compressed: false
+            GlobalTableId: 0
+            table:
+              table descs
+                input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+
+  Stage: Stage-2
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/718354065/10002 
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: _col0
+                    type: string
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: _col0
+              output value names: _col0, _col1
+              Map-reduce partition columns:
+                    expr: _col0
+                    type: string
+              tag: -1
+              value expressions:
+                    expr: _col1
+                    type: bigint
+                    expr: _col2
+                    type: bigint
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/718354065/10002 [file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/718354065/10002]
+      Reduce Operator Tree:
+        Operator:        Group By Operator
+          aggregations:
+                expr: count(VALUE._col0)
+                expr: count(VALUE._col1)
+          keys:
+                expr: KEY._col0
+                type: string
+          mode: final
+          outputColumnNames: _col0, _col1, _col2
+          Operator:          Select Operator
+            expressions:
+                  expr: _col0
+                  type: string
+                  expr: _col1
+                  type: bigint
+                  expr: _col2
+                  type: bigint
+            outputColumnNames: _col0, _col1, _col2
+            Operator:            Select Operator
+              expressions:
+                    expr: _col0
+                    type: string
+                    expr: UDFToInteger(_col1)
+                    type: int
+                    expr: UDFToInteger(_col2)
+                    type: int
+              outputColumnNames: _col0, _col1, _col2
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 1
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.TextInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                    serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                    name: dest_mt1
+
+  Stage: Stage-0
+    Move Operator
+      tables:
+          replace: true
+          table:
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: dest_mt1
+
+query: FROM srcmd INSERT OVERWRITE TABLE dest_mt1 SELECT srcmd.hr, count(distinct srcmd.key), count(distinct srcmd.ds) group by srcmd.hr
+Output: default_db/dest_mt1
+query: SELECT dest_mt1.* FROM dest_mt1
+Input: default_db/dest_mt1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/519219466/10000
+0	10	1
+1	10	1
+12	127	1
+13	25	1
+14	50	1
+18	19	1
+2	36	1
+21	16	1
+22	16	1
+4	43	1
+5	43	1
+7	26	1
+9	47	2
+query: DROP TABLE dest_mt1
+query: DROP TABLE srcmd
+query: DROP TABLE srcmd
+query: DROP TABLE srcmd
+query: DROP TABLE srcmd
+query: DROP TABLE srcmd
+query: DROP TABLE srcmd
+query: DROP TABLE srcmd
+query: DROP TABLE srcmd
+query: DROP TABLE srcmd

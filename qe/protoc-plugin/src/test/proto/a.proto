@@ -1,0 +1,15 @@
+package A;
+import "b.proto";
+
+message MA {
+  required int32 X1 = 1;
+  required b.mb X2 = 2;
+  repeated int32 X3 = 3 [ packed=true ];
+  required b.mb.PhoneType X4 = 4 [ default=WORK ];
+  required b.mbb.mbb1 X5 = 5;
+  repeated group Result = 6 {
+    required int32 y1 =1;
+    repeated b.mb y2 = 2;
+  }
+}
+

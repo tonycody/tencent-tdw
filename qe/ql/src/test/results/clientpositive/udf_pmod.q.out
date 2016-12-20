@@ -1,0 +1,12 @@
+query: SELECT pmod(null, null)
+FROM src LIMIT 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/1598429051/10000
+NULL
+query: SELECT pmod(-100,9), pmod(-50,101), pmod(-1000,29)
+FROM src LIMIT 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/2116792088/10000
+8	51	15
+query: SELECT pmod(100,19), pmod(50,125), pmod(300,15)
+FROM src LIMIT 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/490754948/10000
+5	50	0

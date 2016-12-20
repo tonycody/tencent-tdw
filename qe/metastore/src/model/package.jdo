@@ -1,0 +1,780 @@
+<?xml version="1.0"?> 
+<!DOCTYPE jdo PUBLIC "-//Sun Microsystems, Inc.//DTD Java Data Objects Metadata 2.0//EN" 
+  "http://java.sun.com/dtd/jdo_2_0.dtd">  
+<jdo>  
+  <package name="org.apache.hadoop.hive.metastore.model">  
+    <class name="MDatabase" identity-type="datastore" table="DBS" detachable="true">  
+      <datastore-identity>
+        <column name="DB_ID"/>
+      </datastore-identity>
+      <field name="name">  
+        <column name="NAME" length="128" jdbc-type="VARCHAR"/>  
+        <index name="UniqueDatabase" unique="true"/>
+      </field>
+      <field name="description">  
+        <column name="DESC" length="767" jdbc-type="VARCHAR"/>  
+      </field>  
+      <field name="hdfsscheme">  
+        <column name="HDFS_SCHEME" length="200" jdbc-type="VARCHAR"/>  
+      </field>  
+    </class>
+
+	<!-- Added by : joeyli begin     -->
+    <class name="Mtdw_sys_table_statistics" table="tdw_sys_table_statistics" detachable="true">  
+      <field name="stat_table_name">  
+        <column name="stat_table_name" length="128" jdbc-type="VARCHAR"/>  
+      </field>
+	  <field name="stat_db_name">  
+        <column name="stat_db_name" length="128" jdbc-type="VARCHAR" />  
+      </field>
+      <field name="stat_num_records">  
+        <column name="stat_num_records" jdbc-type="integer"/>  
+      </field>  
+      <field name="stat_num_units">  
+        <column name="stat_num_units" jdbc-type="integer"/>  
+      </field>  
+      <field name="stat_total_size">  
+        <column name="stat_total_size" jdbc-type="integer"/>  
+      </field>  
+      <field name="stat_num_files">  
+        <column name="stat_num_files" jdbc-type="integer"/>  
+      </field>  
+      <field name="stat_num_blocks">  
+        <column name="stat_num_blocks" jdbc-type="integer"/>  
+      </field>  
+    </class>
+
+    <class name="Mtdw_sys_fields_statistics" table="tdw_sys_fields_statistics" detachable="true">  
+      <field name="stat_table_name">  
+        <column name="stat_table_name" length="128" jdbc-type="VARCHAR"/>  
+      </field>
+	  <field name="stat_db_name">  
+        <column name="stat_db_name" length="128" jdbc-type="VARCHAR" />  
+      </field>
+      <field name="stat_field_name">  
+        <column name="stat_field_name" length="128" jdbc-type="VARCHAR"/>  
+      </field>  
+      <field name="stat_nullfac">  
+        <column name="stat_nullfac" jdbc-type="double"/>  
+      </field>  
+      <field name="stat_avg_field_width">  
+        <column name="stat_avg_field_width" jdbc-type="integer"/>  
+      </field>  
+      <field name="stat_distinct_values">  
+        <column name="stat_distinct_values" jdbc-type="double"/>  
+      </field>  
+      <field name="stat_values_1">  
+        <column name="stat_values_1" length="9000" jdbc-type="VARCHAR"/>  
+      </field>  
+      <field name="stat_numbers_1">  
+        <column name="stat_numbers_1" length="9000" jdbc-type="VARCHAR"/>  
+      </field> 
+      <field name="stat_values_2">  
+        <column name="stat_values_2" length="6000" jdbc-type="VARCHAR"/>  
+      </field> 
+      <field name="stat_numbers_2">  
+        <column name="stat_numbers_2" length="6000" jdbc-type="VARCHAR"/>  
+      </field> 
+      <field name="stat_values_3">  
+        <column name="stat_values_3" length="256" jdbc-type="VARCHAR"/>  
+      </field>       
+	  <field name="stat_numbers_3">  
+        <column name="stat_numbers_3" length="256" jdbc-type="VARCHAR"/>  
+      </field> 
+      <field name="stat_number_1_type">  
+        <column name="stat_number_1_type" jdbc-type="integer"/>  
+      </field>        
+      <field name="stat_number_2_type">  
+        <column name="stat_number_2_type" jdbc-type="integer"/>  
+      </field>    
+      <field name="stat_number_3_type">  
+        <column name="stat_number_3_type" jdbc-type="integer"/>  
+      </field>          
+    </class>
+    
+    	<!-- Added by : joeyli end     -->
+    	
+    	
+    <!-- Added by : michealxu begin     -->
+    
+    <class name="Mtdw_query_info" table="tdw_query_info" detachable="true">  
+      <field name="queryId">  
+        <column name="queryId" length="128" jdbc-type="VARCHAR"/>  
+        <index name="UniquequeryId_info" unique="true"/>
+      </field>
+      <field name="userName">  
+        <column name="userName" length="128" jdbc-type="VARCHAR"/>   
+      </field>  
+      <field name="sessionId">  
+        <column name="sessionId" length="128" jdbc-type="VARCHAR"/>
+      </field>  
+      <field name="startTime">  
+        <column name="startTime" length="128" jdbc-type="VARCHAR"/>  
+      </field>  
+      <field name="finishTime">  
+        <column name="finishTime" length="128" jdbc-type="VARCHAR"/>  
+      </field> 
+      <field name="queryString">  
+        <column name="queryString" length="10000" jdbc-type="VARCHAR"/> 
+      </field>  
+      <field name="MRNum">  
+        <column name="MRNum" jdbc-type="integer"/>  
+      </field>  
+      <field name="queryState">  
+        <column name="queryState" length="128" jdbc-type="VARCHAR"/>  
+      </field>  
+	  <field name="ip">  
+        <column name="ip" length="128" jdbc-type="VARCHAR"/>  
+      </field>
+	  <field name="taskid">  
+        <column name="taskid" length="128" jdbc-type="VARCHAR"/>
+		<index name="taskid_info" unique="false"/>		
+      </field>
+    </class>
+    
+    <class name="Mtdw_query_stat" table="tdw_query_stat" detachable="true">  
+      <field name="queryId">  
+        <column name="queryId" length="128" jdbc-type="VARCHAR"/>  
+      </field>
+	  <index name="Unique_find_tdw_query_stat" unique="true">
+        <column name="queryId"/>
+        <column name="currMRIndex"/>
+      </index>
+      <field name="currMRIndex">  
+        <column name="currMRIndex" jdbc-type="integer"/>  
+      </field>  
+      <field name="currMRId">  
+        <column name="currMRId" length="128" jdbc-type="VARCHAR"/>
+        <index name="UniquequeryId_stat" unique="true"/>
+      </field>  
+      <field name="currMRStartTime">  
+        <column name="currMRStartTime" length="128" jdbc-type="VARCHAR"/>  
+      </field>  
+      <field name="currMRFinishTime">  
+        <column name="currMRFinishTime" length="128" jdbc-type="VARCHAR"/>  
+      </field>  
+      <field name="currMRState">  
+        <column name="currMRState" length="128" jdbc-type="VARCHAR"/>  
+      </field>  
+      <field name="MapNum">  
+        <column name="MapNum" jdbc-type="integer"/>  
+      </field>  
+      <field name="ReduceNum">  
+        <column name="ReduceNum" jdbc-type="integer"/>  
+      </field>  
+    </class>
+	
+	<class name="MGroup" table="USERGROUP" detachable="true">  
+      <field name="GROUP_NAME">  
+        <column name="GROUP_NAME" length="128" jdbc-type="VARCHAR"/>  
+      </field>
+      <field name="Creator">  
+        <column name="Creator" length="128" jdbc-type="VARCHAR"/>
+      </field>  
+      <field name="USER_NUM">  
+        <column name="USER_NUM" jdbc-type="integer"/> 
+      </field>  
+      <field name="USER_LIST">  
+        <column name="USER_LIST" length="10000" jdbc-type="VARCHAR"/>  
+      </field>  
+    </class>
+    
+    <!-- Added by : michealxu end     -->	
+    
+    
+    	
+    <class name="MFieldSchema" embedded-only="true" table="TYPE_FIELDS" detachable="true">
+      <field name="name">
+        <column name="FNAME" length="128" jdbc-type="VARCHAR"/>
+      </field>
+      <field name="type" >
+        <column name="FTYPE" length="767" jdbc-type="VARCHAR" allows-null="false"/>
+      </field>
+      <field name="comment" >
+        <column name="FCOMMENT" length="767" jdbc-type="VARCHAR" allows-null="true"/>
+      </field>
+    </class>
+    
+
+	
+    <class name="MType" table="TYPES" detachable="true">  
+      <field name="name" >  
+        <column name="TYPE_NAME" length="128" jdbc-type="VARCHAR"/>  
+        <index name="UniqueType" unique="true"/>
+      </field>
+      <field name="type1">  
+        <column name="TYPE1" length="128" jdbc-type="VARCHAR"/>
+      </field>
+      <field name="type2">  
+        <column name="TYPE2" length="128" jdbc-type="VARCHAR"/>
+      </field>
+      <field name="fields" table="TYPE_FIELDS" >
+        <collection element-type="MFieldSchema"/>
+        <join>
+          <primary-key name="TYPE_FIELDS_PK">
+            <column name="TYPE_NAME"/>
+            <column name="FIELD_NAME"/>
+          </primary-key>
+          <column name="TYPE_NAME"/>
+        </join>
+        <element>
+          <embedded>
+            <field name="name">
+              <column name="FIELD_NAME" length="128" jdbc-type="VARCHAR"/>
+              </field>
+            <field name="type">
+              <column name="FIELD_TYPE" length="128" jdbc-type="VARCHAR"  allows-null="false"/>
+            </field>
+          </embedded>
+        </element>
+      </field>
+    </class>
+
+    <class name="MTable" table="TBLS" identity-type="datastore" detachable="true">
+      <datastore-identity>
+        <column name="TBL_ID"/>
+      </datastore-identity>
+      <index name="UniqueTable" unique="true">
+        <column name="TBL_NAME"/>
+        <column name="DB_ID"/>
+      </index>
+      <field name="tableName">
+        <column name="TBL_NAME" length="128" jdbc-type="VARCHAR"/>
+      </field>
+      <!-- added by seayi for view tables begin-->
+      <field name="vtables">
+        <column name="VTABLES" length="5000" jdbc-type="VARCHAR"/>
+      </field>
+      <!-- added by seayi for view tables  end -->
+      <field name="database">
+        <column name="DB_ID"/>
+      </field>
+      <!-- Modified by : guosijie                                                           -->
+      <!-- Modified date : 2010-02-05                                                       -->
+      <!--   remove the parttionKeys field and add the priPartition and subPartition fields -->
+      <!--
+      <field name="partitionKeys" table="PARTITION_KEYS" >
+        <collection element-type="MFieldSchema"/>
+        <join>
+          <primary-key name="PARTITION_KEY_PK">
+            <column name="TBL_ID"/>
+            <column name="PKEY_NAME"/>
+          </primary-key>
+          <column name="TBL_ID"/>
+        </join>
+        <element>
+          <embedded>
+            <field name="name">
+              <column name="PKEY_NAME" length="128" jdbc-type="VARCHAR"/>
+              </field>
+            <field name="type">
+              <column name="PKEY_TYPE" length="767" jdbc-type="VARCHAR" allows-null="false"/>
+            </field>
+            <field name="comment" >
+              <column name="PKEY_COMMENT" length="767" jdbc-type="VARCHAR" allows-null="true"/>
+            </field>
+          </embedded>
+        </element>
+      </field>
+      -->
+      <field name="priPartition" dependent="true">
+      	<column name="PRI_PART_ID"/>
+      </field>
+      <field name="subPartition" dependent="true">
+      	<column name="SUB_PART_ID"/>
+      </field>
+      <field name="sd" dependent="true">
+        <column name="SD_ID"/>
+      </field>
+      <field name="owner">
+        <column name="OWNER" length="128" jdbc-type="VARCHAR"/>
+      </field>
+      <field name="createTime">
+        <column name="CREATE_TIME" jdbc-type="integer"/>
+      </field>
+      <field name="lastAccessTime">
+        <column name="LAST_ACCESS_TIME" jdbc-type="integer"/>
+      </field>
+      <field name="retention">
+        <column name="RETENTION" jdbc-type="integer"/>
+      </field>
+      <field name="parameters" table="TABLE_PARAMS">
+        <map key-type="java.lang.String" value-type="java.lang.String"/>
+        <join>
+          <column name="TBL_ID"/>
+        </join>
+        <key>
+           <column name="PARAM_KEY" length="256" jdbc-type="VARCHAR"/>
+        </key>
+        <value>
+           <column name="PARAM_VALUE" length="767" jdbc-type="VARCHAR"/>
+        </value>
+      </field>
+      <!-- Added by Brantzhang for HIVE-972 Begin                                            -->
+      <!-- 32672 is the max length of derby varchar length  by steventian                    -->
+      <field name="viewOriginalText">
+        <column name="VIEW_ORIGINAL_TEXT" length="30000" jdbc-type="VARCHAR"/>
+      </field>
+      <field name="viewExpandedText">
+        <column name="VIEW_EXPANDED_TEXT" length="30000" jdbc-type="VARCHAR"/>
+      </field>
+      <!-- Added by Brantzhang for HIVE-972 End                                              -->
+      <!-- Added by Brantzhang for HIVE-1068 Begin                                            -->
+      <field name="tableType">
+        <column name="TBL_TYPE" length="128" jdbc-type="VARCHAR"/>
+      </field>
+      <!-- Added by Brantzhang for HIVE-1068 End                                              -->
+    </class>
+
+    <class name="MSerDeInfo" identity-type="datastore" table="SERDES" detachable="true">
+      <datastore-identity>
+        <column name="SERDE_ID"/>
+      </datastore-identity>
+      <field name="name">
+        <column name="NAME" length="128" jdbc-type="VARCHAR"/>
+      </field>
+      <field name="serializationLib">
+        <column name="SLIB" length="767" jdbc-type="VARCHAR" allows-null="true"/>
+      </field>
+      <field name="parameters" table="SERDE_PARAMS">
+        <map key-type="java.lang.String" value-type="java.lang.String"/>
+        <join>
+          <column name="SERDE_ID"/>
+        </join>
+        <key>
+           <column name="PARAM_KEY" length="256" jdbc-type="VARCHAR"/>
+        </key>
+        <value>
+           <column name="PARAM_VALUE" length="10000" jdbc-type="VARCHAR"/>
+        </value>
+      </field>
+    </class>
+
+    <class name="MOrder" embedded-only="true" table="SORT_ORDER" detachable="true">
+      <field name="col">
+        <column name="COL_NAME" length="128" jdbc-type="VARCHAR"/>
+      </field>
+      <field name="order">
+        <column name="ORDER" jdbc-type="INTEGER"  allows-null="false"/>
+      </field>
+    </class>
+    
+    <class name="MPartSpace" identity-type="datastore" table="PARTSPACES" detachable="true">
+      <datastore-identity>
+        <column name="PARTSPACE_ID"/>
+      </datastore-identity>
+      <field name="values" table="VALUES_COLS">
+        <collection element-type="java.lang.String"/>
+        <join>
+          <column name="PARTSPACE_ID"/>
+        </join>
+        <element column="VALUES_COL_NAME"/>
+      </field>
+    </class>
+
+    <class name="MStorageDescriptor" identity-type="datastore" table="SDS" detachable="true">
+      <datastore-identity>
+        <column name="SD_ID"/>
+      </datastore-identity>
+      <field name="cols" table="COLUMNS" >
+        <collection element-type="MFieldSchema"/>
+        <join>
+          <primary-key name="COLUMNS_PK">
+            <column name="COLUMN_NAME"/>
+          </primary-key>
+          <column name="SD_ID"/>
+        </join>
+        <element>
+          <embedded>
+            <field name="name">
+              <column name="COLUMN_NAME" length="128" jdbc-type="VARCHAR"/>
+              </field>
+            <field name="type">
+              <column name="TYPE_NAME" length="64000" jdbc-type="VARCHAR"   allows-null="false"/>
+            </field>
+          </embedded>
+        </element>
+      </field>
+      <field name="location">
+        <column name="LOCATION" length="767" jdbc-type="VARCHAR"/>
+      </field>
+      <field name="inputFormat">
+        <column name="INPUT_FORMAT" length="256" jdbc-type="VARCHAR"/>
+      </field>
+      <field name="outputFormat">
+        <column name="OUTPUT_FORMAT" length="256" jdbc-type="VARCHAR"/>
+      </field>
+      <field name="isCompressed"/>
+      <field name="numBuckets">
+        <column name="NUM_BUCKETS" jdbc-type="integer"/>
+      </field>
+      <field name="serDeInfo" dependent="true">
+        <column name="SERDE_ID"/>
+      </field>
+      <field name="bucketCols" table="BUCKETING_COLS">
+        <collection element-type="java.lang.String"/>
+        <join>
+          <column name="SD_ID"/>
+        </join>
+        <element column="BUCKET_COL_NAME"/>
+      </field>
+      <field name="sortCols" table="SORT_COLS">
+        <collection element-type="MOrder"/>
+        <join>
+          <column name="SD_ID"/>
+        </join>
+        <element>
+          <embedded>
+            <field name="col">
+              <column name="COLUMN_NAME" length="128" jdbc-type="VARCHAR"/>
+              </field>
+            <field name="order">
+              <column name="ORDER" jdbc-type="INTEGER"  allows-null="false"/>
+            </field>
+          </embedded>
+        </element>
+      </field>
+      <field name="parameters" table="SD_PARAMS">
+        <map key-type="java.lang.String" value-type="java.lang.String"/>
+        <join>
+          <column name="SD_ID"/>
+        </join>
+        <key>
+           <column name="PARAM_KEY" length="256" jdbc-type="VARCHAR"/>
+        </key>
+        <value>
+           <column name="PARAM_VALUE" length="767" jdbc-type="VARCHAR"/>
+        </value>
+      </field>
+    </class>
+
+	<!-- Modified by : guosijie     -->
+	<!-- Modified date : 2010-02-05 -->
+	<!--
+    <class name="MPartition" table="PARTITIONS" identity-type="datastore" detachable="true">
+      <index name="UniquePartition" unique="true">
+        <column name="PART_NAME"/>
+        <column name="TBL_ID"/>
+      </index>
+      <datastore-identity>
+        <column name="PART_ID"/>
+      </datastore-identity>
+      <field name="partitionName">
+        <column name="PART_NAME" length="767" jdbc-type="VARCHAR"/>
+      </field>
+      
+      <field name="table">
+        <column name="TBL_ID"/>
+      </field>
+      <field name="createTime">
+        <column name="CREATE_TIME" jdbc-type="integer"/>
+      </field>
+      <field name="lastAccessTime">
+        <column name="LAST_ACCESS_TIME" jdbc-type="integer"/>
+      </field>
+      <field name="values" table="PARTITION_KEY_VALS">
+        <collection element-type="java.lang.String"/>
+        <join>
+          <column name="PART_ID"/>
+        </join>
+        <element column="PART_KEY_VAL"/>
+      </field>
+      <field name="sd" dependent="true">
+        <column name="SD_ID"/>
+      </field>
+      <field name="parameters" table="PARTITION_PARAMS">
+        <map key-type="java.lang.String" value-type="java.lang.String"/>
+        <join>
+          <column name="PART_ID"/>
+        </join>
+        <key>
+           <column name="PARAM_KEY" length="256" jdbc-type="VARCHAR"/>
+        </key>
+        <value>
+           <column name="PARAM_VALUE" length="767" jdbc-type="VARCHAR"/>
+        </value>
+      </field>
+    </class>
+    -->
+    
+    <class name="MPartition" table="PARTITIONS" identity-type="datastore" detachable="true">
+      <index name="UniquePartition" unique="true">
+        <column name="DB_NAME"/>
+        <column name="TBL_NAME"/>
+        <column name="LEVEL"/>
+      </index>
+      <datastore-identity>
+        <column name="PART_ID"/>
+      </datastore-identity>
+      <field name="dbName">  
+        <column name="DB_NAME" length="128" jdbc-type="VARCHAR"/>  
+      </field>
+	  <field name="tableName">
+        <column name="TBL_NAME" length="128" jdbc-type="VARCHAR"/>
+      </field>
+      <field name="level">
+      	<column name="LEVEL" jdbc-type="integer"/>
+      </field>
+      <field name="parType">
+      	<column name="PART_TYPE" length="32" jdbc-type="VARCHAR"/> 
+      </field>
+      <field name="parKey">
+		<embedded>
+		  <field name="name">
+		    <column name="PARTKEY_NAME" length="128" jdbc-type="VARCHAR"/>
+		  </field>
+		  <field name="type">
+		    <column name="PARTKEY_TYPE" length="767" jdbc-type="VARCHAR" allows-null="false"/>
+		  </field>
+		  <field name="comment" >
+		    <column name="PARTKEY_COMMENT" length="767" jdbc-type="VARCHAR" allows-null="true"/>
+		  </field>
+		</embedded>
+      </field>
+      <field name="partNames">
+        <collection element-type="java.lang.String"/>
+      </field>
+      <field name="parSpaces" table="PARTITION_SPACES">
+        <collection element-type="MPartSpace"/>
+        <join>
+          <column name="PART_ID"/>
+        </join>
+        <element>
+	      <column name="PARTSPACE_ID"/>
+        </element>
+      </field>
+    </class>
+      
+    <!-- Modified by : BrantZhang     -->
+	<!-- Modified date : 2010-04-19 -->
+	
+    <class name="MUser" identity-type="datastore" table="USER" detachable="true">
+      <datastore-identity>
+        <column name="USER_ID"/>
+      </datastore-identity>
+      <field name="userName">
+        <column name="USER_NAME" length="128" jdbc-type="VARCHAR" allows-null="false"/>
+        <index name="UniqueUser" unique="true"/>
+      </field>
+      <field name="passwd">
+        <column name="PASSWD" length="64" jdbc-type="VARCHAR" allows-null="false"/>
+      </field>
+	  <field name="play_roles" table="PLAY_ROLES">
+	  	<collection element-type="MRole"/>
+	  	<join>
+          <column name="USER_ID"/>
+        </join>
+        <element>
+	      <column name="ROLE_ID"/>
+        </element>
+      </field>
+      <field name="select_priv">
+        <column name="SELECT_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+      <field name="insert_priv">
+        <column name="INSERT_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+	  <field name="index_priv">
+        <column name="INDEX_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+      <field name="create_priv">
+        <column name="CREATE_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+      <field name="drop_priv">
+        <column name="DROP_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+	  <field name="delete_priv">
+        <column name="DELETE_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+      <field name="alter_priv">
+        <column name="ALTER_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field> 
+	  <field name="update_priv">
+        <column name="UPDATE_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+	  <field name="createview_priv">
+        <column name="CREATEVIEW_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+      <field name="showview_priv">
+        <column name="SHOWVIEW_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+	  <field name="dba_priv">
+        <column name="DBA_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+	  <field name="group_name">
+        <column name="GROUP_NAME" length="128" jdbc-type="VARCHAR" default-value="default"/>
+      </field>
+      </class>
+
+    <class name="MRole" identity-type="datastore" table="ROLE" detachable="true">
+      <datastore-identity>
+        <column name="ROLE_ID"/>
+      </datastore-identity>
+      <field name="roleName">
+        <column name="ROLE_NAME" length="128" jdbc-type="VARCHAR" allows-null="false"/>
+        <index name="UniqueRole" unique="true"/>
+      </field>
+	  <field name="play_roles" table="SON_ROLES">
+	  	<collection element-type="MRole"/>
+	  	<join>
+          <column name="ROLE_NAME"/>
+        </join>
+        <element>
+	      <column name="ROLE_ID"/>
+        </element>
+      </field>
+      <field name="select_priv">
+        <column name="SELECT_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+      <field name="insert_priv">
+        <column name="INSERT_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+	  <field name="index_priv">
+        <column name="INDEX_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+      <field name="create_priv">
+        <column name="CREATE_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+      <field name="drop_priv">
+        <column name="DROP_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+	  <field name="delete_priv">
+        <column name="DELETE_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+      <field name="alter_priv">
+        <column name="ALTER_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field> 
+	  <field name="update_priv">
+        <column name="UPDATE_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+	  <field name="createview_priv">
+        <column name="CREATEVIEW_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+      <field name="showview_priv">
+        <column name="SHOWVIEW_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+	  <field name="dba_priv">
+        <column name="DBA_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+    </class>
+
+    <class name="MDbPriv" identity-type="datastore" table="DBPRIV" detachable="true">
+      <datastore-identity>
+        <column name="DBPRIV_ID"/>
+      </datastore-identity>
+      <index name="UniqueDbPriv">
+        <column name="DB_ID"/>
+        <column name="USER_NAME"/>
+      </index>
+      <index name="DbPrivUSER" >
+        <column name="USER_NAME"/>
+      </index>
+      <field name="db">
+        <column name="DB_ID"/>
+      </field>
+      <field name="user">
+        <column name="USER_NAME"/>
+      </field>
+      <field name="select_priv">
+        <column name="SELECT_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+      <field name="insert_priv">
+        <column name="INSERT_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+	  <field name="index_priv">
+        <column name="INDEX_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+      <field name="create_priv">
+        <column name="CREATE_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+      <field name="drop_priv">
+        <column name="DROP_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+	  <field name="delete_priv">
+        <column name="DELETE_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+      <field name="alter_priv">
+        <column name="ALTER_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field> 
+	  <field name="update_priv">
+        <column name="UPDATE_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+	  <field name="createview_priv">
+        <column name="CREATEVIEW_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+      <field name="showview_priv">
+        <column name="SHOWVIEW_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+    </class>
+
+    <class name="MTblPriv" identity-type="datastore" table="TBLPRIV" detachable="true">
+      <datastore-identity>
+        <column name="TBLPRIV_ID"/>
+      </datastore-identity>
+      <index name="UniqueTblPriv" unique="true">
+        <column name="DB_ID"/>
+        <column name="TBL_ID"/>
+        <column name="USER_NAME"/>
+      </index>
+      <field name="db">
+        <column name="DB_ID"/>
+      </field>
+      <field name="user">
+        <column name="USER_NAME"/>
+      </field>
+      <field name="table">
+        <column name="TBL_ID"/>
+      </field>
+       <field name="select_priv">
+        <column name="SELECT_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+      <field name="insert_priv">
+        <column name="INSERT_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+	  <field name="index_priv">
+        <column name="INDEX_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+      <field name="create_priv">
+        <column name="CREATE_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+      <field name="drop_priv">
+        <column name="DROP_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+	  <field name="delete_priv">
+        <column name="DELETE_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+      <field name="alter_priv">
+        <column name="ALTER_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field> 
+	  <field name="update_priv">
+        <column name="UPDATE_PRIV" jdbc-type="SMALLINT" default-value="0"/>
+      </field>
+    </class>
+
+  <!-- add by konten for index begin -->
+  <class name="MIndexItem" identity-type="datastore" table="INDEXITEM" detachable="true">      
+      <field name="db">
+        <column name="DB" length="127" jdbc-type="VARCHAR"/>
+      </field>
+      <field name="tbl">
+	    <column name="TBL" length="127" jdbc-type="VARCHAR"/>
+      </field>
+      <field name="name">
+        <column name="NAME" length="127" jdbc-type="VARCHAR"/>
+      </field>
+       <field name="field_list">
+        <column name="FIELD_LIST" length="127" jdbc-type="VARCHAR"/>
+      </field>
+      <field name="location">
+        <column name="LOCATION" length="127" jdbc-type="VARCHAR"/>
+      </field>
+      <field name="type">
+        <column name="TYPE" jdbc-type="integer" default-value="0"/>
+      </field>
+      <field name="status">
+        <column name="STATUS" jdbc-type="integer" default-value="0"/>
+      </field>     
+    </class>
+  <!-- add by konten for index begin -->
+  </package>
+</jdo>

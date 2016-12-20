@@ -1,0 +1,70 @@
+query: DROP TABLE nulltest
+query: CREATE TABLE nulltest(int_data1 INT, int_data2 BIGINT, boolean_data BOOLEAN, double_data DOUBLE, string_data STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/nulltest.txt' INTO TABLE nulltest
+query: SELECT * FROM nulltest WHERE int_data2 in (5, null) and boolean_data not in (true, null)
+Input: default_db/nulltest
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1091671386/10000
+2	NULL	false	NULL	Used
+0	NULL	false	NULL	Analysis
+2	NULL	false	NULL	RANK
+query: SELECT * FROM nulltest WHERE int_data2 not in (0, 1, CAST(2 AS BIGINT)) and double_data not in (16.91358120533963, NULL)
+Input: default_db/nulltest
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1442370082/10000
+0	NULL	true	39.95053934832555	The
+2	5	true	22.15271891090531	Test
+1	5	true	46.927050000959326	Test
+2	3	true	8.77171395741883	The
+0	NULL	NULL	5.1726951608379865	TDW
+0	4	true	19.754128235118877	NULL
+1	8	NULL	5.621675730832165	etc
+query: SELECT * FROM nulltest WHERE boolean_data in (false, NULL) and string_data in ('The', null)
+Input: default_db/nulltest
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/710521253/10000
+0	2	NULL	19.398344450148464	NULL
+query: SELECT * FROM nulltest WHERE boolean_data not in (true, null) and string_data not in ('TDW', null)
+Input: default_db/nulltest
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1440047786/10000
+0	0	false	41.33606448637874	Data
+2	NULL	false	NULL	Used
+0	NULL	false	NULL	Analysis
+1	1	false	32.92404678679056	Functions
+0	2	false	39.845454645318426	LAG
+1	0	false	3.1145951928143676	LEAD
+2	NULL	false	NULL	RANK
+query: SELECT * FROM nulltest WHERE double_data in (16.91358120533963, 32.92404678679056, null) and int_data2 in (5, null)
+Input: default_db/nulltest
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/838167901/10000
+1	5	true	NULL	Set
+2	NULL	false	NULL	Used
+0	NULL	false	NULL	Analysis
+2	NULL	false	NULL	RANK
+query: SELECT * FROM nulltest WHERE double_data not in (NULL) and boolean_data not in (true, null)
+Input: default_db/nulltest
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1102093254/10000
+0	0	false	41.33606448637874	Data
+1	1	false	32.92404678679056	Functions
+0	2	false	39.845454645318426	LAG
+1	0	false	3.1145951928143676	LEAD
+query: SELECT * FROM nulltest WHERE string_data in ('The', null) and  int_data2 in (5, null)
+Input: default_db/nulltest
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1967183211/10000
+0	NULL	true	39.95053934832555	The
+query: SELECT * FROM nulltest WHERE string_data not in ('TDW', null) and boolean_data not in (true, null)
+Input: default_db/nulltest
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/423929883/10000
+0	0	false	41.33606448637874	Data
+2	NULL	false	NULL	Used
+0	NULL	false	NULL	Analysis
+1	1	false	32.92404678679056	Functions
+0	2	false	39.845454645318426	LAG
+1	0	false	3.1145951928143676	LEAD
+2	NULL	false	NULL	RANK
+query: drop table nulltest
+query: drop table nulltest
+query: drop table nulltest
+query: drop table nulltest
+query: drop table nulltest
+query: drop table nulltest
+query: drop table nulltest
+query: drop table nulltest
+query: drop table nulltest

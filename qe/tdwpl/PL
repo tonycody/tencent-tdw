@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ "$PLCLIENT_PATH" = "" ]
+then
+   echo please set env PLCLIENT_PATH
+   exit
+fi
+
+cd $PLCLIENT_PATH/tdwpl/bin/PLClient;./tdwpl -l

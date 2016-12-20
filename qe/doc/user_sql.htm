@@ -1,0 +1,1883 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="zh-cn" dir="ltr">
+<head>
+<title>TDW SQL在线手册 - TDW WIKI</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="MediaWiki 1.16.2" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="/wiki/opensearch_desc.php" title="TDW WIKI (zh-cn)" />
+<link rel="alternate" type="application/atom+xml" title="TDW WIKI的Atom订阅" href="/wiki/index.php?title=%E7%89%B9%E6%AE%8A:%E6%9C%80%E8%BF%91%E6%9B%B4%E6%94%B9&amp;feed=atom" />
+<link rel="stylesheet" href="/wiki/skins/common/shared.css?270" media="screen" />
+<link rel="stylesheet" href="/wiki/skins/common/commonPrint.css?270" media="print" />
+<link rel="stylesheet" href="/wiki/skins/monobook/main.css?270" media="screen" />
+<!--[if lt IE 5.5000]><link rel="stylesheet" href="/wiki/skins/monobook/IE50Fixes.css?270" media="screen" /><![endif]-->
+<!--[if IE 5.5000]><link rel="stylesheet" href="/wiki/skins/monobook/IE55Fixes.css?270" media="screen" /><![endif]-->
+<!--[if IE 6]><link rel="stylesheet" href="/wiki/skins/monobook/IE60Fixes.css?270" media="screen" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" href="/wiki/skins/monobook/IE70Fixes.css?270" media="screen" /><![endif]-->
+<link rel="stylesheet" href="/wiki/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;ctype=text%2Fcss&amp;smaxage=18000&amp;action=raw&amp;maxage=18000" />
+<link rel="stylesheet" href="/wiki/index.php?title=MediaWiki:Print.css&amp;usemsgcache=yes&amp;ctype=text%2Fcss&amp;smaxage=18000&amp;action=raw&amp;maxage=18000" media="print" />
+<link rel="stylesheet" href="/wiki/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;ctype=text%2Fcss&amp;smaxage=18000&amp;action=raw&amp;maxage=18000" />
+<link rel="stylesheet" href="/wiki/index.php?title=-&amp;action=raw&amp;maxage=18000&amp;gen=css" />
+<script>
+var skin="monobook",
+stylepath="/wiki/skins",
+wgUrlProtocols="http\\:\\/\\/|https\\:\\/\\/|ftp\\:\\/\\/|irc\\:\\/\\/|gopher\\:\\/\\/|telnet\\:\\/\\/|nntp\\:\\/\\/|worldwind\\:\\/\\/|mailto\\:|news\\:|svn\\:\\/\\/",
+wgArticlePath="/wiki/index.php/$1",
+wgScriptPath="/wiki",
+wgScriptExtension=".php",
+wgScript="/wiki/index.php",
+wgVariantArticlePath=false,
+wgActionPaths={},
+wgServer="http://tdw.boss.com",
+wgCanonicalNamespace="",
+wgCanonicalSpecialPageName=false,
+wgNamespaceNumber=0,
+wgPageName="TDW_SQL在线手册",
+wgTitle="TDW SQL在线手册",
+wgAction="view",
+wgArticleId=20,
+wgIsArticle=true,
+wgUserName=null,
+wgUserGroups=null,
+wgUserLanguage="zh-cn",
+wgContentLanguage="zh-cn",
+wgBreakFrames=false,
+wgCurRevisionId=3435,
+wgVersion="1.16.2",
+wgEnableAPI=true,
+wgEnableWriteAPI=true,
+wgSeparatorTransformTable=["", ""],
+wgDigitTransformTable=["", ""],
+wgMainPageTitle="首页",
+wgFormattedNamespaces={"-2": "媒体", "-1": "特殊", "0": "", "1": "讨论", "2": "用户", "3": "用户讨论", "4": "TDW WIKI", "5": "TDW WIKI讨论", "6": "文件", "7": "文件讨论", "8": "MediaWiki", "9": "MediaWiki讨论", "10": "模板", "11": "模板讨论", "12": "帮助", "13": "帮助讨论", "14": "分类", "15": "分类讨论"},
+wgNamespaceIds={"媒体": -2, "特殊": -1, "": 0, "讨论": 1, "用户": 2, "用户讨论": 3, "tdw_wiki": 4, "tdw_wiki讨论": 5, "文件": 6, "文件讨论": 7, "mediawiki": 8, "mediawiki讨论": 9, "模板": 10, "模板讨论": 11, "帮助": 12, "帮助讨论": 13, "分类": 14, "分类讨论": 15, "对话": 1, "用户对话": 3, "图像": 6, "档案": 6, "image": 6, "image_talk": 7, "图像对话": 7, "图像讨论": 7, "档案对话": 7, "档案讨论": 7, "文件对话": 7, "模板对话": 11, "帮助对话": 13, "分类对话": 15},
+wgSiteName="TDW WIKI",
+wgCategories=[],
+wgRestrictionEdit=[],
+wgRestrictionMove=[],
+wgFCKEditorDir="extensions/WYSIWYG/ckeditor/",
+wgFCKEditorExtDir="extensions/WYSIWYG",
+wgFCKEditorToolbarSet="Wiki",
+wgFCKEditorHeight="0",
+wgCKeditorMagicWords={"wikitags": ["nowiki", "includeonly", "onlyinclude", "noinclude", "pre", "gallery", "source", "syntaxhighlight"], "magicwords": ["NOTOC", "FORCETOC", "TOC", "NOEDITSECTION", "NEWSECTIONLINK", "NONEWSECTIONLINK", "NOCONTENTCONVERT", "NOCC", "NOTITLECONVERT", "NOTC", "NOGALLERY", "INDEX", "NOINDEX", "STATICREDIRECT", "NOGALLERY", "HIDDENCAT", "START", "END"], "datevars": ["CURRENTYEAR", "CURRENTMONTH", "CURRENTMONTHNAME", "CURRENTMONTHNAMEGEN", "CURRENTMONTHABBREV", "CURRENTDAY", "CURRENTDAY2", "CURRENTDOW", "CURRENTDAYNAME", "CURRENTTIME", "CURRENTHOUR", "CURRENTWEEK", "CURRENTTIMESTAMP"], "wikivars": ["SITENAME", "SERVER", "SERVERNAME", "DIRMARK", "SCRIPTPATH", "CURRENTVERSION", "CONTENTLANG", "REVISIONID", "REVISIONDAY", "REVISIONDAY2", "REVISIONMONTH", "REVISIONYEAR", "REVISIONTIMESTAMP", "REVISIONUSER", "FULLPAGENAME", "PAGENAME", "BASEPAGENAME", "SUBPAGENAME", "SUBJECTPAGENAME", "TALKPAGENAME", "NAMESPACE", "ARTICLESPACE", "TALKSPACE"], "parserhooks": ["lc", "lcfirst", "uc", "ucfirst", "formatnum", "#dateformat", "padleft", "padright", "plural", "grammar", "#language", "int", "#tag", "#int", "#ns", "#nse", "#urlencode", "#lcfirst", "#ucfirst", "#lc", "#uc", "#localurl", "#localurle", "#fullurl", "#fullurle", "#formatnum", "#grammar", "#gender", "#plural", "#numberofpages", "#numberofusers", "#numberofactiveusers", "#numberofarticles", "#numberoffiles", "#numberofadmins", "#numberingroup", "#numberofedits", "#numberofviews", "#padleft", "#padright", "#anchorencode", "#special", "#defaultsort", "#filepath", "#pagesincategory", "#pagesize", "#protectionlevel", "#namespace", "#namespacee", "#talkspace", "#talkspacee", "#subjectspace", "#subjectspacee", "#pagename", "#pagenamee", "#fullpagename", "#fullpagenamee", "#basepagename", "#basepagenamee", "#subpagename", "#subpagenamee", "#talkpagename", "#talkpagenamee", "#subjectpagename", "#subjectpagenamee", "#formatdate", "#displaytitle"]},
+wgCKeditorUseBuildin4Extensions=[],
+wgAllowExternalImages=true;
+</script><script src="/wiki/skins/common/wikibits.js?270"></script>
+<script src="/wiki/skins/common/ajax.js?270"></script>
+<script src="/wiki/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook&amp;270"></script>
+
+</head>
+<body class="mediawiki ltr ns-0 ns-subject page-TDW_SQL在线手册 skin-monobook">
+<div id="globalWrapper">
+<div id="column-content"><div id="content" >
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading">TDW SQL在线手册</h1>
+	<div id="bodyContent">
+		<h3 id="siteSub">出自TDW WIKI</h3>
+		<div id="contentSub"></div>
+		<div id="jump-to-nav">跳转到： <a href="#column-one">导航</a>, <a href="#searchInput">搜索</a></div>
+		<!-- start content -->
+<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>目录</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#DDL.E8.AF.AD.E5.8F.A5"><span class="tocnumber">1</span> <span class="toctext">DDL语句</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#CREATE_DATABASE_.E5.88.9B.E5.BB.BA.E6.95.B0.E6.8D.AE.E5.BA.93"><span class="tocnumber">1.1</span> <span class="toctext">CREATE DATABASE 创建数据库</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#.E5.88.A0.E9.99.A4.E6.95.B0.E6.8D.AE.E5.BA.93"><span class="tocnumber">1.2</span> <span class="toctext">删除数据库</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#.E6.94.B9.E5.8F.98.E5.BD.93.E5.89.8D.E9.BB.98.E8.AE.A4.E6.95.B0.E6.8D.AE.E5.BA.93"><span class="tocnumber">1.3</span> <span class="toctext">改变当前默认数据库</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#.E6.98.BE.E7.A4.BATDW.E5.86.85.E7.9A.84.E6.95.B0.E6.8D.AE.E5.BA.93"><span class="tocnumber">1.4</span> <span class="toctext">显示TDW内的数据库</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#.E5.88.9B.E5.BB.BA.E8.A1.A8"><span class="tocnumber">1.5</span> <span class="toctext">创建表</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#.E5.88.A0.E9.99.A4.E8.A1.A8"><span class="tocnumber">1.6</span> <span class="toctext">删除表</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#.E6.B8.85.E7.A9.BA.E8.A1.A8"><span class="tocnumber">1.7</span> <span class="toctext">清空表</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#.E5.A2.9E.E5.8A.A0.E5.88.86.E5.8C.BA"><span class="tocnumber">1.8</span> <span class="toctext">增加分区</span></a></li>
+<li class="toclevel-2 tocsection-10"><a href="#.E5.88.A0.E9.99.A4.E5.88.86.E5.8C.BA"><span class="tocnumber">1.9</span> <span class="toctext">删除分区</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#.E6.B8.85.E7.A9.BA.E5.88.86.E5.8C.BA"><span class="tocnumber">1.10</span> <span class="toctext">清空分区</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#.E8.A1.A8.E9.87.8D.E5.91.BD.E5.90.8D"><span class="tocnumber">1.11</span> <span class="toctext">表重命名</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#.E6.9B.B4.E6.94.B9comment"><span class="tocnumber">1.12</span> <span class="toctext">更改comment</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="#.E5.A2.9E.E5.8A.A0.E3.80.81.E6.9B.BF.E5.AD.97.E6.AE.B5"><span class="tocnumber">1.13</span> <span class="toctext">增加、替字段</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#.E5.88.9B.E5.BB.BA.2F.E6.9B.B4.E6.96.B0.E8.A7.86.E5.9B.BE"><span class="tocnumber">1.14</span> <span class="toctext">创建/更新视图</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#.E5.88.A0.E9.99.A4.E8.A7.86.E5.9B.BE"><span class="tocnumber">1.15</span> <span class="toctext">删除视图</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#.E6.98.BE.E7.A4.BA.E5.87.BD.E6.95.B0"><span class="tocnumber">1.16</span> <span class="toctext">显示函数</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#.E6.98.BE.E7.A4.BA.E5.86.85.E7.BD.AE.E5.87.BD.E6.95.B0.E7.9A.84.E4.BF.A1.E6.81.AF"><span class="tocnumber">1.17</span> <span class="toctext">显示内置函数的信息</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#.E5.88.9B.E5.BB.BA.E4.B8.B4.E6.97.B6.E5.87.BD.E6.95.B0"><span class="tocnumber">1.18</span> <span class="toctext">创建临时函数</span></a></li>
+<li class="toclevel-2 tocsection-20"><a href="#.E6.9F.A5.E7.9C.8B.E5.BD.93.E5.89.8D.E6.95.B0.E6.8D.AE.E5.BA.93.E4.B8.AD.E7.9A.84.E8.A1.A8"><span class="tocnumber">1.19</span> <span class="toctext">查看当前数据库中的表</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#.E6.9F.A5.E7.9C.8B.E8.A1.A8.E7.9A.84.E5.88.86.E5.8C.BA.E4.BF.A1.E6.81.AF"><span class="tocnumber">1.20</span> <span class="toctext">查看表的分区信息</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#.E8.8E.B7.E5.BE.97.E8.A1.A8.E7.9A.84.E5.85.83.E6.95.B0.E6.8D.AE.E4.BF.A1.E6.81.AF"><span class="tocnumber">1.21</span> <span class="toctext">获得表的元数据信息</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="#.E8.8E.B7.E5.BE.97.E5.88.97.E5.90.8D.E4.B8.AD.E5.8C.85.E5.90.AB.E6.8C.87.E5.AE.9A.E8.A1.A8.E8.BE.BE.E5.BC.8F.E7.9A.84.E5.88.97.E5.AE.9A.E4.B9.89.E4.BF.A1.E6.81.AF"><span class="tocnumber">1.22</span> <span class="toctext">获得列名中包含指定表达式的列定义信息</span></a></li>
+<li class="toclevel-2 tocsection-24"><a href="#SHOW_CREATE_TABLE"><span class="tocnumber">1.23</span> <span class="toctext">SHOW CREATE TABLE</span></a></li>
+<li class="toclevel-2 tocsection-25"><a href="#SHOW_PROCESSLIST"><span class="tocnumber">1.24</span> <span class="toctext">SHOW PROCESSLIST</span></a></li>
+<li class="toclevel-2 tocsection-26"><a href="#KILLQUERY"><span class="tocnumber">1.25</span> <span class="toctext">KILLQUERY</span></a></li>
+<li class="toclevel-2 tocsection-27"><a href="#SHOWQUERY"><span class="tocnumber">1.26</span> <span class="toctext">SHOWQUERY</span></a></li>
+<li class="toclevel-2 tocsection-28"><a href="#SHOW_VERSION"><span class="tocnumber">1.27</span> <span class="toctext">SHOW VERSION</span></a></li>
+<li class="toclevel-2 tocsection-29"><a href="#SHOW_ROWCOUNT"><span class="tocnumber">1.28</span> <span class="toctext">SHOW ROWCOUNT</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-30"><a href="#DML.E8.AF.AD.E5.8F.A5"><span class="tocnumber">2</span> <span class="toctext">DML语句</span></a>
+<ul>
+<li class="toclevel-2 tocsection-31"><a href="#Load.E8.AF.AD.E5.8F.A5"><span class="tocnumber">2.1</span> <span class="toctext">Load语句</span></a></li>
+<li class="toclevel-2 tocsection-32"><a href="#Insert.E8.AF.AD.E5.8F.A5"><span class="tocnumber">2.2</span> <span class="toctext">Insert语句</span></a></li>
+<li class="toclevel-2 tocsection-33"><a href="#.E6.95.B0.E6.8D.AE.E5.AF.BC.E5.87.BA"><span class="tocnumber">2.3</span> <span class="toctext">数据导出</span></a></li>
+<li class="toclevel-2 tocsection-34"><a href="#Update.E8.AF.AD.E5.8F.A5"><span class="tocnumber">2.4</span> <span class="toctext">Update语句</span></a></li>
+<li class="toclevel-2 tocsection-35"><a href="#Delete.E8.AF.AD.E5.8F.A5"><span class="tocnumber">2.5</span> <span class="toctext">Delete语句</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-36"><a href="#DQL.E8.AF.AD.E5.8F.A5"><span class="tocnumber">3</span> <span class="toctext">DQL语句</span></a>
+<ul>
+<li class="toclevel-2 tocsection-37"><a href="#Select.E8.AF.AD.E5.8F.A5"><span class="tocnumber">3.1</span> <span class="toctext">Select语句</span></a></li>
+<li class="toclevel-2 tocsection-38"><a href="#.E8.B7.A8DB.E5.BC.95.E7.94.A8.E8.A1.A8"><span class="tocnumber">3.2</span> <span class="toctext">跨DB引用表</span></a></li>
+<li class="toclevel-2 tocsection-39"><a href="#Having.E5.AD.90.E5.8F.A5"><span class="tocnumber">3.3</span> <span class="toctext">Having子句</span></a></li>
+<li class="toclevel-2 tocsection-40"><a href="#Order_by.E5.AD.90.E5.8F.A5.EF.BC.88.E4.B8.8D.E5.B8.A6limit.EF.BC.89"><span class="tocnumber">3.4</span> <span class="toctext">Order by子句（不带limit）</span></a></li>
+<li class="toclevel-2 tocsection-41"><a href="#Order_by.E5.AD.90.E5.8F.A5.EF.BC.88.E5.B8.A6limit.EF.BC.89"><span class="tocnumber">3.5</span> <span class="toctext">Order by子句（带limit）</span></a></li>
+<li class="toclevel-2 tocsection-42"><a href="#group_by.E5.AD.90.E5.8F.A5"><span class="tocnumber">3.6</span> <span class="toctext">group by子句</span></a></li>
+<li class="toclevel-2 tocsection-43"><a href="#join.E6.93.8D.E4.BD.9C"><span class="tocnumber">3.7</span> <span class="toctext">join操作</span></a></li>
+<li class="toclevel-2 tocsection-44"><a href="#Union_.5BAll.5D.E6.93.8D.E4.BD.9C"><span class="tocnumber">3.8</span> <span class="toctext">Union [All]操作</span></a></li>
+<li class="toclevel-2 tocsection-45"><a href="#.E5.A4.9A.E7.BB.B4.E5.88.86.E6.9E.90.EF.BC.88ROLLUP.E3.80.81CUBE.E3.80.81grouping.E5.87.BD.E6.95.B0.EF.BC.89"><span class="tocnumber">3.9</span> <span class="toctext">多维分析（ROLLUP、CUBE、grouping函数）</span></a></li>
+<li class="toclevel-2 tocsection-46"><a href="#.E5.A4.84.E7.90.86protobuf.E8.A1.A8.E4.B8.ADrepeated_.E5.AD.97.E6.AE.B5.E7.9A.84SQL"><span class="tocnumber">3.10</span> <span class="toctext">处理protobuf表中repeated 字段的SQL</span></a></li>
+<li class="toclevel-2 tocsection-47"><a href="#with.E8.AF.AD.E5.8F.A5"><span class="tocnumber">3.11</span> <span class="toctext">with语句</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-48"><a href="#SQL.2FMED.E5.A4.9A.E6.95.B0.E6.8D.AE.E6.BA.90.E6.93.8D.E4.BD.9C"><span class="tocnumber">4</span> <span class="toctext">SQL/MED多数据源操作</span></a>
+<ul>
+<li class="toclevel-2 tocsection-49"><a href="#.E5.88.9B.E5.BB.BATDW.E5.A4.96.E8.A1.A8.E5.85.B3.E8.81.94PostgreSQL.E6.88.96.E8.80.85Oracle.E4.B8.AD.E7.9A.84.E6.95.B0.E6.8D.AE"><span class="tocnumber">4.1</span> <span class="toctext">创建TDW外表关联PostgreSQL或者Oracle中的数据</span></a></li>
+<li class="toclevel-2 tocsection-50"><a href="#ExecExtSQL.E6.89.A7.E8.A1.8C.E5.A4.96.E9.83.A8DB.E5.91.BD.E4.BB.A4"><span class="tocnumber">4.2</span> <span class="toctext">ExecExtSQL执行外部DB命令</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-51"><a href="#DCL.E8.AF.AD.E5.8F.A5"><span class="tocnumber">5</span> <span class="toctext">DCL语句</span></a>
+<ul>
+<li class="toclevel-2 tocsection-52"><a href="#.E5.88.9B.E5.BB.BA.E7.94.A8.E6.88.B7"><span class="tocnumber">5.1</span> <span class="toctext">创建用户</span></a></li>
+<li class="toclevel-2 tocsection-53"><a href="#.E5.88.A0.E9.99.A4.E7.94.A8.E6.88.B7"><span class="tocnumber">5.2</span> <span class="toctext">删除用户</span></a></li>
+<li class="toclevel-2 tocsection-54"><a href="#.E4.BF.AE.E6.94.B9.E5.AF.86.E7.A0.81"><span class="tocnumber">5.3</span> <span class="toctext">修改密码</span></a></li>
+<li class="toclevel-2 tocsection-55"><a href="#.E5.88.97.E4.B8.BE.E7.94.A8.E6.88.B7"><span class="tocnumber">5.4</span> <span class="toctext">列举用户</span></a></li>
+<li class="toclevel-2 tocsection-56"><a href="#.E6.8E.88.E4.BA.88.E7.94.A8.E6.88.B7.E6.9D.83.E9.99.90"><span class="tocnumber">5.5</span> <span class="toctext">授予用户权限</span></a></li>
+<li class="toclevel-2 tocsection-57"><a href="#.E6.92.A4.E9.94.80.E7.94.A8.E6.88.B7.E6.9D.83.E9.99.90"><span class="tocnumber">5.6</span> <span class="toctext">撤销用户权限</span></a></li>
+<li class="toclevel-2 tocsection-58"><a href="#.E6.98.BE.E7.A4.BA.E7.94.A8.E6.88.B7.2F.E8.A7.92.E8.89.B2.E6.9D.83.E9.99.90"><span class="tocnumber">5.7</span> <span class="toctext">显示用户/角色权限</span></a></li>
+<li class="toclevel-2 tocsection-59"><a href="#.E5.88.9B.E5.BB.BA.E8.A7.92.E8.89.B2"><span class="tocnumber">5.8</span> <span class="toctext">创建角色</span></a></li>
+<li class="toclevel-2 tocsection-60"><a href="#.E5.88.A0.E9.99.A4.E8.A7.92.E8.89.B2"><span class="tocnumber">5.9</span> <span class="toctext">删除角色</span></a></li>
+<li class="toclevel-2 tocsection-61"><a href="#.E5.88.97.E4.B8.BE.E8.A7.92.E8.89.B2"><span class="tocnumber">5.10</span> <span class="toctext">列举角色</span></a></li>
+<li class="toclevel-2 tocsection-62"><a href="#.E6.8E.88.E4.BA.88.E8.A7.92.E8.89.B2.E6.9D.83.E9.99.90"><span class="tocnumber">5.11</span> <span class="toctext">授予角色权限</span></a></li>
+<li class="toclevel-2 tocsection-63"><a href="#.E6.92.A4.E9.94.80.E8.A7.92.E8.89.B2.E6.9D.83.E9.99.90"><span class="tocnumber">5.12</span> <span class="toctext">撤销角色权限</span></a></li>
+<li class="toclevel-2 tocsection-64"><a href="#.E6.8E.88.E4.BA.88.E7.94.A8.E6.88.B7.EF.BC.88.E6.88.96.E8.A7.92.E8.89.B2.EF.BC.89.E8.A7.92.E8.89.B2"><span class="tocnumber">5.13</span> <span class="toctext">授予用户（或角色）角色</span></a></li>
+<li class="toclevel-2 tocsection-65"><a href="#.E6.94.B6.E5.9B.9E.E7.94.A8.E6.88.B7.EF.BC.88.E6.88.96.E8.A7.92.E8.89.B2.EF.BC.89.E8.A7.92.E8.89.B2"><span class="tocnumber">5.14</span> <span class="toctext">收回用户（或角色）角色</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table><script>if (window.showTocToggle) { var tocShowText = "显示"; var tocHideText = "隐藏"; showTocToggle(); } </script>
+<h2> <span class="mw-headline" id="DDL.E8.AF.AD.E5.8F.A5"> <b>DDL语句</b> </span></h2>
+<hr />
+<h3> <span class="mw-headline" id="CREATE_DATABASE_.E5.88.9B.E5.BB.BA.E6.95.B0.E6.8D.AE.E5.BA.93"> <b>CREATE DATABASE 创建数据库</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> create database &lt;DBname&gt; [with (hdfsschema = 'hdfs address')]
+</pre>
+<p><br /><b>说明：</b>
+</p><p>1.如果DBname已经存在，则报错。
+</p><p>2.用户必须有创建数据库的权限（DBA或者user具有create权限）。
+</p><p>3.如果带有with [with (hdfsschema = 'hdfs address')],则创建的database将存储在指定的hdfs上。
+</p><p><b>注意：</b>
+</p><p>Default_db是系统默认的DB，系统安装后自动生成。
+</p><p><b>举例：</b>
+</p><p>创建一个数据库TDW：
+</p>
+<pre> Create database tdw;
+
+</pre>
+<p>创建一个数据库hy，并指定它存储在hdfs://hy.hdfs.com:5555中
+</p>
+<pre> create database hy with ( hdfsschema = 'hdfs://hy.hdfs.com:5555');
+</pre>
+<h3> <span class="mw-headline" id=".E5.88.A0.E9.99.A4.E6.95.B0.E6.8D.AE.E5.BA.93"> <b>删除数据库</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> drop database &lt;DBname&gt;
+</pre>
+<p><b>说明：</b>
+</p><p>删除不存在的DB时SQL返回成功。用户必须有删除数据库的权限
+</p><p><b>注意：</b>
+</p><p>Default_db是系统默认的DB，系统安装后自动生成，用户无法删除。 如果用户删除当前DB，则删除后，用户的当前DB为default_db。
+</p><p><br />举例： 删除数据库TDW:
+</p>
+<pre> Drop database tdw;
+</pre>
+<h3> <span class="mw-headline" id=".E6.94.B9.E5.8F.98.E5.BD.93.E5.89.8D.E9.BB.98.E8.AE.A4.E6.95.B0.E6.8D.AE.E5.BA.93"> <b>改变当前默认数据库</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> use &lt;DBname&gt;
+</pre>
+<p><b>说明：</b>
+</p><p>如果目标DB不存在，则报错。 用户改变当前默认数据库总可以成功，但是如果没有相应权限，则无法对该数据库中的表进行操作。
+</p><p><b>注意：</b>
+</p><p><b>举例：</b>
+</p><p>将当前默认DB设置为tdw：
+</p>
+<pre> use tdw；
+</pre>
+<p><br />
+</p>
+<h3> <span class="mw-headline" id=".E6.98.BE.E7.A4.BATDW.E5.86.85.E7.9A.84.E6.95.B0.E6.8D.AE.E5.BA.93"> <b>显示TDW内的数据库</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> Show databases；
+</pre>
+<p><b>说明：</b>
+</p><p>返回TDW系统内的数据库。
+</p><p><b>注意：</b>
+</p><p><br /><b>举例：</b>
+</p>
+<pre> Show databases；
+</pre>
+<h3> <span class="mw-headline" id=".E5.88.9B.E5.BB.BA.E8.A1.A8"> <b>创建表</b><br /> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> CREATE [EXTERNAL] TABLE [IF NOT EXISTS] table_name
+[(col_name data_type [COMMENT col_comment], ...)]
+[COMMENT table_comment]
+[partition_def]
+[CLUSTERED BY (col_name, col_name, ...) [SORTED BY (col_name [ASC|DESC], ...)] INTO num_buckets BUCKETS]
+[ROW FORMAT row_format]
+[STORED AS file_format]
+[LOCATION hdfs_path]
+[AS select_statement]
+
+CREATE [EXTERNAL] TABLE [IF NOT EXISTS] table_name
+LIKE existing_table_name
+[LOCATION hdfs_path]
+</pre>
+<p>partition_def
+</p>
+<pre>&nbsp;: PARTITION BY part_type (col_name) [sub_part_def] [(part_body [,part_body,...])]
+</pre>
+<p>part_body
+</p>
+<pre>&nbsp;: PARTITION part_name VALUES LESS THAN (const)
+| PARTITION DEFAULT
+| PARTITION part_name VALUES IN (const[,const,...])
+</pre>
+<p>sub_part_def
+</p>
+<pre>&nbsp;: SUBPARTITION BY part_type(col_name) [(sub_part_body [,sub_part_body,...])]
+</pre>
+<p>sub_part_body
+</p>
+<pre>&nbsp;: SUBPARTITION part_name VALUES LESS THAN (const)
+| SUBPARTITION DEFAULT
+| SUBPARTITION part_name VALUES IN (const[,const...])
+</pre>
+<p>part_type
+</p>
+<pre>&nbsp;: RANGE
+| LIST
+| HASHKEY
+</pre>
+<p>file_format
+</p>
+<pre>&nbsp;: textfile 
+| formatfile [compress]
+| pgdata
+| rcfile [compress]
+| columnfile [projection(col_name,...),(...) ] [compress]
+</pre>
+<p>data_type
+</p>
+<pre>&nbsp;: primitive_type
+| array_type
+| map_type
+</pre>
+<p>primitive_type
+</p>
+<pre>&nbsp;: TINYINT  -  1 byte integer
+| SMALLINT  -  2 byte integer
+| INT   -   4 byte integer
+| BIGINT   -   8 byte integer
+| BOOLEAN   -   TRUE/FALSE
+| FLOAT   -   single precision
+| DOUBLE   -   Double precision
+| STRING   -   sequence of characters in a specified set
+</pre>
+<p><b>建议：</b>
+</p><p>1).整型尽量用bigint，浮点型尽量用double，避免在隐式转换的时候出现一些小问题。
+</p><p>2).强制类型转换可以使用cast 例如 cast (a as double)
+</p>
+<pre>array_type
+</pre>
+<pre>&nbsp;: ARRAY &lt; data_type &gt;
+</pre>
+<p>map_type
+</p>
+<pre>&nbsp;: MAP &lt; primitive_type, data_type &gt;
+</pre>
+<p>row_format
+</p>
+<pre>&nbsp;: DELIMITED [FIELDS TERMINATED BY char] [COLLECTION ITEMS TERMINATED BY char]
+[MAP KEYS TERMINATED BY char] 
+[WITH (CHARSET="CHARSET_VALUE")]
+| SERDE serde_name [WITH SERDEPROPERTIES (property_name=property_value, property_name=property_value, ...)]
+</pre>
+<p>file_format:
+</p>
+<pre>&nbsp;: SEQUENCEFILE
+| TEXTFILE
+| INPUTFORMAT input_format_classname OUTPUTFORMAT output_format_classname
+| PBFILE 
+| FORMATFILE
+| COLUMNFILE
+</pre>
+<p><b>说明：</b>
+</p><p>1).如果指定external，表示所创建的表是外表（外表是将文件系统上的文本数据映射而成的表），新版本HDFS外表支持分区，在删除外表时，它的元数据会删除，文件系统上的数据不会删除。
+</p><p>2).如果没有指定if not exists，则创建的表如果已经存在，会返回错误，如果指定了if not exists，则不会返回错误。
+</p><p>3).目前支持range、list和hash分区。range分区定义时，分区的less than 的参数值必须按照从小到大的顺序排列，分区字段必须是表字段。Hash分区定义时，只能指定一个字段作为分区字段，且字段类型不可以是复合类型或者boolean类型；hash分区只能作为最低一级分区，即如果有两级分区，hash分区只能作为二级分区。
+</p><p>4).如果使用like，则创建的表使用已有表的定义。注意：仅建议源表和目标表都为内表的情况下使用。
+</p><p>5).location可以指定数据的存储位置，只能在外表中使用。
+</p><p>6).目前支持最多两层分区，每层分区都可以指定default分区（hash分区除外）。如果没有指定分区，在插入到表中时，如果记录不在任何分区中则会报错。
+</p><p>7).hash分区的数目用户不需要指定，由TDW系统统一配置。除建表语句外，在其他语句中，hash分区对用户透明，用户无法对hash分区进行增、删、清空、分支修剪等操作。
+</p><p>8).用户必须有创建表的权限。
+</p><p>9).TDW在创建protobuf存储格式的表，需要上传proto文件，一般通过TDW IDE进行操作，详见<a href="http://tdw.boss.com/wiki/index.php/%E6%96%B0%E5%BB%BA%E5%92%8C%E6%9B%B4%E6%96%B0PB%E8%A1%A8" class="external text" rel="nofollow">新建和更新PB表</a>。
+</p><p>10).外表的数据引号问题：如果某一列的数据格式为string类型，则string类型不能带引号。否则可能出现数据导入错误。TDW对出现在SQL中的字符串的引号会进行处理，把引号不当作字符串的一部分，而数据中的引号会成为数据的一部分。
+</p><p>11).TDW表的字段不支持默认值，所以建表时不支持指定字段的默认值
+</p><p>12).分区时，如果分区定义带有负数，那么负数必须使用单引号，例如：
+</p>
+<pre> partition p1 values in (1,'-1')。
+</pre>
+<p><b>注意：</b>
+</p><p>分区只能在定义的时候指定，表建好以后，无法将不带分区的表转变为带分区的表。 分区列一旦指定以后将无法改变
+</p><p>hash分区在2011年内受集群规模的限制，在使用上效率不高，且存在一些隐藏的bug，故暂时不推荐使用
+</p><p>如果所建的表带有default分区，那么在插入数据时，那些没有命中已知分区的数据，会放到default分区中，当后来add分区后，default分区中的数据并不会被自动移入对应的分区。因此，使用default分区可能带来一些意外的结果。比如用户没有建立abc这个分区，向表中插入abc分区的数据，会使数据存放在default分区中。这时，用户使用from tablename partition(abc) p找不到应该属于abc分区的数据，但是通过select * From tablename又可以查到。为了避免在何种情况，可以删除default分区，这样在插入数据时，tdw发现没有对应的分区，就会认为是脏数据而报错。
+</p><p><b>举例：</b>
+</p><p>1).创建一个带分区的表，表的存储按照TDW结构化的方式
+</p>
+<pre> CREATE TABLE 
+Ptestformat
+(a TINYINT, b SMALLINT, c int, d BIGINT , e FLOAT , f DOUBLE , g STRING ) 
+partition by list(a)
+(partition default)
+STORED AS FORMATFILE;
+
+</pre>
+<p>2).创建一个外表，指定了文本的列的分隔符，指定了表的存储目录
+</p>
+<pre> CREATE EXTERNAL TABLE ptest(a TINYINT, b SMALLINT, c int, d BIGINT , e FLOAT , f DOUBLE , g STRING )
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+LOCATION '/user/tdwadmin/test';
+</pre>
+<p>3).创建一个带有两级分区的表
+</p>
+<pre> CREATE TABLE part_test(
+Col_nam1 int,
+Col_nam2 int
+)
+PARTITION BY RANGE(Col_nam1)
+SUBPARTITION BY LIST(Col_nam2)
+(
+SUBPARTITION par_name1 VALUES IN (1,2,3),
+SUBPARTITION par_name2 VALUES IN (4,5),
+SUBPARTITION default
+)
+(
+PARTITION par_name1 VALUES LESS THAN (2),
+PARTITION par_name2 VALUES LESS THAN (5),
+PARTITION default
+);
+</pre>
+<p>4).创建一个文本表，表的字段包含array和map复杂数据类型
+</p>
+<pre> CREATE TABLE page_view
+(
+viewTime INT,
+userid BIGINT,
+page_url STRING,
+referrer_url STRING,
+friends ARRAY&lt;BIGINT&gt;,
+properties MAP&lt;STRING, STRING&gt;
+ip STRING COMMENT 'IP Address of the User' --列和列的注释
+)COMMENT 'This is the page view table' --表的注释
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '1' --字段以'1'分隔
+COLLECTION ITEMS TERMINATED BY '2' --数组中的元素以'2'分隔
+MAP KEYS TERMINATED BY '3' --map中的key和value以'3'分隔
+</pre>
+<p>5).创建一个表pv2，与page_view的定义相似：
+</p>
+<pre> Create table pv2 like page_view;
+</pre>
+<p>6).创建protobuf存储格式的表：
+</p>
+<pre> CREATE TABLE page  PARTITION BY LIST(qq) (PARTITION default) STORED AS PBFILE;
+</pre>
+<p>7).创建一级分区为hash分区的表：
+</p>
+<pre> create table hash_table1 (col_name1 int, col_name2 int) partition by hashkey(col_name2);
+</pre>
+<p>8).创建二级分区为hash分区的表：
+</p>
+<pre> create table hash_table2 (col_name1 int, col_name2 int) 
+partition by list(col_name1) subpartition by hashkey(col_name2) 
+(partition par_name1 values in (1,3,5), partition default);
+</pre>
+<p>9).创建结构化存储+压缩格式的表：
+</p>
+<pre> CREATE TABLE format_storage(a int, b int)
+STORED AS FORMATFILE COMPRESS;
+</pre>
+<p>10).创建列存储+压缩格式的表：
+</p>
+<pre> CREATE TABLE column_storage(a int, b int, c int, d int)
+STORED AS COLUMNFILE PROJECTION(a,c),(b,d) COMPRESS;
+</pre>
+<p><b>注意对于列簇的一些约定：</b> 列簇仅对列存储（或列存储+压缩）有效； 若没有显示指定列簇，缺省每个字段独立一个列簇； 若显示指定列簇，所有剩余未指定的字段构成一个列簇； 一个表中的列簇最大不能超过20个；
+</p><p>11).使用Create table as功能创建表
+</p>
+<pre> CREATE TABLE ctas1 as select key k, value from src sort by k, value limit 10;
+</pre>
+<p><b>Ctas（Create table as select）功能</b>允许用户根据select语句来创建表，<b>并将select语句的结果集插入到新建立的表中。</b>
+</p><p>1.select语句可以是目前所支持的任意形式。
+</p><p>2.新创建的表可以和源表有不同的SerDe和存储格式。
+</p><p>3.<b>用户可以通过列别名的方式指定新创建表的列名。</b>如果未指定，则新创建的表的schema是从select语句中自动探测的。
+</p><p><b>注意:</b>
+</p><p>1.新创建的表暂时不支持分区。
+</p><p>2.新创建的表不能是外表。
+</p><p>3.新创建的表不能是PB表。
+</p><p>4.新创建的表不能是索引表。
+</p><p>12).使用with (charset="charset_value")语句建表
+</p>
+<pre>  CREATE EXTERNAL TABLE testtbl(gender STRING, name STRING) row format delimited fields terminated by ';' WITH (CHARSET="gbk");
+</pre>
+<p>with功能是对原有建表语句中DELIMITED和SERDE_PROPERTIES不能同时指定字符编码的优化。
+</p><p><b>注意:</b>
+</p><p>1.with功能仅和DELIMITED语句一起使用，和SERDEPROPERTIES同时使用时无效。
+</p><p>2.charset_value目前可以支持多种编码设置，但目前系统仅支持utf-8和gbk编码。
+</p><p>13).创建BI存储引擎类型外表
+</p><p>&nbsp;&nbsp;&nbsp;&nbsp; 此功能会在TDW建一张TDW外表，同时会在BI库建一张与之同名同结构的表，后续可以在TDW中可以对该表进行各种计算，表的数据变动只会发生在BI库端。如果在建表语句中带有 [AS select_statement]子句，那么会将as 子句的结果写入BI库的表中。具体说明参见： <a href="http://tdw.boss.com/wiki/index.php/TDW_BI_%E5%A4%96%E8%A1%A8%E5%8A%9F%E8%83%BD" class="external text" rel="nofollow">TDW PGDATA 存储引擎介绍</a>
+</p>
+<h3> <span class="mw-headline" id=".E5.88.A0.E9.99.A4.E8.A1.A8"> <b>删除表</b> </span></h3>
+<hr />
+<p><br /><b>格式：</b>
+</p>
+<pre> drop  table &lt;TABname&gt;
+</pre>
+<p><b>说明：</b>
+</p><p>删除指定的表，如果表不存在，也返回成功。 用户必须有删除表的权限。
+</p><p><b>注意：</b>
+</p><p>如果不是外表，则删除表的元数据和数据，如果是外表，则只删除表的定义。
+</p><p>删除pgdata存储引擎的表失败时，请看是否是这个原因：<a href="http://tdw.boss.com/wiki/index.php/BI%E5%BA%93FAQ#.E6.88.91.E5.88.A0.E9.99.A4.E4.B8.80.E5.BC.A0pgdata.E5.AD.98.E5.82.A8.E5.BC.95.E6.93.8E.E7.9A.84.E8.A1.A8.E6.97.B6.E6.8A.A5.E9.94.99.EF.BC.8C.E6.8F.90.E7.A4.BA.E8.AF.B4.E6.9C.89.E8.A7.86.E5.9B.BE.E4.BE.9D.E8.B5.96.E5.AE.83.EF.BC.8C.E4.BD.86.E6.98.AF.E6.88.91.E5.9C.A8tdw.E4.B8.AD.E6.B2.A1.E6.9C.89.E6.89.BE.E5.88.B0.E8.A7.86.E5.9B.BE.EF.BC.8C.E6.80.8E.E4.B9.88.E5.9B.9E.E4.BA.8B.EF.BC.9F" class="external free" rel="nofollow">http://tdw.boss.com/wiki/index.php/BI%E5%BA%93FAQ#.E6.88.91.E5.88.A0.E9.99.A4.E4.B8.80.E5.BC.A0pgdata.E5.AD.98.E5.82.A8.E5.BC.95.E6.93.8E.E7.9A.84.E8.A1.A8.E6.97.B6.E6.8A.A5.E9.94.99.EF.BC.8C.E6.8F.90.E7.A4.BA.E8.AF.B4.E6.9C.89.E8.A7.86.E5.9B.BE.E4.BE.9D.E8.B5.96.E5.AE.83.EF.BC.8C.E4.BD.86.E6.98.AF.E6.88.91.E5.9C.A8tdw.E4.B8.AD.E6.B2.A1.E6.9C.89.E6.89.BE.E5.88.B0.E8.A7.86.E5.9B.BE.EF.BC.8C.E6.80.8E.E4.B9.88.E5.9B.9E.E4.BA.8B.EF.BC.9F</a>
+</p><p><b>举例：</b>
+</p><p>删除表t
+</p>
+<pre> Drop table t;
+</pre>
+<h3> <span class="mw-headline" id=".E6.B8.85.E7.A9.BA.E8.A1.A8"> <b>清空表</b> </span></h3>
+<hr />
+<p><br /><b>格式：</b>
+</p>
+<pre> truncate  table &lt;TABname&gt;
+</pre>
+<p><b>说明：</b>
+</p><p>删除指定表的数据，如果表不存在，并不报错。 用户必须有删除表的权限。
+</p><p><b>注意：</b>
+</p><p><br /><b>举例：</b>
+</p><p>删除表t
+</p>
+<pre> truncate table t;
+</pre>
+<h3> <span class="mw-headline" id=".E5.A2.9E.E5.8A.A0.E5.88.86.E5.8C.BA"> <b>增加分区</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p><p>增加一级分区 一级分区range partition：
+</p>
+<pre> ALTER TABLE &lt;TABname&gt; ADD PARTITION par_name VALUES LESS THAN (const)
+</pre>
+<p>一级分区list partition：
+</p>
+<pre> ALTER TABLE &lt;TABname&gt; ADD PARTITION par_name VALUES IN (const,...)
+</pre>
+<p>增加default partition：
+</p>
+<pre> ALTER TABLE &lt;TABname&gt; ADD default PARTITION;
+</pre>
+<p>增加二级分区 二级分区range partition：
+</p>
+<pre> ALTER TABLE &lt;TABname&gt; ADD SUBPARTITION &lt;par_name&gt; VALUES LESS THAN (const);
+</pre>
+<p>二级分区list partition：
+</p>
+<pre> ALTER TABLE &lt;TABname&gt; ADD SUBPARTITION &lt;par_name&gt; VALUES IN (const,...);
+</pre>
+<p>增加default partition：
+</p>
+<pre> ALTER TABLE &lt;TABname&gt; ADD default SUBPARTITION;
+</pre>
+<p><b>说明：</b>
+</p><p>在分区表上增加新的分区。 用户需要对表有alter的权限。
+</p><p><b>注意:</b>
+</p><p>1).如果表是两级分区的，增加一级分区后，新的一级分区内会自动按照二级分区的定义再分区，比如表一级分区为p1,p2,二级分区为sp1，sp2，则表的叶子分区为：p1/sp1,p1/sp2,p2/sp1,p2/sp2。此时如果增加一个一级分区p3,则新的会增加p3/sp1,p3/sp2两个叶子分区；此时如果增加一个二级分区sp3，则会增加p1/sp3,p2/sp3两个叶子分区。
+</p><p>2).如果表在创建时没有定义一级分区，或者二级分区，则不能增加一级分区或者二级分区。
+</p><p>3).default是默认分区的分区名，不能改变，不能用于其他分区的分区名。
+</p><p>4).增加分区只是增加了元数据和目录，数据与分区的一致性需要用户去保证，例如如果新增加的分区的数据以前都在default分区中，则需要用户执行
+</p>
+<pre> Insert table TABname select  t.* from TABname partition(default) t
+</pre>
+<p>来把数据导入到新的分区中。
+</p><p>5). 用户不能通过该命令增加hash分区。如果两级分区中的第二级分区为hash分区，则增加一级分区时，二级hash分区将自动被增加。
+</p><p>6). TDW支持的分区的个数，每一级最多为65536个。如果一级的表的分区多于65536，那么可能是您的数据模型设计有问题，或者需要清除一些老分区。
+</p><p><b>举例：</b>
+</p><p>表定义
+</p>
+<pre> create table kv (key int,value string)
+partition by range(key)
+(
+partition default
+);
+</pre>
+<p>增加一个分区存放key值小于100的记录：
+</p>
+<pre> alter table add partition less_100 values less than (100);
+</pre>
+<p><br />
+</p>
+<h3> <span class="mw-headline" id=".E5.88.A0.E9.99.A4.E5.88.86.E5.8C.BA"> <b>删除分区</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p><p>删除一级分区：
+</p>
+<pre> ALTER TABLE &lt;TABname&gt; DROP PARTITION &lt;par_name&gt;
+</pre>
+<p>删除二级分区：
+</p>
+<pre> ALTER TABLE &lt;TABname&gt; DROP SUBPARTITION &lt;par_name&gt;
+</pre>
+<p><b>说明：</b>
+</p><p>删除不存在的分区，返回成功。 应用应该对这个表有alter的权限。
+</p><p><b>注意：</b> 1).这个SQL语句将删除分区的定义和数据。
+</p><p>2).删除一级分区会导致一级分区下的所有二级分区删除；删除二级分区会导致所有一级分区下的该二级分区被删除,比如表一级分区为p1,p2,二级分区为sp1，sp2，则表的叶子分区为：p1/sp1,p1/sp2,p2/sp1,p2/sp2,如果这时删除一级分区p1,则会删除p1/sp1,p1/sp2两个叶子分区;如果这时删除二级分区sp1，则会删除p1/sp1，p2/sp1两个叶子分区。
+</p><p>3).用户不能删除hash分区。如果hash分区为二级分区，则删除一级分区时二级分区将自动被删除。
+</p><p><br /><b>举例：</b>
+</p><p>删除分区p2
+</p>
+<pre> alter table test drop partition (p2);
+</pre>
+<h3> <span class="mw-headline" id=".E6.B8.85.E7.A9.BA.E5.88.86.E5.8C.BA"> <b>清空分区</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p><p>清空一个叶子分区：
+</p>
+<pre> ALTER TABLE &lt;TABname&gt; TRUNCATE PARTITION &lt;(pripar_name,subpar_name)&gt;;
+</pre>
+<p>清空一个一级分区：
+</p>
+<pre> ALTER TABLE &lt;TABname&gt; TRUNCATE PARTITION &lt;(par_name)&gt;;
+</pre>
+<p>清空一个二级分区：
+</p>
+<pre> ALTER TABLE &lt;TABname&gt; TRUNCATE SUBPARTITION &lt;(par_name)&gt;;
+</pre>
+<p><b>说明：</b>
+</p><p>删除分区中的数据，保留分区元数据。 用户需要对表有delete权限。
+</p><p><b>注意：</b>
+</p><p>清空一级分区会导致该一级分区下的所有数据删除，清空二级分区会导致所有一级分区下的该二级分区数据删除，清空叶子分区只删除指定一级分区下的指定二级分区里的数据。用户不能指定清除hash分区。
+</p><p><b>举例：</b>
+</p><p>清除test表表p1分区下的sp1子分区
+</p>
+<pre> Alter table test truncate partition（p1,sp1）
+</pre>
+<p><br />
+</p>
+<h3> <span class="mw-headline" id=".E8.A1.A8.E9.87.8D.E5.91.BD.E5.90.8D"> <b>表重命名</b><br /> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> ALTER TABLE &lt;old_name&gt; RENAME TO &lt;new_name&gt;;
+</pre>
+<p><b>说明：</b>
+</p><p>重命名表，如果新名已经被使用，则表错。 用户须对表有alter权限。
+</p><p><b>注意：</b>
+</p><p><b>举例：</b> 重命名表test为newtest
+</p>
+<pre> Alter table test rename to newtest;
+</pre>
+<h3> <span class="mw-headline" id=".E6.9B.B4.E6.94.B9comment"> <b>更改comment</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> COMMENT ON TABLE tblname is 'the new comment';
+COMMENT ON TABLE tblname is NULL;
+COMMENT ON VIEW viewname is 'the new comment';
+COMMENT ON VIEW viewname is NULL;
+COMMENT ON COLUMN columnname is 'the new comment';
+COMMENT ON COLUMN columnname is NULL;
+</pre>
+<p><b>说明：</b>
+</p><p>用户不指定数据库时，默认修改的是当前数据库的表或视图。
+</p><p>用户可以用db::tbl,db::view,db::tbl.col,db::view.col的形式指定数据库；如果是当前数据库，则可以省略db名。
+</p><p>列名的指定形式为tbl.col，view.col。也可以在前面指定数据库名。
+</p><p>当is关键词之后是字符串时，是将comment修改为新的comment；如果是null，则是删除指定comment。
+</p><p>用户须对表或视图有alter权限。
+</p><p><b>注意：</b>
+</p><p>在更改表或视图的comment时，要留意自己要修改的是表还是视图。
+</p><p><b>举例：</b>
+</p>
+<h3> <span class="mw-headline" id=".E5.A2.9E.E5.8A.A0.E3.80.81.E6.9B.BF.E5.AD.97.E6.AE.B5"> <b>增加、替字段</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> ALTER TABLE &lt;TABname&gt; ADD COLUMNS (col_name data_type [COMMENT col_comment],...)
+</pre>
+<pre> ALTER TABLE &lt;TABname&gt; CHANGE [COLUMN] col_old_name col_new_name [column_type] [COMMENT col_comment]
+</pre>
+<p><b>说明：</b>
+</p>
+<div>0、文本表暂不支持修改表结构<span class="Apple-tab-span" style="white-space:pre"></span></div><div>1、建议对外表不要修改schema（禁止）</div><div>2、PB表不允许修改schema</div><div>3、对内表中的分区字段和索引字段不允许修改schema</div><div>4、增加字段的功能，只能加在表的末尾</div>
+<p>5、减少列和替换所有列（replace）功能暂时<b><span style="font-size:larger;"><span style="color:#ff0000;">不支持</span></span></b>（<span style="font-family: Arial, Verdana, sans-serif;">tdw做了存储压缩，数据结构化后，字段顺序固定了，目前要实现中间插入或删除比较难</span><span style="font-family: Arial, Verdana, sans-serif;">）</span>
+</p>
+<pre>6、关于修改字段数据类型的类型转换规则，参考下表：
+	Tinyint	Smal..	Int	Float	Bigint	Double 	String
+Tiny..	------	------	------	------	Direct	Direct	Direct
+Smal..	------	------	------	------	Direct	Direct	Direct
+Int   	------	------	------	------	Direct	Direct	Direct
+Float 	------	------	------	------	Direct	Direct	Direct
+Bigint	------	------	------	------	Direct	Direct	Direct
+Double	------	------	------	------	Direct	Direct	Direct
+String	------	------	------	------	------	------	------
+7、已知BUG：db名、表名、字段名大小写敏感，有大写会change失败，tdw会尽快修复，使用时注意
+
+注：
+1)Boolean类型不支持类型修改
+2)任何类型不能转换为四种小类型：Tinyint Smallint Int Float
+3)String类型不允许转为任何类型
+4)Float或者double类型转为bigint类型，如果Float或者double数值超过bigint表达范围，则转为bigint的最大值或者最小值（根据mysql的标准）
+5)bigint转为double类型，在理论上会产生极少数的精度损失，经过评估，认为这样的损失是可以接受的。
+6)在进行数据类型转换的时候，不会修改实际数据，从小类型转为大类型以后，不会发生数据错误，在double和bigint之间进行相互转换的时候，
+当double转为bigint以后可能会发生一定的精度损失，如果转换回来成double，原来的数据将完全复原。（这一点和Oracle以及mysql的处理有一定的区别）。
+</pre>
+<p><br />用户必须对表有alter权限。
+</p><p><b>注意：</b>
+</p><p>hive官方版本支持所有字段的替换操作（replace功能），tdw目前不开放这个功能。
+</p><p><b>举例：</b>
+</p><p>给表增加两个int型字段key1和key2
+</p>
+<pre> alter table test add columns (key1 int，key2 int)；
+</pre>
+<p>修改列名
+</p>
+<pre> alter table test change column key1 key_1;
+</pre>
+<p>修改列类型
+</p>
+<pre> alter table test change key_1 key_1 bigint;
+</pre>
+<p>修改列名以及列类型
+</p>
+<pre> alter table test change key_1 key1 string;
+</pre>
+<h3> <span class="mw-headline" id=".E5.88.9B.E5.BB.BA.2F.E6.9B.B4.E6.96.B0.E8.A7.86.E5.9B.BE"> <b>创建/更新视图</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> CREATE [OR REPLACE] VIEW [IF NOT EXISTS] view_name AS SELECT ...;
+</pre>
+<p><b>说明：</b>
+</p><p>OR REPLACE和IF NOT EXISTS不能同时使用。
+</p><p>对于视图定义中引用的表，建议采用DBName::TableName的形式，以方便跨数据库引用。
+</p><p><b>注意：</b>
+</p><p><br /><b>举例：</b>
+</p>
+<pre> create or replace view view1 as select * from db1::table1;
+</pre>
+<p><br />
+</p>
+<h3> <span class="mw-headline" id=".E5.88.A0.E9.99.A4.E8.A7.86.E5.9B.BE"> <b>删除视图</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> DROP VIEW view_name;
+</pre>
+<p><b>说明：</b>
+</p><p><br /><b>注意：</b>
+</p><p><br /><b>举例：</b>
+</p>
+<pre> drop view view1;
+</pre>
+<p><br />
+</p><p><br />
+</p>
+<h3> <span class="mw-headline" id=".E6.98.BE.E7.A4.BA.E5.87.BD.E6.95.B0"> <b>显示函数</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> show functions [func_name]
+</pre>
+<p><b>说明：</b>
+</p><p>如果不带参数，则列举出系统支持的所有函数和算子，包括用户自定义的(TDW不支持用户自定义UDF)，如果带参数，则将参数看为正则表达式，“.”代表一个字符，"*"代表匹配任意个星号之前的字符,参数必须带引号。如 show functions "a.*"返回所有a开始的函数。
+</p><p><b>注意：</b>
+</p><p><b>举例：</b>
+</p><p>显示所有内建函数和自定义函数(TDW不支持用户自定义UDF)
+</p>
+<pre> Show functions;
+</pre>
+<p>显示所有函数名以a开始的函数
+</p>
+<pre> Show functions  "a.*";
+</pre>
+<h3> <span class="mw-headline" id=".E6.98.BE.E7.A4.BA.E5.86.85.E7.BD.AE.E5.87.BD.E6.95.B0.E7.9A.84.E4.BF.A1.E6.81.AF"> <b>显示内置函数的信息</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p><p>describe function [extended] &lt;func_name&gt;;
+</p><p><b>说明：</b>
+</p><p>加上extended后会显示更详细的用法
+</p><p><b>注意：</b>
+</p><p><br /><b>举例：</b> 显示abs求绝对值函数的说明
+</p>
+<pre> describe function abs
+结果:
+abs(x) - returns the absolute value of x
+</pre>
+<p>显示更详细的用法
+</p>
+<pre> describe function extended abs
+结果：
+abs(x) - returns the absolute value of x
+</pre>
+<p>Example:
+</p>
+<pre> &gt; SELECT abs(0) FROM src LIMIT 1;
+0
+&gt; SELECT abs(-5) FROM src LIMIT 1;
+5
+</pre>
+<p><br />
+</p>
+<h3> <span class="mw-headline" id=".E5.88.9B.E5.BB.BA.E4.B8.B4.E6.97.B6.E5.87.BD.E6.95.B0"> <b>创建临时函数</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> Cureate temporary function func as myfunc
+</pre>
+<p><br />
+</p>
+<h3> <span class="mw-headline" id=".E6.9F.A5.E7.9C.8B.E5.BD.93.E5.89.8D.E6.95.B0.E6.8D.AE.E5.BA.93.E4.B8.AD.E7.9A.84.E8.A1.A8"> <b>查看当前数据库中的表</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> show tables [identifier_with_wildcards]
+</pre>
+<p><b>说明：</b>
+</p><p>如果不带参数，返回当前数据库的默认表。如果带参数，则参数中可以带*,|等正则匹配符号,*匹配任意字符，|匹配可选字符串，参数必须带引号，单引号双引号都可。
+</p><p><b>注意：</b>
+</p><p><br /><b>举例：</b> 显示当前数据库下的所有表
+</p>
+<pre> Show tables;
+</pre>
+<p>显示当前数据库下名字由a开始的所有表
+</p>
+<pre> Show tables 'a*';
+</pre>
+<p><br />
+</p>
+<h3> <span class="mw-headline" id=".E6.9F.A5.E7.9C.8B.E8.A1.A8.E7.9A.84.E5.88.86.E5.8C.BA.E4.BF.A1.E6.81.AF"> <b>查看表的分区信息</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> show partitions &lt;table_name&gt;
+</pre>
+<p><b>说明：</b>
+</p><p>分别显示第一层分区和第二层分区的分区名，如果不存在分区或者不存在第二层分区，则不显示。
+</p><p><b>注意：</b>
+</p><p><br /><b>举例：</b>
+</p><p>显示表test的分区情况
+</p>
+<pre> Show partitions test;
+</pre>
+<h3> <span class="mw-headline" id=".E8.8E.B7.E5.BE.97.E8.A1.A8.E7.9A.84.E5.85.83.E6.95.B0.E6.8D.AE.E4.BF.A1.E6.81.AF"> <b>获得表的元数据信息</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> DESCRIBE [EXTENDED] &lt;table_name&gt;[DOT col_name]
+</pre>
+<p><b>说明：</b>
+</p><p>如果不带EXTENDED，则只返回表的列信息，或者指定的列信息，如果带有EXTENDED，则除了返回上面的信息，还会返回表的元数据信息。
+</p><p><b>注意：</b>
+</p><p><br /><b>举例：</b>
+</p><p>显示表kv的表字段信息
+</p>
+<pre> describe kv
+</pre>
+<p>结果：
+</p>
+<pre> key     int
+value   string
+key2    int
+key3    int
+</pre>
+<p>显示表kv的详细信息
+</p>
+<pre> describe extended kv
+</pre>
+<p>结果：
+</p>
+<pre> key     int
+value   string
+key2    int
+key3    int
+             
+</pre>
+<p>Detailed Table Information Table(tableName:kv, dbName:dcl_auto_test, owner:root, createTime:1354953791, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:key, type:int, comment:null), FieldSchema(name:value, type:string, comment:null), FieldSchema(name:key2, type:int, comment:null), FieldSchema(name:key3, type:int, comment:null)], location:hdfs://nn-boyd.tencent-distribute.com:44611/user/tdw/warehouse/dcl_auto_test.db/kv, inputFormat:StorageEngineClient.FormatStorageInputFormat, outputFormat:StorageEngineClient.FormatStorageHiveOutputFormat, compressed:true, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:StorageEngineClient.FormatStorageSerDe, parameters:{serialization.format=1}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{type=format}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, vtables:null)
+</p><p><br />只返回某一列的信息 对表create table map_test (key map&lt;int,string&gt;); 想获得key这个字段的信息
+</p>
+<pre> describe map_test.key
+</pre>
+<p>结果：
+</p>
+<pre> key     map&lt;int,string&gt; from deserializer
+</pre>
+<h3> <span class="mw-headline" id=".E8.8E.B7.E5.BE.97.E5.88.97.E5.90.8D.E4.B8.AD.E5.8C.85.E5.90.AB.E6.8C.87.E5.AE.9A.E8.A1.A8.E8.BE.BE.E5.BC.8F.E7.9A.84.E5.88.97.E5.AE.9A.E4.B9.89.E4.BF.A1.E6.81.AF"> <b>获得列名中包含指定表达式的列定义信息</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p><p>DESCRIBE &lt;table_name&gt; where column_name contains "regexp";
+</p><p><b>说明：</b>
+</p><p>regexp为正则表达式。
+</p><p><b>注意：</b>
+</p><p><b>举例：</b>
+</p><p>显示表kv的表字段信息
+</p>
+<pre> describe kv
+</pre>
+<p>结果：
+</p>
+<pre> key     int
+value   string
+key2    int
+key3    int
+</pre>
+<p>显示表kv中列名中包含key的列信息
+</p>
+<pre> describe kv where column_name contains "key.*";
+</pre>
+<p>结果：
+</p>
+<pre> key     int
+key2    int
+key3    int
+</pre>
+<h3> <span class="mw-headline" id="SHOW_CREATE_TABLE"> <b>SHOW CREATE TABLE</b> </span></h3>
+<p><b>格式：</b>
+</p>
+<pre>SHOW CREATE TABLE &lt;table_name&gt;
+</pre>
+<p><b>说明：</b>
+</p><p>获得指定表的定义语句,包含建表语句中以下字段（某些字段只有在使用这个功能时才会有）：
+</p>
+<ol><li>是否是外表
+</li><li>表名
+</li><li>表的字段
+</li><li>表的分区定义
+</li><li>自定义的分隔符
+</li><li>存储格式（Store as）
+</li><li>列存储定义
+</li><li>是否压缩
+</li><li>Charset
+</li><li>外表的LOCATION
+</li><li>索引
+</li></ol>
+<p><b>注意：</b>
+</p><p>除了上面列出的字段，其他的暂不支持，例如建表时自定义SerDe不支持，表和字段的注释不支持，clustered by，sorted by，bucket不支持，使用create table as时使用的Select语句不会显示（元数据中没有保存该信息），建表时指定的IF NOT EXISTS（元数据中没有保存该信息） ，create table like也不会保存原表的表名（元数据中没有保存该信息）。PB表也不支持，对PB表运行该语句会提示错误。
+</p><p><b>举例：</b>
+</p><p>创建结列存储表：
+</p>
+<pre>CREATE TABLE column_storage(a int, b int, c int, d int)
+STORED AS COLUMNFILE PROJECTION(a,c),(b,d) COMPRESS;
+</pre>
+<p>获得类存储表的DDL:
+</p>
+<pre>SHOW CREATE TABLE column_storage;
+</pre>
+<pre>CREATE TABLE column_storage(
+a INT,
+b INT,
+c INT,
+d INT
+)
+STORED AS COLUMNFILE PROJECTION ( a , c ), ( b , d ) COMPRESS
+</pre>
+<h3> <span class="mw-headline" id="SHOW_PROCESSLIST"> <b>SHOW PROCESSLIST</b> </span></h3>
+<p><b>格式：</b>
+</p>
+<pre>SHOW PROCESSLIST
+</pre>
+<p><b>说明：</b>
+</p><p>该命令显示该用户所发起的任务的执行情况，root用户可以查看当前系统所有正在执行的任务的信息（包含任务ID，起始时间，语句执行进度和语句的内容）。 当一个任务正在执行的时候，该任务所在的PL客户端是处于阻塞的状态，如果要查看这些任务的执行情况需要另外再开一个PL客户端使用show processlist命令来进行查看。
+</p><p><b>举例：</b>
+</p><p>输入show processlist后的结果示例：
+</p>
+<pre>009043839572886903_3_2365562387 root    2011-08-03 17:59:22     1/1     job_201108011612_0130,2,1       0%  0%  select count(1) from myqq
+</pre>
+<p>第一列为该任务的queryid，如果要终止该任务只需要执行killquery 009043839572886903_3_2365562387就可以了。如果要查看该任务的完整的语句，执行showquery 009043839572886903_3_2365562387。 第二列为发起该次查询的用户名，第三列为任务的开始时间，第四列为当前job数与总的job数，第五列为当前job的id和map数、reduce数，第六列为当前job的map和reduce的执行进度，最后一列为该次查询的SQL语句，如果语句过长会做截断（大于100个字符）。
+</p>
+<h3> <span class="mw-headline" id="KILLQUERY"> <b>KILLQUERY</b> </span></h3>
+<p><b>格式：</b>
+</p>
+<pre>KILLQUERY &lt;queryid&gt;
+</pre>
+<p><b>说明：</b>
+</p>
+<pre>该命令通过任务的ID可以终止该任务（用过show processlist可以获得id），用户只有终止自己发起任务的权限（root用户除外）。
+</pre>
+<h3> <span class="mw-headline" id="SHOWQUERY"> <b>SHOWQUERY</b> </span></h3>
+<p><b>格式：</b>
+</p>
+<pre>SHOWQUERY &lt;queryid&gt;
+</pre>
+<p><b>说明：</b>
+</p>
+<pre>该命令通过任务的ID可以获得该任务的完整的语句（用过show processlist可以获得id），用户只能查看自己发起的查询语句（root用户除外）。
+</pre>
+<h3> <span class="mw-headline" id="SHOW_VERSION"> <b>SHOW VERSION</b> </span></h3>
+<p><b>格式：</b>
+</p><p>SHOW VERSION
+</p><p><b>说明：</b>
+</p>
+<pre>该命令显示当前使用的查询引擎版本号，也可以在命令行下使用hive -v
+</pre>
+<h3> <span class="mw-headline" id="SHOW_ROWCOUNT"> <b>SHOW ROWCOUNT</b> </span></h3>
+<p><b>格式：</b>
+</p><p>SHOW ROWCOUNT [extended] tablename [PARTITION(partitionname)][, SUBPARTITION(subpartitionname)][, PARTITION(partitionname,subpartitionname)]
+</p><p><b>说明：</b>
+</p>
+<pre>该命令查看表的记录数或者分区的记录数（暂时只支持结构化即formatfile表和rcfile表）。加extended参数会打印该表的详细信息（每个分区的记录数都会打印出来，hash分区不会打印具体信息），也可以指定一个具体的分区来查看。
+</pre>
+<p><b>举例：</b>
+</p>
+<pre>show rowcount hash_table4 partition(par_name1); 
+show rowcount extended hash_table4;
+</pre>
+<h2> <span class="mw-headline" id="DML.E8.AF.AD.E5.8F.A5"> <b>DML语句</b> </span></h2>
+<h3> <span class="mw-headline" id="Load.E8.AF.AD.E5.8F.A5"> <b>Load语句</b> </span></h3>
+<p><b>格式：</b>
+</p>
+<pre> LOAD DATA INPATH 'filepath' [OVERWRITE] INTO TABLE tablename 
+</pre>
+<p><b>说明：</b>
+</p><p>将文件拷入指定的表中，这里的表不能是分区表。 1).filepath可以是相对路径，绝对路径和URI（如hdfs://namenode:9000/user/hive/project/data1 ）
+</p><p>2).filepath可以是目录，这时目录中所有文件将被拷贝到到表中，也可以是文件，这是该文件将被拷到表中。
+</p><p>3).如果路径不是绝对路径，则filepath被解释成/user/&lt;username&gt;下 的相对路径。
+</p><p>5).如果overwrite被指定，则表中的内容会先清除，然后再拷贝文件。如果overwrite没有被指定，则文件会被插入到表中，此时需要注意：如果表中的文件名如果与插入的文件同名，则表中该重名的文件会被替换。
+</p><p><b>注意：</b>
+</p><p>filepath不能含有子文件夹。 TDW不对上传的文件的结构做任何检查，用户需要保证文件的格式复合表的定义。
+</p><p><b>举例：</b>
+</p><p>加载hdfs上的数据到表test中
+</p>
+<pre> Load data inpath "hdfs://name_node:9000/user/mydata" into table test;
+</pre>
+<h3> <span class="mw-headline" id="Insert.E8.AF.AD.E5.8F.A5"> <b>Insert语句</b> </span></h3>
+<p><b>格式：</b>
+</p>
+<pre> INSERT [OVERWRITE] TABLE tablename1[COLUMNLIST] select_statement1 FROM from_statement 
+</pre>
+<p>多插入语句：
+</p>
+<pre> FROM from_statement
+INSERT [OVERWRITE] TABLE tablename1[COLUMNLIST] select_statement1
+[INSERT [OVERWRITE] TABLE tablename2[COLUMNLIST] select_statement2] ...
+COLUMNLIST&nbsp;: (col1 { , coli }*)
+</pre>
+<p>插入多行常量数据（注意这里没有TABLE关键字）：
+</p>
+<pre> INSERT [OVERWRITE] INTO tablename[COLUMNLIST] VALUES (cnst1{,cnsti}*),(cnst1{,cnsti}*)*
+</pre>
+<p><b>说明：</b>
+</p><p>将查询语句的执行结果插入到指定的表中，TDW支持多条insert子句在一条语句中。 如果目标表是分区表，则结果会自动插入到对应分区中
+</p><p><b>注意：</b>
+</p><p>如果使用overwrite方式，则目标表中的所有数据将被先删除（如果目标表是分区表，则所有的分区将被清空），然后再插入新的数据。 尽量使用多insert子句的方式，可以减少了数据的扫描，提高运行效率。 如果目标表为hash分区表，则数据在入库时会进行排序，保证每个hash分区中的数据就hash分区key而言是有序的。 外表中的数据引号问题，请看这里的注意事项
+</p><p>如果使用指定列插入的方式，必须保证被插入列（被插入表后面跟着的小括号内的字段列表）与插入列（select后面的字段列表）一一对应：字段数目相同，并且字段类型一一相同。 插入多行数据，需要注意的是，插入的每行数据需要和表中的列对应，包括字段数目和，字段类型的匹配。目前只支持常量的插入，不支持复杂类型数据，不支持函数插入。如果需要插入NULL，需要显示的使用NULL关键字，或者使用insertcolumns指定需要插入的列，而没有指定的列为空，不支持""或者<i>作为NULL输入。</i>
+</p><p><span style="font-size:large;"><span style="color: rgb(255, 0, 0);"><b>INSERT支持并发！！！</b></span></span>
+</p><p>说明：
+</p><p>1.protobuf表的repeated字段（对应为tdw中的array类型）中的单个元素不允许为空值 例如表src(key string,value array(int))。目标表desc为protobuf格式，结构与src相同。 src中的一条记录 “name" 1,null,3,4 通过select insert语句insert到desc表后的结果为：“name” 1，3，4
+</p><p>2.array类型的表可以用ARRAY(0,1)构造，例如INSERT TABLE a_roncen_array SELECT 1 ,ARRAY(0,1) FROM a_cherry_part_1 limit 1;查询时用SELECT &nbsp;a,b[0] FROM test::a_roncen_array limit 1000进行查询
+</p><p><b>含有hash分区的表insert数据时候不支持指定列名的插入。</b>
+</p><p><b>举例：</b>
+</p><p>将表a和b的链接结果插入到表test中去
+</p>
+<pre> Insert overwrite table test select * from a join b on(a.key = b.key)；
+</pre>
+<p>将查询结果插入到test和test2表中
+</p>
+<pre> From a join （select * from b where b &gt; 10）c on(a.key = c.key)
+Insert overwrite table test select a.key ,c.value
+Insert overwrite table test2 select a.key,c.key;
+</pre>
+<p>insert columns:
+</p>
+<pre> Insert overwrite table tablename(a, b) select a, b from tbl2;
+</pre>
+<p>insert values:
+</p>
+<pre> Insert into tablename(a,b) values(1,'a'),(2,'b');
+</pre>
+<h3> <span class="mw-headline" id=".E6.95.B0.E6.8D.AE.E5.AF.BC.E5.87.BA"> <b>数据导出</b> </span></h3>
+<p><b>格式：</b>
+</p>
+<pre> INSERT OVERWRITE DIRECTORY directory1 SELECT ... FROM ...;
+</pre>
+<pre> FROM from_statement
+INSERT OVERWRITE DIRECTORY directory1 select_statement1
+[INSERT OVERWRITE DIRECTORY directory2 select_statement2] ...;
+</pre>
+<p><b>说明：</b> 将查询结果输出到指定目录，TDW支持多条insert子句在一条语句中，注意只能插入到分布式文件系统的目录中。
+</p><p><b>注意：</b> 指定的hdfs目录，必须与数据在统一个集群。不能跨集群insert。
+</p><p><b>举例：</b>
+</p><p>将表test中的内容导出到HDFS指定的目录中
+</p>
+<pre> Insert overwrite directory "hdfs://name_node:9000/data/mydata" select * from test;
+</pre>
+<p>将查询结果分别导出到HDFS和本地的目录中
+</p>
+<pre> From test
+Insert overwrite directory "hdfs://name_node:9000/data/mydata" select * 
+Insert overwrite directory "hdfs://name_node:9000/data/mydata" select *&nbsp;;
+</pre>
+<h3> <span class="mw-headline" id="Update.E8.AF.AD.E5.8F.A5"> <b>Update语句</b> </span></h3>
+<p><b>说明：</b>
+</p>
+<pre>   UPDATE table_name [PARTITION (partname) tabalias]? SET col_name= expr [, col_name= expr ]*  [WHERE where_definition]?
+</pre>
+<p>Update操作的基本语法如上，从指定的table_name表中，使用表达式expr更新列col_name，set后面可以跟多个col表达式（用逗号分隔开），但不支持多层嵌套，也不支持多表连接。Where表达式子句为可选项，如果有则表示只对其中部分数据进行update，where子句只可能有一个，对前面多个set语句都有效。where子句中不可使用exist等带子查询的表达式。如果是分区表则必须显式指定分区，不支持同时指定多个分区。如果表是二级分区表则必须同时指定一级分区和二级分区。<b>在处理分区表的时候update不支持对分区字段进行update。</b>
+</p><p><b>注意：</b>
+</p><p>update暂不支持多列累计运算的功能。<b>比如set a=a+1,b=a和set b=a,a=a+1在这里的结果是一样的，跟先后顺序无关，这和传统的数据库可能有所不同。</b>&nbsp;如果出现set a=1,a=2这种重复赋值的情况，只处理最后一次赋值。 如果set的数据类型如目标列不一致，数据会被置为null。
+</p>
+<ul><li>update不支持hash分区的表，也不支持外表和视图。
+</li><li>update目前还没有<b>锁机制来保证并发性</b>，需要用户注意，对于update、delete、select并发操作同一张表的时候（同时对一张表做读和写操作），<span style="font-size:x-large;"><span style="color:#ff0000;"><b>一定要保证这些操作是串行的，否则可能引发正在运行的select操作失败</b></span></span>。<b>只<i>并行select<span style="font-size: 12px;">操作同一张表是没有问题的。</span></i></b>
+</li></ul>
+<h3> <span class="mw-headline" id="Delete.E8.AF.AD.E5.8F.A5"> <b>Delete语句</b> </span></h3>
+<p><b>说明：</b>
+</p><p>TDW支持三种删除数据的方式：
+</p>
+<ol><li>对于<b>非分区表</b>，通过Delete语句的方式支持记录级的删除（TDWV0.2R090开始支持）。
+</li><li>对于<b>分区表</b>，支持分区级的删除。
+</li><li>可以参考update，来达到删除数据的目的。
+</li></ol>
+<p>Delete语句用于非分区表中的记录删除，语法如下：
+</p>
+<pre> DELETE FROM &lt;table_name&gt;  [WHERE where_definition]
+</pre>
+<p>table_name表中有些行满足由where_definition给定的条件，DELETE用于删除这些行。
+</p><p>如果编写的DELETE语句中没有WHERE子句，将删除表中所有的行。
+</p><p>使用Delete语句时需要注意以下几点：
+</p>
+<ol><li>如果被删除的表正在被使用，Delete操作的原子性无法保证，用户最好在<b>确保</b>表在未使用时进行Delete操作。对于update、delete操作同一张表的时候，<span style="color: rgb(0, 0, 0); font-family: sans-serif; line-height: 19.046875px; font-size: x-large;"><span style="color: rgb(255, 0, 0);"><b>一定要保证这些操作是串行的，否则可能引发正在运行的select操作失败</b></span></span><span style="color: rgb(0, 0, 0); font-family: sans-serif; font-size: 13px; line-height: 19.046875px;">。</span><b>只<i>并行select<span style="font-size: 12px;">操作同一张表是没有问题的。</span></i></b>
+</li><li>Delete语句中的where_definition如果使用exists，则只能使用单个exists，也不能使用and语句和其他条件一起使用。
+</li><li>Delete语句中的where_definition如果使用exists，不能使用not exists。
+</li><li>Delete操作可以对HDFS外表进行，但HDFS外表不支持带where条件的delete语句，不带where条件的delete语句相当于truncate，<span style="color:#ff0000;">该操作会删除hdfs上的数据</span>，操作需谨慎。
+</li></ol>
+<h2> <span class="mw-headline" id="DQL.E8.AF.AD.E5.8F.A5"> <b>DQL语句</b> </span></h2>
+<hr />
+<h3> <span class="mw-headline" id="Select.E8.AF.AD.E5.8F.A5"> <b>Select语句</b> </span></h3>
+<hr />
+<p>格式：
+</p>
+<pre> SELECT [ALL | DISTINCT] select_expr, select_expr, ...
+FROM table_reference
+[WHERE where_condition] 
+[GROUP BY col_list]
+[   CLUSTER BY col_list
+| [DISTRIBUTE BY col_list] [SORT BY col_list]
+]
+[LIMIT number]
+</pre>
+<p><b>说明：</b>
+</p><p>1).一个select语句可以是一个union all或者subquery的子句 例如:
+</p>
+<pre> select * from (select * from a  union all select * from b) sub
+</pre>
+<p>2).table_reference指定数据的输入，它可以是一个表，也可以是一个join结构，也可以是子查询。
+</p><p>3).支持列名是正则表达式，例如：SELECT `(ds|hr)?+.+` FROM sales
+</p><p>4).可以在from子句中显式指定分区名减少扫描数据: 用户可以在SELECT语句中，显示指定访问哪个分区，格式如下：
+</p>
+<pre>FROM table_name PARTITION(pri_part_name[,sub_part_name]) alias
+</pre>
+<p>例如要访问test2表中的defaut一级分区中的spart_2011april二级分区中的内容：
+</p>
+<pre>SELECT key,value FROM test2 PARTITION (default,spart_2011april) t;
+
+</pre>
+<p>5).where<span style="font-family: Arial, Verdana, sans-serif;">子句中</span><span style="font-family: Arial, Verdana, sans-serif;">判断字段是否为空时使用：字段名 + is not null</span>
+</p><p><b>注意：</b>
+</p><p>1.在from子句中显式指定分区时，必须指定别名。 例如：
+</p>
+<pre>SELECT key,value FROM test2 PARTITION (default,spart_2011april) <b>t</b>;
+</pre>
+<p>不能写成
+</p>
+<pre>SELECT key,value FROM test2 PARTITION (default,spart_2011april);
+</pre>
+<p>2.<b>目前只有From后面可以跟select子查询，select_expr，where条件中不支持子查询。</b>
+</p><p><b>举例：</b>
+</p><p>取得test的表内容
+</p>
+<pre> Select * from test；
+</pre>
+<p>取得test数据的记录个数
+</p>
+<pre> Select count（1）from test；
+</pre>
+<p>返回10条groupby后的结果
+</p>
+<pre> Select key count（distinct value）from test group by key limit 10；
+</pre>
+<h3> <span class="mw-headline" id=".E8.B7.A8DB.E5.BC.95.E7.94.A8.E8.A1.A8"> <b>跨DB引用表</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre>SELECT a.key ,b.value FROM db1::a a JOIN db2::a b ON(a.key = b.key) 
+</pre>
+<p>说明： 在当前默认DB中，应用其他DB中的表。
+</p><p>目前TDW支持以下几种表名、列名引用方式。
+</p>
+<table border="1" align="center" style="text-align:center;">
+
+<tr>
+<td> DBName::TableName
+</td><td> 引用DBName的表TableName
+</td></tr>
+<tr>
+<td> TableName
+</td><td> 引用当前默认DB的TableName
+</td></tr>
+<tr>
+<td> Alias.ColumnName
+</td><td> 引用Alias指代的表的ColumnName列
+</td></tr>
+<tr>
+<td> TableName.ColumnName
+</td><td> 引用当前默认DB的表的ColumnName列
+</td></tr>
+<tr>
+<td> DBName::TableName.ColumnName
+</td><td> 引用DBName的表TableName的列ColumnName列
+</td></tr></table>
+<p>用户可以在Select语句中，通过DBName::TableName的方式引用表，为了方便期间，可以对它起别名，这样就可以用别名指代这个表。
+</p><p><b>注意：</b>
+</p><p><b>举例：</b>
+</p>
+<pre>SELECT t.a,t.b FROM db1::mytable t;
+</pre>
+<p>用户也可以将别名与表的全名混用，例如下面的写法也是合法的：
+</p>
+<pre>SELECT db1::mytable.a,t.b FROM db1::mytable t;
+</pre>
+<p>但是在一些情况下，使用别名是为了对同一个表进行区分，例如下面这种情况：
+</p>
+<pre>SELECT t1.a,t2.b FROM db1::t t1 LEFT OUTER JOIN db2::t t2 ON(t1.a=t2.a)
+</pre>
+<p>这种情况下，如果将t1.a改成表的全名，TDW查询引擎将无法区分引用的是那一个表，所以这种情况TDW解析器会报错。 如果在FROM后面的表不使用全名，则会在当前DB中查找表，此时也可以使用表的全名： 将设当前默认DB为db2，则下面的语句合法：
+</p>
+<pre>SELECT db2::kv.key,t.value FROM kv t WHERE t.key = kv.value
+</pre>
+<hr />
+<h3> <span class="mw-headline" id="Having.E5.AD.90.E5.8F.A5"> <b>Having子句</b> </span></h3>
+<p><b>说明：</b>
+</p><p>ANSI规范和Oracle均不支持在Having子句中引用&lt;select list&gt;中的alias，所以如下语句： SELECT city, AVG(age) as age FROM users GROUP BY city HAVING age &gt; 20; 是错误的，需要改写成： SELECT city, AVG(age) as age FROM users GROUP BY city HAVING AVG(age) &gt; 20;
+</p>
+<h3> <span class="mw-headline" id="Order_by.E5.AD.90.E5.8F.A5.EF.BC.88.E4.B8.8D.E5.B8.A6limit.EF.BC.89"> <b>Order by子句（不带limit）</b> </span></h3>
+<hr />
+<p><b>说明：</b>
+</p><p>目前不带limit的order by语句是通过将mapred.reduce.tasks变量设置为1，将全部数据在reduce过程拉到同一台机器上做排序来实现。数据量大时，会造成mapreduce任务无法完成，从而无法完成全局排序。 SELECT key, value FROM src ORDER BY key ASC, value DESC;
+</p><p>sort by与order by的区别 order by是所有结果按指定列排序，而sort by是让每一个reduce的结果按照指定列排序，如果只有一个reduce，则sort by与 order by返回相同的结果。
+</p>
+<h3> <span class="mw-headline" id="Order_by.E5.AD.90.E5.8F.A5.EF.BC.88.E5.B8.A6limit.EF.BC.89"> <b>Order by子句（带limit）</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> SELECT [ALL | DISTINCT] select_expr, select_expr, ...
+FROM table_reference
+[WHERE where_condition] 
+ORDER BY col_list
+LIMIT number
+</pre>
+<p><b>说明：</b>
+</p><p>目前带limit的order by语句通过在每一个Map取topN，在Reduce阶段将#Map×N条记录拉到同一台机器做排序，从而完成数据的取前Top N的操作。可以实现数据的排序后取前N的操作。 SELECT key, value FROM src ORDER BY key LIMIT N;
+</p><p>Order by +limit 中limit值的设置： 默认配置在hive-default.xml文件中
+</p>
+<pre>   &lt;property&gt;
+    &lt;name&gt;hive.sortby.limit.maxcount&lt;/name&gt;
+    &lt;value&gt;1024&lt;/value&gt;
+    &lt;description&gt;When limit is specified after sort by, this is the max value for limit&lt;/description&gt;
+&lt;/property&gt;
+</pre>
+<p>默认limit的最大值为1024，当sql中的limit值大于设置的最大值时，会在语法检查中报错并有如下提示： FAILED: Error in semantic analysis: line 1:42 Limit value is Too BIG for ORDER BY(Default Max Limit:1024) 若需修改limit的最大值可通过在hive命令行下修改hive.sortby.limit.maxcount变量的值即可。修改命令如下所示： set hive.sortby.limit.maxcount=10240
+</p>
+<h3> <span class="mw-headline" id="group_by.E5.AD.90.E5.8F.A5"> <b>group by子句</b> </span></h3>
+<hr />
+<p><b>说明：</b>
+</p><p>支持group by，支持一条语句中包含多个聚集函数，如：
+</p>
+<pre> SELECT pv_users.gender, count(DISTINCT pv_users.userid), count(1), sum(DISTINCT pv_users.userid)
+FROM pv_users
+GROUP BY pv_users.gender;
+</pre>
+<p><b>注意：</b>
+</p><p>1).目前不支持一条语句含有多个对不同列的dinstinct聚集函数 例如下面的语句暂时不支持：
+</p>
+<pre> INSERT OVERWRITE TABLE pv_gender_agg
+SELECT pv_users.gender, count(DISTINCT pv_users.userid), count(DISTINCT pv_users.ip)
+FROM pv_users
+GROUP BY pv_users.gender;
+</pre>
+<p>这个功能在下一个版本将支持。 2).支持一条语句多group by，对于这样的语句TDW将做优化，它的运行效率将比两条高。
+</p>
+<pre> FROM pv_users 
+INSERT OVERWRITE TABLE pv_gender_sum
+SELECT pv_users.gender, count(DISTINCT pv_users.userid) 
+GROUP BY pv_users.gender 
+INSERT OVERWRITE DIRECTORY '/user/facebook/tmp/pv_age_sum'
+SELECT pv_users.age, count(DISTINCT pv_users.userid) 
+GROUP BY pv_users.age; 
+</pre>
+<p><br />
+</p>
+<h3> <span class="mw-headline" id="join.E6.93.8D.E4.BD.9C"> <b>join操作</b> </span></h3>
+<hr />
+<p>格式： join_table:
+</p>
+<pre>   table_reference JOIN table_factor [join_condition]
+| table_reference {LEFT|RIGHT|FULL} OUTER JOIN table_reference join_condition
+</pre>
+<p>table_reference:
+</p>
+<pre>   table_factor
+| join_table
+</pre>
+<p>table_factor:
+</p>
+<pre>   tbl_name [alias]
+| table_subquery alias
+| ( table_references )
+</pre>
+<p>join_condition:
+</p>
+<pre>   ON equality_expression ( AND equality_expression )*
+</pre>
+<p>equality_expression:
+</p>
+<pre>   expression = expression
+</pre>
+<p>目前只支持等值链接，例如
+</p>
+<pre> SELECT a.* FROM a JOIN b ON (a.id = b.id) 
+</pre>
+<p>和
+</p>
+<pre> SELECT a.* FROM a JOIN b ON (a.id = b.id AND a.department = b.department)
+</pre>
+<p>都是合法的 但是
+</p>
+<pre> SELECT a.* FROM a JOIN b ON (a.id &lt;&gt; b.id)
+</pre>
+<p>不是合法的。
+</p><p>支持多表链接，如
+</p>
+<pre> SELECT a.val, b.val, c.val FROM a JOIN b ON (a.key = b.key1) JOIN c ON (c.key = b.key2)
+</pre>
+<p>Hash Map Join操作 格式： join_table:
+</p>
+<pre>   table_factor JOIN table_factor join_condition
+</pre>
+<p>table_factor:
+</p>
+<pre>   tbl_name [alias]
+</pre>
+<p>join_condition:
+</p>
+<pre>   ON equality_expression
+</pre>
+<p>equality_expression: expression = expression
+</p><p>mapjoin_hints:
+</p>
+<pre> /*+mapjoin(alias|tbl_name)*/
+</pre>
+<p>select mapjoin_hints select_expr, select_expr, ... from jointable
+</p><p>说明： [left|right|full] outer join目前outer不能省略。但在SQL标准中，outer是可选的，有outer和没有outer语义是等价的。 参与连接的数据表必须采用了hash分区，且hash分区数相同。
+</p><p>必须显式的使用hints，并将小表名写在hints中，例如：
+</p>
+<pre> SELECT /*+mapjoin(a)*/ a.* FROM table1 a JOIN table2 b ON (a.qq_num = b.qq_num);
+</pre>
+<p>连接顺序必须为小表连接大表。比如，在上例中，a表应为在hints中提到的需要在map端缓存的表。
+</p><p>和连接一样目前只支持等值连接。
+</p><p>目前提供内连接、左外连接（左表不可以是小表）和右外连接（右表不可以是小表）功能。
+</p><p>Hash Map Join支持对大表或小表进行分支修剪。
+</p><p>考虑到map join比较消耗内存，不支持多表连接。
+</p><p>在开始执行hash map join之前，需要对部分参数进行设置。主要包括：mapred.child.java.opts、hive.mapjoin.cache.numrows、Sorted.Merge.Map.Join。详细说明如下：
+</p><p>hive.mapjoin.cache.numrows：hash map join会优先将计算所需的小表键值对保存在内存容器中，剩下的键值对将被保存到硬盘。该参数决定保存在内存中的记录条数，系统默认设置该参数为500000。该条数越多，所需的内存越多，则需要将mapred.child.java.opts设的越大。TDW中的默认hash分区数为500，因此，用户可以根据小表的行数算出将该参数设为多少较合适。示例如下：
+</p>
+<pre> set hive.mapjoin.cache.numrows=3000000；
+</pre>
+<p>mapred.child.java.opts：该参数设置map任务和reduce任务可用的虚拟机最大内存。由于map join是一个比较消耗内存的操作，而默认的内存大小为1G，即1024M，因此，在执行上述hash map join查询命令之前最好先用set命令设置内存大小。根据经验数据，在列数不多的情况下，一百万条记录所需的内存容器大小约为500~700MB.因此，如果在内存中缓冲的数据条数为300万，则将该参数设为3072M较为稳妥。原则上，mapred.child.java.opts的大小不要超过4096M。如果单个map任务要处理的条数较多，超过内存限制，则可以根据可用内存大小设置hive.mapjoin.cache.numrows，超出部分将被放入硬盘文件缓存。示例如下： set mapred.child.java.opts=-Xmx4096M；
+</p><p>TDW中提供了两种hash map join算法，两者的区别是一种算法使用hash map作为内存容器，而后一种使用数组（sorted list）作为内存容器。前者是TDW中的默认hash map join算法，后者的速度更快，对内存的需求更少。但是，后者要求小表的每个hash分区中的数据必须是有序的，且如果小表的hash分区是二级分区的话不能有多个一级分区参与计算。如要使用基于sorted list的算法，则执行以下命令：
+</p>
+<pre> set Sorted.Merge.Map.Join = true；
+</pre>
+<p>否则，
+</p>
+<pre> set Sorted.Merge.Map.Join = false；
+</pre>
+<p>注意：Hash Map Join不支持与其他查询组合在一起形成复杂的查询语句。
+</p><p><b>举例：</b>
+</p>
+<pre> insert overwrite table tmpCS select /*+ mapjoin(a)*/ a.* from userprofileCS a join tcssCS b on a.QQ_NUM=b.QQ_NUM where b.INSERTDATE = '2010-05-10';
+</pre>
+<h3> <span class="mw-headline" id="Union_.5BAll.5D.E6.93.8D.E4.BD.9C"> <b>Union [All]操作</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> SELECT *
+FROM (
+select_statement
+UNION [ALL]
+select_statement
+) unionResult
+</pre>
+<p><b>说明：</b>
+</p><p>目前支持union all操作和去重的union操作。SQL中不包含all关键字则表示为去重union，将对结果集做去重操作。
+</p><p><b>注意：</b>
+</p><p>1.union [all]链接起来的select子句，不能有别名，例如上面的select_statement不需要别名。
+</p><p>2.union [all]整体必须有别名，例如上面的unionResult，外层select可以将unionResult当作临时表，引用它的列。
+</p><p>3.每个select_statement选出的列，可以有别名，但是TDW会以UNION [ALL]的第一个select子句的列名或者别名作为unionResult的列名，供外层引用。
+</p><p><b>举例：</b>
+</p><p>Union后进行join操作
+</p>
+<pre> SELECT u.id, actions.date
+FROM (
+    SELECT av.uid AS uid, av.date AS date 
+    FROM action_video av 
+    WHERE av.date = '2008-06-03' 
+    UNION ALL 
+    SELECT ac.uid AS uid, ac.date AS date 
+    FROM action_comment ac 
+    WHERE ac.date = '2008-06-03' 
+ ) actions JOIN users u ON (u.id = actions.uid)
+</pre>
+<h3> <span class="mw-headline" id=".E5.A4.9A.E7.BB.B4.E5.88.86.E6.9E.90.EF.BC.88ROLLUP.E3.80.81CUBE.E3.80.81grouping.E5.87.BD.E6.95.B0.EF.BC.89"> <b>多维分析（ROLLUP、CUBE、grouping函数）</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> SELECT selectClause
+FROM fromClause
+WHERE whereClause&nbsp;?
+GROUP BY groupbyClause
+HAVING havingClause?
+...
+</pre>
+<p><br />
+</p><p><b>说明：</b> 在上面的格式中，带问号的子句和用省略号代替的子句，可有可无。
+</p><p>1.ROLLUP对groupbyClause进行扩展，可以令SELECT语句根据分组的维度计算多层小计，并计算总计。位于ROLLUP中的只能是普通列（可以是包含不普通列的算式）或者前者的组合。 ROLLUP的一般用法为：
+</p>
+<pre>group by [groupby_list,] rollup(groupby_list)，[groupby_list]
+</pre>
+<p>例如，
+</p>
+<pre>group by rollup（time，region，department）
+</pre>
+<p>2.CUBE子句也是对GROUP BY进行扩展，返回CUBE中所有列组合的小计信息，同时,在最后显示总计信息。位于CUBE中的只能是普通列（可以是包含不普通列的算式）或者前者的组合。 CUBE的一般用法为：
+</p>
+<pre>group by [groupby_list,] cube (groupby_list)，[groupby_list]
+</pre>
+<p>例如，
+</p>
+<pre>group by expr1, cube(expr2, expr3)
+</pre>
+<p>3.GROUPINGSETS子句也是对GROUP BY进行扩展，返回GROUPINGSETS中每个分组的分组聚合。位于GROUPINGSETS中的只能是普通列（可以是包含不普通列的算式）或者前者的组合。 GROUPINGSETS的一般用法为：
+</p>
+<pre>group by [groupby_list,] GROUPINGSETS(groupby_list)，[groupby_list]
+</pre>
+<p><b>注意：此功能在qev1.0r025版本以后提供，如要使用需要打开如下开关：</b>
+</p>
+<pre>set hive.optimize.cuberollup=true
+</pre>
+<p>例如，
+</p>
+<pre>group by expr1, GROUPINGSETS(expr2, expr3)
+</pre>
+<p>4.使用ROLLUP或CUBE中的一个列作为参数，grouping函数在遇到ROLL UP和CUBE生成的NULL值时，返回1。就是说，如果这一列是个小计或总计时，grouping返回1，否则返回0。grouping函数只能在使用ROLLUP或CUBE的查询中使用。grouping函数一般出现在select子句中，也可以出现在having子句中。形如，
+</p>
+<pre>select …， [grouping(column in groupby_list) … ]
+…
+group by … {CUBE | ROLLUP} (groupby_list)
+</pre>
+<p>例如，
+</p>
+<pre>select ...,grouping(expr1),...
+...
+group by ...CUBE(expr1,...)...
+...
+</pre>
+<p>5.此外，与ORACLE类似，TDW支持在ROLLUP中使用括号将部分普通列组合在一起，作为一个整体。只是语法略有不同。ORACLE中允许使用括号直接将列组合在一起，TDW中由于语法冲突问题，需要用户在括号外增加一个group关键词。例如： ROLLUP (year, group(quarter, month), day)意味着：
+</p>
+<pre>group by  year, quarter, month, day         +
+group by  year, quarter, month              +
+group by  year                              +
+总计
+</pre>
+<p><b>注意：</b>
+</p><p>1.为了避免出错，特别是在有非select、from、group by、where、having子句的情况下，最好用as 给select列起别名，并在那些子句中使用别名，但这不是强制性的，而是与其他SQL的惯例一致。
+</p><p>2.考虑到含义存疑，多维分析暂不支持select distinct。
+</p><p>3.当使用group把多个普通列组合在一起时，不允许group的多层嵌套，当然也不允许在group中嵌套cube或rollup。
+</p><p>4.多维分析不支持SELECT *。
+</p>
+<h3> <span class="mw-headline" id=".E5.A4.84.E7.90.86protobuf.E8.A1.A8.E4.B8.ADrepeated_.E5.AD.97.E6.AE.B5.E7.9A.84SQL"> <b>处理protobuf表中repeated 字段的SQL</b> </span></h3>
+<hr />
+<p><b>Lateral View + explode 实现对repeated字段做sql计算</b>
+</p><p><b>举例：</b>
+</p><p>假设广告展示表AdImpression的定义中每个广告展示的记录由一个页面的id和当前页面上展示的广告几个id的list组成，其proto定义为：
+</p>
+<pre> message AdImpression{
+required string pageid = 1;
+repeated int adid_list =2;
+}
+</pre>
+<p>当前表中有如下数据：
+</p>
+<table border="1" style="text-align:center;">
+
+<tr>
+<td> string pageid
+</td><td> Array&lt;int&gt; adid_list
+</td></tr>
+<tr>
+<td> "front_page"
+</td><td> [1, 2, 3]
+</td></tr>
+<tr>
+<td> "contact_page"
+</td><td> [3, 4, ]
+</td></tr></table>
+<p>对表做lateral view + explode 的SQL如下所示：
+</p>
+<pre> SELECT pageid, adid FROM pageAds LATERAL VIEW explode(adid_list) adTable AS adid;
+</pre>
+<p>可以产生如下的输出：
+</p>
+<table border="1" style="text-align:center;">
+
+<tr>
+<td> string pageid
+</td><td> int adid
+</td></tr>
+<tr>
+<td> "front_page"
+</td><td> 1
+</td></tr>
+<tr>
+<td> "front_page"
+</td><td> 2
+</td></tr>
+<tr>
+<td> "front_page"
+</td><td> 3
+</td></tr>
+<tr>
+<td> "contact_page"
+</td><td> 3
+</td></tr>
+<tr>
+<td> "contact_page"
+</td><td> 4
+</td></tr></table>
+<p><br />对repeated字段explode后的结果做方便的计算：
+</p>
+<pre> SELECT adid, count(1) 
+FROM pageAds LATERAL VIEW explode(adid_list) adTable AS adid
+GROUP BY adid;
+</pre>
+<table border="1" style="text-align:center;">
+
+<tr>
+<td> int adid
+</td><td> count(1)
+</td></tr>
+<tr>
+<td> 1
+</td><td> 1
+</td></tr>
+<tr>
+<td> 2
+</td><td> 1
+</td></tr>
+<tr>
+<td> 3
+</td><td> 2
+</td></tr>
+<tr>
+<td> 4
+</td><td> 1
+</td></tr></table>
+<p>repeated字段的值可能为空，在TDW中为explode增加了<b>设置缺省值</b>的功能。（TDWV0.2R090开始支持）
+</p>
+<pre> select id, testid from explodetest LATERAL VIEW explode(test) testdd as testid;
+</pre>
+<table border="1" style="text-align:center;">
+
+<tr>
+<td> int adid
+</td><td> count(1)
+</td></tr>
+<tr>
+<td> 2
+</td><td> 3
+</td></tr>
+<tr>
+<td> 2
+</td><td> 4
+</td></tr>
+<tr>
+<td> 2
+</td><td> 5
+</td></tr></table>
+<pre> select id, testid from explodetest LATERAL VIEW explode(test，<b>100</b>) testdd as testid;
+</pre>
+<table border="1" style="text-align:center;">
+
+<tr>
+<td> int adid
+</td><td> count(1)
+</td></tr>
+<tr>
+<td> 2
+</td><td> 3
+</td></tr>
+<tr>
+<td> 2
+</td><td> 4
+</td></tr>
+<tr>
+<td> 2
+</td><td> 5
+</td></tr>
+<tr>
+<td> 3
+</td><td> 100
+</td></tr></table>
+<p>在使用缺省值的时候限定如下：
+</p>
+<ol><li>对于Map类型还有Struct类型无法支持，可以支持List类型
+</li><li>对于基本类型可以支持int到bigint，float到double的自动类型提升，而List类型不能支持。
+</li></ol>
+<p><b>注意！！</b>
+</p><p>当前直接对explode产生的列做where计算是会有问题，需要将lateral view + explode 产生的结果做为子查询，再对子查询的结果做where过滤，例如查询id为3的广告都在哪些广告展示中出现：
+</p>
+<pre>  SELECT pageid FROM pageAds LATERAL VIEW explode(adid_list) adTable AS adid where adid = 3;
+</pre>
+<p>需要改写为：
+</p>
+<pre>  SELECT pageid FROM 
+(SELECT pageid,adid FROM pageAds LATERAL VIEW explode(adid_list) adTable AS adid) subq 
+where adid = 3;
+</pre>
+<h3> <span class="mw-headline" id="with.E8.AF.AD.E5.8F.A5"> <b>with语句</b> </span></h3>
+<pre> [INSERT [OVERWRITE] INTO TABLE destination]
+with   
+alias_name1 as    (subquery1),  
+alias_name2 as    (subQuery2),  
+……  
+alias_nameN as    (subQueryN)  
+select col1,col2…… col3   
+   from alias_name1,alias_name2……,alias_nameN 
+</pre>
+<p>说明： 1.如果前面有insert，语法为insert [overwrite] into table tablename，这跟跟传统关系数据库可能会不一致。 2.最后的主查询语句必须是select语句，暂时不支持update和delete。 3.暂不支持with recursive这种递归调用的高级用法。 4.主查询select语句from后面也可跟子查询，并不限于上面的示例。
+</p>
+<h2> <span class="mw-headline" id="SQL.2FMED.E5.A4.9A.E6.95.B0.E6.8D.AE.E6.BA.90.E6.93.8D.E4.BD.9C"> SQL/MED多数据源操作 </span></h2>
+<h3> <span class="mw-headline" id=".E5.88.9B.E5.BB.BATDW.E5.A4.96.E8.A1.A8.E5.85.B3.E8.81.94PostgreSQL.E6.88.96.E8.80.85Oracle.E4.B8.AD.E7.9A.84.E6.95.B0.E6.8D.AE"> 创建TDW外表关联PostgreSQL或者Oracle中的数据 </span></h3>
+<p><b>格式：</b> 创建TDW外表关联外部数库中的表：
+</p>
+<pre>CREATE [EXTERNAL] TABLE [IF NOT EXISTS] table_name
+[(col_name data_type [COMMENT col_comment], ...)] WITH (
+ip='domain',port='XXX',db_name='XXX',user_name='XXX',pwd='XXX',table_name='XXX',charset='gbk|utf8',db_type='pg|ora|pgsql|oracle');
+</pre>
+<p>或者创建TDW外表关联外部数据库中的SQL结果
+</p>
+<pre>CREATE [EXTERNAL] TABLE [IF NOT EXISTS] table_name
+[(col_name data_type [COMMENT col_comment], ...)] WITH (
+ip='domain',port='XXX',db_name='XXX',user_name='XXX',pwd='XXX',<i>sql="XXX"</i>,db_type='pg|ora|pgsql|oracle');
+</pre>
+<p><b>说明：</b>
+</p><p>在TDW中创建一张外表，关联其他DBMS数据库中的数据。数据可以是其他数据库中的表，也可以是其他数据库中的一条SQL语句返回的结果集，分别对应上面两种格式（差别在于前者用table_name选项，而后者用sql选项）。目前只支持PostgreSQL 9.0,9.1数据库和Oracle 11g数据库。 创建好的外表，在TDW中可以当作普通表使用，可以与其他TDW中的表做JOIN等操作，也可以insert或者insert select。因此，推荐将经常变动的表、配置表等，在其他数据库中保存，然后在TDW以外表关联之，以补充TDW不支持update和delete的功能。
+</p><p><span style="color:#ff0000;"><span style="font-size:medium;">如果在tdw中建pg/bi库的外表，推荐的方式是使用pgdata存储引擎，pgdata存储引擎只需要在tdw中发起create table语句，然后系统会自动在bi库中建对应的表，并且在tdw中建关联关系，使用更方便。</span></span>
+</p><p><span style="color:#ff0000;"><span style="font-size:medium;">pgdata存储引擎的更多信息请看这里：</span></span><span style="color:#0000ff;"><span style="font-size:medium;"><a href="http://tdw.boss.com/wiki/index.php/TDW_PGDATA_%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BB%8B%E7%BB%8D" class="external text" rel="nofollow">pgdata存储引擎</a></span></span><span style="font-size:medium;"></span>
+</p><p><b>注意：</b>
+</p>
+<ol><li>with选项ip，port，pwd，sql的值必须为字符串，也就是必须用引号引起来，否则会报错；其他选项可以不加引号；<span style="color:#ff0000;">ip必须是域名。</span>
+</li><li>如果Oracle或者PG中的表为GBK编码，则需要指定charset='gbk'才能正常显示中文,如果是utf8编码，则charset可以忽略。
+</li><li>db_type可选的值为pgsql、pg、oracle、ora。当为pgsql、pg时将连接PostgreSQL,当为oracle,ora时，将连接Oracle。
+</li><li>如果sql中包含单引号，则可以使用双引号把真个SQL引起来；如果sql中包含双引号，则可以用单引号将它引起来。
+</li><li>创建的外表可以insert数据，暂时不可以修改、增加和删除数据
+</li><li>外表的数据不宜过大，否则会影响SQL效率。推荐对10万行以下的数据创建外表，如果超过10万行，请将PostgreSQL或者Oracle中的表直接建在TDW中。
+</li><li>建表时，列的数目必须和sql或者table指定的查询生成的列的数目一致，如果不一致则会报错。
+</li><li>因为TDW的类型与其他数据库不是一一对应的，所以，请按照以下表格，将其他数据库的类型，对应为相应的HIVE类型：
+</li></ol>
+<p><a href="/wiki/index.php/%E6%96%87%E4%BB%B6:Extt.png" class="image" title="RTENOTITLE"><img alt="RTENOTITLE" src="/wiki/images/b/bd/Extt.png" width="578" height="200" /></a>
+</p><p><br />
+</p><p><span style="font-size:medium;"><span style="color:#ff0000;"><b>【优化】：</b>如果在tdw中发起的tdw sql语句涉及的表只包含pg外表，且语法符合postgresql，则这个sql会直接发送给pg，而不会在tdw通过mapreduce执行，这时执行速度会与直接在pg中运行一样快。通常比在tdw中执行快很多。</span></span>
+</p><p><b>举例：</b>
+</p><p>创建外表关联Oracle中的表：
+</p>
+<pre>CREATE external TABLE  JOBS2 
+(	
+JOB_ID STRING, 
+JOB_TITLE STRING, 
+MIN_SALARY DOUBLE, 
+MAX_SALARY DOUBLE
+)WITH(ip='my_oracle_domian.com',port='1521',db_name='test',user_name='hr',pwd='hr',sql="select * from JOBS",db_type='ora');
+</pre>
+<p><br />
+</p>
+<pre>CREATE external TABLE  JOBS2 
+(	
+JOB_ID STRING, 
+JOB_TITLE STRING, 
+MIN_SALARY DOUBLE, 
+MAX_SALARY DOUBLE
+)WITH(ip='my_oracle_domain.com',port='1521',db_name='test',user_name='hr',pwd='hr',table_name="JOBS",db_type='ora');
+</pre>
+<h3> <span class="mw-headline" id="ExecExtSQL.E6.89.A7.E8.A1.8C.E5.A4.96.E9.83.A8DB.E5.91.BD.E4.BB.A4"> ExecExtSQL执行外部DB命令 </span></h3>
+<p><b>格式：</b>
+</p>
+<pre>ExecExtsql 'sql' with (ip='xx',port='xx',db_name='xx',user_name='xx',pwd='xx',db_type='xx');
+</pre>
+<p><br /><b>说明：</b>
+</p><p>此命令，实现在TDW中运行其他数据库sql。它将DDL、DML语句发送到指定的DBMS中运行，如果成功，会返回影响的行数（DDL语句可能影响函数为0），如果错误，会返回所连接的DB定义的错误码和错误信息。目前TDW只支持Oracle 11g数据库和PostgreSQL 9.0、PostgreSQL 9.1数据库。
+</p><p><b>注意：</b>
+</p>
+<ol><li>with选项ip，port，pwd的值必须为字符串，也就是必须用引号引起来，否则会报错；其他选项可以不加引号。<span style="color:#ff0000;">ip必须是域名。</span>
+</li><li>db_type可选的值为pgsql、pg、oracle、ora。当为pgsql、pg时将连接PostgreSQL,当为oracle,ora时，将连接Oracle。
+</li><li>如果sql中包含单引号，则可以使用双引号把真个SQL引起来；如果sql中包含双引号，则可以用单引号将它引起来。
+</li><li>这个语句只能支持DDL、DML等不返回数据集的语句发送的远程DBMS，不支持select语句。
+</li><li>sql字符串中只能包含一条SQL，不能包含多条SQL。SQL不需要使用分号结尾（PG SQL后的分号可选，而Oracle以分号结尾会报错）
+</li></ol>
+<p><b>举例：</b>
+</p><p>在PostgreSQL上创建xxxx表：
+</p>
+<pre>execextsql "create table xxxx(xx int) " with('user_name'='test',pwd='test',"db_name"="test",ip='boss-bi-tdw',port='5432');
+</pre>
+<p>在Oracle上创建xxxx表：
+</p>
+<pre>execextsql "create table xxxx(xx int) " with('user_name'='allison','pwd'='abc',"db_name"="bic",ip="my_oracle.com",port='1521',db_type=ora);
+</pre>
+<p>在oracle上执行insert语句：
+</p>
+<pre>execextsql "insert into jobs values('mmmm','bbb',1111,2222) " with('user_name'='allison','pwd'='abc',"db_name"="bic",ip="my_oralce.com",port='1521',db_type=ora);
+</pre>
+<h2> <span class="mw-headline" id="DCL.E8.AF.AD.E5.8F.A5"> <b>DCL语句</b> </span></h2>
+<hr />
+<h3> <span class="mw-headline" id=".E5.88.9B.E5.BB.BA.E7.94.A8.E6.88.B7"> <b>创建用户</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> CREATE USER username IDENTIFIED BY 'passwd'
+</pre>
+<p><b>说明：</b>
+</p><p>TDW系统中有3类用户：root用户、DBA（DataBase Administer）用户和普通用户。在系统的初始状态下，系统中只有一个root用户。root用户的权限类似于超级用户，他可以创建用户或角色，可以修改普通用户/角色的权限，也可以修改DBA用户/角色的权限。此外，root用户还可以修改所有用户的密码。当普通用户被root用户被授予DBA全局权限后，该用户就成为DBA用户。DBA用户可以创建用户或角色，可以修改普通用户/角色的权限，也可以修改普通用户的密码。普通用户没有任何系统管理权限，可以给自己修改密码。
+</p><p>在创建新用户时不分配任何权限，需要在用户创建完成后，通过GRANT命令给该用户分配相应的权限。
+</p><p>在创建新用户时必须提供新用户的初始密码。用户名长度位于1~16个字符之间，密码位于1~41个字符之间。其中，字符请使用字母、数字和下划线，但不能为纯数字、hive关键字，或者直接取名为user或role都是不允许的。另外，请不要使用特殊字符（如汉字、#、%等），尽管系统并不禁止使用。新用户名不可以和已有的用户名和角色名重复。用户名将被转换为小写保存到系统中，也就是说，“user1”和“USER1”表示的是同一个用户。因此，请不要用大小写区分用户名。
+</p><p>该命令只可以由root用户和DBA用户执行。
+</p><p><b>注意：</b>
+</p><p><b>举例：</b>
+</p>
+<pre> create user user1 identified by 'passwd'
+</pre>
+<h3> <span class="mw-headline" id=".E5.88.A0.E9.99.A4.E7.94.A8.E6.88.B7"> <b>删除用户</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> DROP USER username
+</pre>
+<p><b>说明：</b>
+</p><p>该命令执行后，该用户的全局权限、数据库权限和数据表权限均将被删除。只有root用户和DBA用户可以执行该命令。
+</p><p><b>注意：</b>
+</p><p>允许同时删除多个用户，用户名之间用','分隔。 只有root用户可以删除DBA用户。
+</p><p><b>举例：</b>
+</p>
+<pre> drop user user1，user2
+</pre>
+<h3> <span class="mw-headline" id=".E4.BF.AE.E6.94.B9.E5.AF.86.E7.A0.81"> <b>修改密码</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> SETPASSWD TO 'new passwd'
+</pre>
+<p><b>说明：</b>
+</p><p>修改用户自己或者他人的密码。
+</p><p><b>注意：</b>
+</p><p>root用户或DBA用户可以使用该命令为其他用户修改密码。但是，DBA用户的密码只有DBA用户自己或者root用户可以修改。此时的命令格式如下：
+</p>
+<pre> SETPASSWD FOR username TO 'newpasswd'
+</pre>
+<p><b>举例：</b>
+</p>
+<pre> setpasswd to 'newpasswd'
+</pre>
+<h3> <span class="mw-headline" id=".E5.88.97.E4.B8.BE.E7.94.A8.E6.88.B7"> <b>列举用户</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> SHOW USERS
+</pre>
+<p><b>说明：</b>
+</p><p>列举出所有的用户的名字。
+</p><p>注意：
+</p><p><b>举例：</b>
+</p>
+<pre> show users
+</pre>
+<h3> <span class="mw-headline" id=".E6.8E.88.E4.BA.88.E7.94.A8.E6.88.B7.E6.9D.83.E9.99.90"> <b>授予用户权限</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> GRANT privileges ON dbname.tablename TO username
+</pre>
+<p><b>说明：</b>
+</p><p>用于给用户授予权限。 privileges是权限列表，权限间用逗号分隔，ALL可以用于代表除DBA外的所有权限。例如： grant all on *.* to user1 //授予user1操作TDW中所有数据库和表的所有权限（但不包含DBA权限）
+</p><p><b>注意：</b>
+</p><p>该命令只有root用户和DBA用户可以执行，其中，只有root用户可以给其他用户授予DBA权限或者给DBA用户授予权限。 同一条有效的授权命令可以被重复执行多次而不会带来其他问题，也不会因重复授予用户相同权限而被警告。
+</p><p>GRANT权限可以分别作用在多个层次上
+</p><p>①GRANT作用在整个TDW系统中： 举例： grant select on *.* to user2 // user2可以查询TDW中所有数据库中的表 ②GRANT作用在单个数据库上： 举例： grant drop on db1.* to user3 //user3可以删除数据库db1中的任何表 ③GRANT作用在单个数据表上： 举例： grant select,insert,update,delete on db1.table2 to user3 //user3可以对数据库db1中的表table2执行查询、插入、更新和删除行的操作
+</p><p>DBA权限
+</p><p>如前所述，DBA是一个特殊的全局权限，当用户被授予DBA权限后，他将拥有与所有的全局相当甚至更高的权利。但是，与root用户不同，DBA用户不具备对DBA的操作权限，也就是说，他无法给其他用户授予/收回DBA权限，也不能修改其他DBA用户的密码。DBA权限可以以与授予全局权限相同的方法授予，即， grant dba on *.* to user1 或者，由root用户通过以下的简写方式授予用户。注意：DBA权限意味着拥有了所有其他权限，所以，DBA权限尽量单独授予。 grant dba to user1
+</p>
+<h3> <span class="mw-headline" id=".E6.92.A4.E9.94.80.E7.94.A8.E6.88.B7.E6.9D.83.E9.99.90"> <b>撤销用户权限</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> REVOKE privileges ON dbname.tablename FROM username
+</pre>
+<p><b>说明：</b>
+</p><p>REVOKE命令可以收回某个用户的部分或全部权限，REVOKE跟GRANT的语法差不多，只需要把关键字 “TO” 换成 “FROM” 即可。
+</p><p><b>注意：</b>
+</p><p>收回用户的全局权限的时候不会影响用户的数据库权限和表权限，相应的，收回数据库权限的时候不会影响用户的数据表权限。 只有root用户才能撤销DBA用户的权限。 可以收回用户并未被授予的权限，不会带来其他问题，尽管毫无意义。 同一条有效的收回权限命令可以被重复执行多次而不会带来其他问题，也不会因重复收回用户相同的权限而被警告。 目前系统不支持撤销全局权限拥有者（*.*）的数据库级权限（某db.* 或 某db.某tbl）。
+</p><p><br /><b>举例：</b>
+</p>
+<pre> revoke all on db1.* from user2 //收回user2在数据库db1上的所有权限。
+revoke dba from user1       //收回user1的DBA权限
+</pre>
+<h3> <span class="mw-headline" id=".E6.98.BE.E7.A4.BA.E7.94.A8.E6.88.B7.2F.E8.A7.92.E8.89.B2.E6.9D.83.E9.99.90"> <b>显示用户/角色权限</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> SHOW GRANTS FOR username/rolename
+</pre>
+<p><b>说明：</b>
+</p><p>该命令用于查看用户或角色的权限。
+</p><p><b>注意：</b>
+</p><p><b>举例：</b>
+</p>
+<pre> show grants for user2
+</pre>
+<h3> <span class="mw-headline" id=".E5.88.9B.E5.BB.BA.E8.A7.92.E8.89.B2"> <b>创建角色</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> CREATE ROLE rolename
+</pre>
+<p><b>说明：</b>
+</p><p>只有root用户或DBA用户可以创建角色。
+</p><p><b>注意：</b>
+</p><p>可以同时创建多个角色。 角色名的命名方法与用户名相同。 角色名不可与用户名重复。
+</p><p><b>举例：</b>
+</p>
+<pre> create role role1，role2
+</pre>
+<h3> <span class="mw-headline" id=".E5.88.A0.E9.99.A4.E8.A7.92.E8.89.B2"> <b>删除角色</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> DROP ROLE rolename
+</pre>
+<p><b>说明：</b>
+</p><p>只允许root用户和DBA用户执行该命令。 如果命令中的角色涉及到了DBA权限，则只允许root用户执行。 当角色被删除时，与该角色相关的权限也被删除。相应的拥有该角色的用户或角色的角色列表也将被更新。
+</p><p><b>注意：</b>
+</p><p>允许同时删除多个角色。
+</p><p><b>举例：</b>
+</p>
+<pre> drop role role1，role2
+</pre>
+<h3> <span class="mw-headline" id=".E5.88.97.E4.B8.BE.E8.A7.92.E8.89.B2"> <b>列举角色</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> SHOW ROLES
+</pre>
+<p><b>说明：</b>
+</p><p>任何用户均可以使用该命令列举TDW中的全部角色。
+</p><p><b>注意：</b>
+</p><p><b>举例：</b>
+</p>
+<pre> show roles
+</pre>
+<h3> <span class="mw-headline" id=".E6.8E.88.E4.BA.88.E8.A7.92.E8.89.B2.E6.9D.83.E9.99.90"> <b>授予角色权限</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> GRANT privileges ON dbname.tablename TO rolename
+</pre>
+<p><b>说明：</b>
+</p><p>GRANT命令也可以用于给角色授予权限，该命令的格式与给用户授权的格式完全相同。
+</p><p><b>注意：</b>
+</p><p>只允许root用户和DBA执行该命令。 如果命令中涉及到了DBA权限，则只允许root用户执行。
+</p><p><b>举例：</b>
+</p>
+<pre> grant all on *.* to role2     //授予role2操作整个TDW数据仓库的权限；
+grant dba to role1          //授予role1 DBA权限
+</pre>
+<h3> <span class="mw-headline" id=".E6.92.A4.E9.94.80.E8.A7.92.E8.89.B2.E6.9D.83.E9.99.90"> <b>撤销角色权限</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> REVOKE privileges ON dbname.tablename FROM rolename
+</pre>
+<p><b>说明：</b>
+</p><p>REVOKE命令也可以收回某个角色的部分或全部权限。
+</p><p><b>注意：</b>
+</p><p>只允许root用户和DBA执行该命令。 如果命令中涉及到了DBA权限，则只允许root用户执行。
+</p><p><b>举例：</b>
+</p>
+<pre> revoke all on *.* from role2  //收回role2的所有全局权限。
+revoke dba from role1       //收回role1的DBA权限
+</pre>
+<h3> <span class="mw-headline" id=".E6.8E.88.E4.BA.88.E7.94.A8.E6.88.B7.EF.BC.88.E6.88.96.E8.A7.92.E8.89.B2.EF.BC.89.E8.A7.92.E8.89.B2"> <b>授予用户（或角色）角色</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> GRANT ROLE role TO username/rolename
+</pre>
+<p><b>说明：</b>
+</p><p>该命令可以将角色授予用户/角色。用户拥有了角色后也就拥有了该角色的所有权限。
+</p><p><b>注意：</b>
+</p><p>只允许root用户和DBA执行该命令。 如果命令中的角色或用户涉及到了DBA权限，则只允许root用户执行。 为方便管理与处理，只允许角色间嵌套一次。也就是说，如果role2被授予role1，则不再允许将role1授予其他角色。
+</p><p><b>举例：</b>
+</p>
+<pre> grant role role1,role2 to user1,user2,role3
+</pre>
+<h3> <span class="mw-headline" id=".E6.94.B6.E5.9B.9E.E7.94.A8.E6.88.B7.EF.BC.88.E6.88.96.E8.A7.92.E8.89.B2.EF.BC.89.E8.A7.92.E8.89.B2"> <b>收回用户（或角色）角色</b> </span></h3>
+<hr />
+<p><b>格式：</b>
+</p>
+<pre> REVOKE ROLE rolename FROM username/rolename
+</pre>
+<p><b>说明：</b>
+</p><p>该命令从用户或角色收回角色。
+</p><p><b>注意：</b>
+</p><p>只允许root用户和DBA用户执行该命令。 如果命令中的角色或用户涉及到了DBA权限，则只允许root用户执行。 为避免在同时收回多个角色时造成混淆和影响命令正确执行，当从某个用户或角色收回某个并未被授予的角色（但该角色在系统中存在）时，这种情形将不被警告，因为这并不影响命令结果的正确性。
+</p><p><b>举例：</b>
+</p>
+<pre> revoke role role1,role2 from user1,user2
+revoke role role role3, role4 from role1, role2<span style="white-space: normal;"><font face="Arial, Verdana, sans-serif">
+</font></span>
+</pre>
+<!-- 
+NewPP limit report
+Preprocessor node count: 288/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key wikidb:pcache:idhash:20-0!1!0!!zh-cn!2!edit=0 and timestamp 20141209013343 -->
+<!-- Served in 0.195 secs. --></body></html>

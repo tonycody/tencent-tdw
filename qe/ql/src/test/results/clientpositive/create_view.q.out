@@ -1,0 +1,500 @@
+query: DROP VIEW view1
+query: DROP VIEW view2
+query: DROP VIEW view3
+query: DROP VIEW view4
+query: DROP VIEW view5
+query: DROP VIEW view6
+query: DROP VIEW view7
+query: DROP VIEW view8
+query: DROP VIEW view9
+query: DROP VIEW view10
+query: DROP VIEW view11
+query: DROP VIEW view12
+query: DROP VIEW view13
+query: DROP VIEW view14
+query: DROP VIEW view15
+query: DROP VIEW view16
+query: DROP TEMPORARY FUNCTION test_translate
+query: DROP TEMPORARY FUNCTION test_max
+query: DROP TEMPORARY FUNCTION test_explode
+query: SELECT * FROM src WHERE key=86
+Input: default_db/src
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/94702982/10000
+86	val_86
+query: CREATE VIEW view1 AS SELECT value FROM src WHERE key=86
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/866796682/10000
+query: desc extended view1
+value	string	
+	 	 
+Detailed Table Information	Table(tableName:view1, dbName:default_db, owner:root, createTime:1329298245, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:value, type:string, comment:null)], location:null, inputFormat:null, outputFormat:null, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:null, parameters:{}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:SELECT value FROM src WHERE key=86, viewExpandedText:SELECT default_db::src.value FROM src WHERE default_db::src.key=86, tableType:VIRTUAL_VIEW, vtables:default_db::src)	
+query: CREATE VIEW view2 AS SELECT * FROM src
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/490176353/10000
+query: desc extended view2
+key	string	
+value	string	
+	 	 
+Detailed Table Information	Table(tableName:view2, dbName:default_db, owner:root, createTime:1329298245, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:key, type:string, comment:null), FieldSchema(name:value, type:string, comment:null)], location:null, inputFormat:null, outputFormat:null, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:null, parameters:{}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:SELECT * FROM src, viewExpandedText:SELECT default_db::src.key, default_db::src.value FROM src, tableType:VIRTUAL_VIEW, vtables:default_db::src)	
+query: CREATE VIEW view3(valoo) 
+WITH (CHARSET = "gbk")
+AS SELECT upper(value) FROM src WHERE key=86
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/553162796/10000
+query: desc extended view3
+valoo	string	
+	 	 
+Detailed Table Information	Table(tableName:view3, dbName:default_db, owner:root, createTime:1329298245, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:valoo, type:string, comment:null)], location:null, inputFormat:null, outputFormat:null, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:null, parameters:{}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{charset=gbk}, viewOriginalText:SELECT upper(value) FROM src WHERE key=86, viewExpandedText:SELECT _c0 AS valoo FROM (SELECT upper(default_db::src.value) FROM src WHERE default_db::src.key=86) view3, tableType:VIRTUAL_VIEW, vtables:default_db::src)	
+query: SELECT * from view1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1174182013/10000
+val_86
+query: SELECT * from view2 where key=18
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1508524183/10000
+18	val_18
+18	val_18
+query: SELECT * from view3
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/450484427/10000
+VAL_86
+query: -- test EXPLAIN output for CREATE VIEW
+EXPLAIN
+CREATE VIEW view0(valoo) AS SELECT upper(value) FROM src WHERE key=86
+ABSTRACT SYNTAX TREE:
+  (TOK_CREATEVIEW view0 (TOK_TABCOLNAME (TOK_TABCOL valoo TOK_NULL)) (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB src))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_FUNCTION upper (TOK_TABLE_OR_COL value)))) (TOK_WHERE (= (TOK_TABLE_OR_COL key) 86)))))
+
+STAGE DEPENDENCIES:
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-0
+      Create View Operator:
+        Create View
+          if not exists: false
+          or replace: false
+          columns: valoo string
+          expanded text: SELECT _c0 AS valoo FROM (SELECT upper(default_db::src.value) FROM src WHERE default_db::src.key=86) view0
+          name: view0
+          original text: SELECT upper(value) FROM src WHERE key=86
+
+query: -- make sure EXPLAIN works with a query which references a view
+EXPLAIN
+SELECT * from view2 where key=18
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB view2))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR TOK_ALLCOLREF)) (TOK_WHERE (= (TOK_TABLE_OR_COL key) 18))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/view2:default_db/src 
+          Operator:          TableScan
+            alias: default_db/src
+            Operator:            Filter Operator
+              predicate:
+                  expr: (key = 18)
+                  type: boolean
+              Operator:              Select Operator
+                expressions:
+                      expr: key
+                      type: string
+                      expr: value
+                      type: string
+                outputColumnNames: _col0, _col1
+                Operator:                Filter Operator
+                  predicate:
+                      expr: (_col0 = 18)
+                      type: boolean
+                  Operator:                  Select Operator
+                    expressions:
+                          expr: _col0
+                          type: string
+                          expr: _col1
+                          type: string
+                    outputColumnNames: _col0, _col1
+                    Operator:                    File Output Operator
+                      compressed: false
+                      GlobalTableId: 0
+                      table:
+                        table descs
+                          input format: org.apache.hadoop.mapred.TextInputFormat
+                          output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src [default_db/view2:default_db/src]
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: DESCRIBE view1
+value	string	
+query: DESCRIBE EXTENDED view1
+value	string	
+	 	 
+Detailed Table Information	Table(tableName:view1, dbName:default_db, owner:root, createTime:1329298245, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:value, type:string, comment:null)], location:null, inputFormat:null, outputFormat:null, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:null, parameters:{}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:SELECT value FROM src WHERE key=86, viewExpandedText:SELECT default_db::src.value FROM src WHERE default_db::src.key=86, tableType:VIRTUAL_VIEW, vtables:default_db::src)	
+query: DESCRIBE view2
+key	string	
+value	string	
+query: DESCRIBE EXTENDED view2
+key	string	
+value	string	
+	 	 
+Detailed Table Information	Table(tableName:view2, dbName:default_db, owner:root, createTime:1329298245, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:key, type:string, comment:null), FieldSchema(name:value, type:string, comment:null)], location:null, inputFormat:null, outputFormat:null, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:null, parameters:{}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:SELECT * FROM src, viewExpandedText:SELECT default_db::src.key, default_db::src.value FROM src, tableType:VIRTUAL_VIEW, vtables:default_db::src)	
+query: DESCRIBE view3
+valoo	string	
+query: DESCRIBE EXTENDED view3
+valoo	string	
+	 	 
+Detailed Table Information	Table(tableName:view3, dbName:default_db, owner:root, createTime:1329298245, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:valoo, type:string, comment:null)], location:null, inputFormat:null, outputFormat:null, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:null, parameters:{}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{charset=gbk}, viewOriginalText:SELECT upper(value) FROM src WHERE key=86, viewExpandedText:SELECT _c0 AS valoo FROM (SELECT upper(default_db::src.value) FROM src WHERE default_db::src.key=86) view3, tableType:VIRTUAL_VIEW, vtables:default_db::src)	
+query: ALTER VIEW view3 SET TBLPROPERTIES ("biggest" = "loser")
+query: DESCRIBE EXTENDED view3
+valoo	string	
+	 	 
+Detailed Table Information	Table(tableName:view3, dbName:default_db, owner:root, createTime:1329298245, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:valoo, type:string, comment:null)], location:null, inputFormat:null, outputFormat:null, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:null, parameters:{}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{last_modified_by=tdwadmin, last_modified_time=1329298255, charset=gbk, biggest=loser}, viewOriginalText:SELECT upper(value) FROM src WHERE key=86, viewExpandedText:SELECT _c0 AS valoo FROM (SELECT upper(default_db::src.value) FROM src WHERE default_db::src.key=86) view3, tableType:VIRTUAL_VIEW, vtables:default_db::src)	
+query: CREATE TABLE table1 (key int) STORED AS FORMATFILE
+query: -- use DESCRIBE EXTENDED on a base table and an external table as points
+-- of comparison for view descriptions
+DESCRIBE EXTENDED table1
+key	int	
+	 	 
+Detailed Table Information	Table(tableName:table1, dbName:default_db, owner:root, createTime:1329298255, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:key, type:int, comment:null)], location:file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/table1, inputFormat:StorageEngineClient.FormatStorageInputFormat, outputFormat:StorageEngineClient.FormatStorageHiveOutputFormat, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:StorageEngineClient.FormatStorageSerDe, parameters:{serialization.format=1}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{type=format}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, vtables:null)	
+query: DESCRIBE EXTENDED src1
+key	string	default
+value	string	default
+	 	 
+Detailed Table Information	Table(tableName:src1, dbName:default_db, owner:null, createTime:0, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:key, type:string, comment:default), FieldSchema(name:value, type:string, comment:default)], location:file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src1, inputFormat:org.apache.hadoop.mapred.TextInputFormat, outputFormat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe, parameters:{serialization.format=1}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, vtables:null)	
+query: -- use DESCRIBE EXTENDED on a base table as a point of comparison for
+-- view descriptions
+DESCRIBE EXTENDED table1
+key	int	
+	 	 
+Detailed Table Information	Table(tableName:table1, dbName:default_db, owner:root, createTime:1329298255, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:key, type:int, comment:null)], location:file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/table1, inputFormat:StorageEngineClient.FormatStorageInputFormat, outputFormat:StorageEngineClient.FormatStorageHiveOutputFormat, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:StorageEngineClient.FormatStorageSerDe, parameters:{serialization.format=1}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{type=format}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, vtables:null)	
+query: INSERT OVERWRITE TABLE table1 SELECT key FROM src WHERE key = 86
+Output: default_db/table1
+query: SELECT * FROM table1
+Input: default_db/table1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1894904454/10000
+86
+query: CREATE VIEW view4 AS SELECT * FROM table1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1743055371/10000
+query: SELECT * FROM view4
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/2018684970/10000
+86
+query: DESCRIBE view4
+key	int	
+query: ALTER TABLE table1 ADD COLUMNS (value STRING)
+query: SELECT * FROM table1
+Input: default_db/table1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1458147665/10000
+86	NULL
+query: SELECT * FROM view4
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/882468041/10000
+86
+query: DESCRIBE table1
+key	int	
+value	string	
+query: DESCRIBE view4
+key	int	
+query: CREATE VIEW view5 AS SELECT v1.key as key1, v2.key as key2
+FROM view4 v1 join view4 v2
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/89165324/10000
+query: SELECT * FROM view5
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/2077788747/10000
+86	86
+query: DESCRIBE view5
+key1	int	
+key2	int	
+query: -- verify that column name and comment in DDL portion
+-- overrides column alias in SELECT
+CREATE VIEW view6(valoo COMMENT 'I cannot spell') AS
+SELECT upper(value) as blarg FROM src WHERE key=86
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/2046517378/10000
+query: DESCRIBE view6
+valoo	string	I cannot spell
+query: -- verify that ORDER BY and LIMIT are both supported in view def
+CREATE VIEW view7 AS
+SELECT * FROM src
+WHERE key > 80 AND key < 100
+ORDER BY key, value
+LIMIT 10
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1913800118/10000
+query: SELECT * FROM view7
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1436516768/10000
+82	val_82
+83	val_83
+83	val_83
+84	val_84
+84	val_84
+85	val_85
+86	val_86
+87	val_87
+90	val_90
+90	val_90
+query: -- top-level ORDER BY should override the one inside the view
+-- (however, the inside ORDER BY should still influence the evaluation
+-- of the limit)
+SELECT * FROM view7 ORDER BY key DESC, value
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1175499352/10000
+90	val_90
+90	val_90
+87	val_87
+86	val_86
+85	val_85
+84	val_84
+84	val_84
+83	val_83
+83	val_83
+82	val_82
+query: -- top-level LIMIT should override if lower
+SELECT * FROM view7 LIMIT 5
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1241761283/10000
+82	val_82
+83	val_83
+83	val_83
+84	val_84
+84	val_84
+query: -- but not if higher
+SELECT * FROM view7 LIMIT 20
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1397179165/10000
+82	val_82
+83	val_83
+83	val_83
+84	val_84
+84	val_84
+85	val_85
+86	val_86
+87	val_87
+90	val_90
+90	val_90
+query: -- test usage of a function within a view
+CREATE TEMPORARY FUNCTION test_translate AS
+'org.apache.hadoop.hive.ql.udf.generic.GenericUDFTestTranslate'
+query: CREATE VIEW view8(c) AS
+SELECT test_translate('abc', 'a', 'b')
+FROM table1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/595278748/10000
+query: DESCRIBE EXTENDED view8
+c	string	
+	 	 
+Detailed Table Information	Table(tableName:view8, dbName:default_db, owner:root, createTime:1329298281, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:c, type:string, comment:null)], location:null, inputFormat:null, outputFormat:null, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:null, parameters:{}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:SELECT test_translate('abc', 'a', 'b')	 
+FROM table1, viewExpandedText:SELECT _c0 AS c FROM (SELECT test_translate('abc', 'a', 'b')	 	 
+FROM table1) view8, tableType:VIRTUAL_VIEW, vtables:default_db::table1)		 
+query: SELECT * FROM view8
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1979723592/10000
+bbc
+query: -- test usage of a UDAF within a view
+CREATE TEMPORARY FUNCTION test_max AS
+'org.apache.hadoop.hive.ql.udf.UDAFTestMax'
+query: CREATE VIEW view9(m) AS
+SELECT test_max(length(value))
+FROM src
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/517783708/10000
+query: DESCRIBE EXTENDED view9
+m	int	
+	 	 
+Detailed Table Information	Table(tableName:view9, dbName:default_db, owner:root, createTime:1329298284, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:m, type:int, comment:null)], location:null, inputFormat:null, outputFormat:null, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:null, parameters:{}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:SELECT test_max(length(value))	 
+FROM src, viewExpandedText:SELECT _c0 AS m FROM (SELECT test_max(length(default_db::src.value))	 	 
+FROM src) view9, tableType:VIRTUAL_VIEW, vtables:default_db::src)		 
+query: SELECT * FROM view9
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1064631715/10000
+7
+query: -- test usage of a subselect within a view
+CREATE VIEW view10 AS
+SELECT slurp.* FROM (SELECT * FROM src WHERE key=86) slurp
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1081639159/10000
+query: DESCRIBE EXTENDED view10
+key	string	
+value	string	
+	 	 
+Detailed Table Information	Table(tableName:view10, dbName:default_db, owner:root, createTime:1329298287, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:key, type:string, comment:null), FieldSchema(name:value, type:string, comment:null)], location:null, inputFormat:null, outputFormat:null, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:null, parameters:{}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:SELECT slurp.* FROM (SELECT * FROM src WHERE key=86) slurp, viewExpandedText:SELECT slurp.key, slurp.value FROM (SELECT default_db::src.key, default_db::src.value FROM src WHERE default_db::src.key=86) slurp, tableType:VIRTUAL_VIEW, vtables:default_db::src)	
+query: SELECT * FROM view10
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1625949441/10000
+86	val_86
+query: -- test usage of a UDTF within a view
+CREATE TEMPORARY FUNCTION test_explode AS
+'org.apache.hadoop.hive.ql.udf.generic.GenericUDTFExplode'
+query: CREATE VIEW view11 AS
+SELECT test_explode(array(1,2,3)) AS (boom)
+FROM table1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/243950218/10000
+query: DESCRIBE EXTENDED view11
+boom	int	
+	 	 
+Detailed Table Information	Table(tableName:view11, dbName:default_db, owner:root, createTime:1329298290, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:boom, type:int, comment:null)], location:null, inputFormat:null, outputFormat:null, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:null, parameters:{}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:SELECT test_explode(array(1,2,3)) AS (boom)	 
+FROM table1, viewExpandedText:SELECT test_explode(array(1,2,3)) AS (boom)	 	 
+FROM table1, tableType:VIRTUAL_VIEW, vtables:default_db::table1)		 
+query: SELECT * FROM view11
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1669139696/10000
+1
+2
+3
+query: -- test usage of LATERAL within a view
+CREATE VIEW view12 AS
+SELECT * FROM src LATERAL VIEW explode(array(1,2,3)) myTable AS myCol
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1229806287/10000
+query: DESCRIBE EXTENDED view12
+key	string	
+value	string	
+mycol	int	
+	 	 
+Detailed Table Information	Table(tableName:view12, dbName:default_db, owner:root, createTime:1329298293, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:key, type:string, comment:null), FieldSchema(name:value, type:string, comment:null), FieldSchema(name:mycol, type:int, comment:null)], location:null, inputFormat:null, outputFormat:null, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:null, parameters:{}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:SELECT * FROM src LATERAL VIEW explode(array(1,2,3)) myTable AS myCol, viewExpandedText:SELECT default_db::src.key, default_db::src.value, mytable.mycol FROM src LATERAL VIEW explode(array(1,2,3)) myTable AS myCol, tableType:VIRTUAL_VIEW, vtables:default_db::src)	
+query: SELECT * FROM view12
+ORDER BY key ASC, myCol ASC LIMIT 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1793263411/10000
+0	val_0	1
+query: -- test usage of LATERAL with a view as the LHS
+SELECT * FROM view2 LATERAL VIEW explode(array(1,2,3)) myTable AS myCol
+ORDER BY key ASC, myCol ASC LIMIT 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1646700902/10000
+0	val_0	1
+query: -- test usage of JOIN+UNION+AGG all within same view
+CREATE VIEW view14 AS
+SELECT unionsrc1.key as k1, unionsrc1.value as v1,
+       unionsrc2.key as k2, unionsrc2.value as v2
+FROM (select 'tst1' as key, cast(count(1) as string) as value from src s1
+                         UNION  ALL
+      select s2.key as key, s2.value as value from src s2 where s2.key < 10) unionsrc1
+JOIN
+     (select 'tst1' as key, cast(count(1) as string) as value from src s3
+                         UNION  ALL
+      select s4.key as key, s4.value as value from src s4 where s4.key < 10) unionsrc2
+ON (unionsrc1.key = unionsrc2.key)
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1893259440/10000
+query: DESCRIBE EXTENDED view14
+k1	string	
+v1	string	
+k2	string	
+v2	string	
+	 	 
+Detailed Table Information	Table(tableName:view14, dbName:default_db, owner:root, createTime:1329298299, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:k1, type:string, comment:null), FieldSchema(name:v1, type:string, comment:null), FieldSchema(name:k2, type:string, comment:null), FieldSchema(name:v2, type:string, comment:null)], location:null, inputFormat:null, outputFormat:null, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:null, parameters:{}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:SELECT unionsrc1.key as k1, unionsrc1.value as v1,	 
+       unionsrc2.key as k2, unionsrc2.value as v2	 	 
+FROM (select 'tst1' as key, cast(count(1) as string) as value from src s1	 	 
+                         UNION  ALL	 	 
+      select s2.key as key, s2.value as value from src s2 where s2.key < 10) unionsrc1	 	 
+JOIN	 	 
+     (select 'tst1' as key, cast(count(1) as string) as value from src s3	 	 
+                         UNION  ALL	 	 
+      select s4.key as key, s4.value as value from src s4 where s4.key < 10) unionsrc2	 	 
+ON (unionsrc1.key = unionsrc2.key), viewExpandedText:SELECT unionsrc1.key as k1, unionsrc1.value as v1,	 	 
+       unionsrc2.key as k2, unionsrc2.value as v2	 	 
+FROM (select 'tst1' as key, cast(count(1) as string) as value from src s1	 	 
+                         UNION  ALL	 	 
+      select s2.key as key, s2.value as value from src s2 where s2.key < 10) unionsrc1	 	 
+JOIN	 	 
+     (select 'tst1' as key, cast(count(1) as string) as value from src s3	 	 
+                         UNION  ALL	 	 
+      select s4.key as key, s4.value as value from src s4 where s4.key < 10) unionsrc2	 	 
+ON (unionsrc1.key = unionsrc2.key), tableType:VIRTUAL_VIEW, vtables:default_db::src)		 
+query: SELECT * FROM view14
+ORDER BY k1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1563087191/10000
+0	val_0	0	val_0
+0	val_0	0	val_0
+0	val_0	0	val_0
+0	val_0	0	val_0
+0	val_0	0	val_0
+0	val_0	0	val_0
+0	val_0	0	val_0
+0	val_0	0	val_0
+0	val_0	0	val_0
+2	val_2	2	val_2
+4	val_4	4	val_4
+5	val_5	5	val_5
+5	val_5	5	val_5
+5	val_5	5	val_5
+5	val_5	5	val_5
+5	val_5	5	val_5
+5	val_5	5	val_5
+5	val_5	5	val_5
+5	val_5	5	val_5
+5	val_5	5	val_5
+8	val_8	8	val_8
+9	val_9	9	val_9
+tst1	500	tst1	500
+query: -- test usage of GROUP BY within view
+CREATE VIEW view15 AS
+SELECT key,COUNT(value) AS value_count
+FROM src
+GROUP BY key
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/741827443/10000
+query: DESCRIBE EXTENDED view15
+key	string	
+value_count	bigint	
+	 	 
+Detailed Table Information	Table(tableName:view15, dbName:default_db, owner:root, createTime:1329298319, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:key, type:string, comment:null), FieldSchema(name:value_count, type:bigint, comment:null)], location:null, inputFormat:null, outputFormat:null, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:null, parameters:{}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:SELECT key,COUNT(value) AS value_count	 
+FROM src	 	 
+GROUP BY key, viewExpandedText:SELECT key,COUNT(default_db::src.value) AS value_count	 	 
+FROM src	 	 
+GROUP BY default_db::src.key, tableType:VIRTUAL_VIEW, vtables:default_db::src)		 
+query: SELECT * FROM view15
+ORDER BY value_count DESC, key
+LIMIT 10
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/33486406/10000
+230	5
+348	5
+401	5
+469	5
+138	4
+169	4
+277	4
+406	4
+468	4
+489	4
+query: -- test usage of DISTINCT within view
+CREATE VIEW view16 AS
+SELECT DISTINCT value
+FROM src
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/771171424/10000
+query: DESCRIBE EXTENDED view16
+value	string	
+	 	 
+Detailed Table Information	Table(tableName:view16, dbName:default_db, owner:root, createTime:1329298325, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:value, type:string, comment:null)], location:null, inputFormat:null, outputFormat:null, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:null, parameters:{}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:SELECT DISTINCT value	 
+FROM src, viewExpandedText:SELECT DISTINCT default_db::src.value	 	 
+FROM src, tableType:VIRTUAL_VIEW, vtables:default_db::src)		 
+query: SELECT * FROM view16
+ORDER BY value
+LIMIT 10
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/848452064/10000
+val_0
+val_10
+val_100
+val_103
+val_104
+val_105
+val_11
+val_111
+val_113
+val_114
+query: -- this should work since currently we don't track view->table
+-- dependencies for implementing RESTRICT
+
+
+DROP VIEW view1
+query: DROP VIEW view2
+query: DROP VIEW view3
+query: DROP VIEW view4
+query: DROP VIEW view5
+query: DROP VIEW view6
+query: DROP VIEW view7
+query: DROP VIEW view8
+query: DROP VIEW view9
+query: DROP VIEW view10
+query: DROP VIEW view11
+query: DROP VIEW view12
+query: DROP VIEW view13
+query: DROP VIEW view14
+query: DROP VIEW view15
+query: DROP VIEW view16
+query: DROP TEMPORARY FUNCTION test_translate
+query: DROP TEMPORARY FUNCTION test_max
+query: DROP TEMPORARY FUNCTION test_explode
+query: DROP TEMPORARY FUNCTION test_explode
+query: DROP TEMPORARY FUNCTION test_explode
+query: DROP TEMPORARY FUNCTION test_explode
+query: DROP TEMPORARY FUNCTION test_explode
+query: DROP TEMPORARY FUNCTION test_explode
+query: DROP TEMPORARY FUNCTION test_explode
+query: DROP TEMPORARY FUNCTION test_explode
+query: DROP TEMPORARY FUNCTION test_explode

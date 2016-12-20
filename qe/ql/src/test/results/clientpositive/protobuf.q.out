@@ -1,0 +1,414 @@
+query: drop table person
+query: create table person stored as pb
+query: desc extended person
+name	string	
+id	int	
+email	string	
+phone	array<string>	
+	 	 
+Detailed Table Information	Table(tableName:person, dbName:default_db, owner:root, createTime:1398885021, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:name, type:string, comment:null), FieldSchema(name:id, type:int, comment:null), FieldSchema(name:email, type:string, comment:null), FieldSchema(name:phone, type:array<string>, comment:null)], location:file:/data/allison/tdw_src/src/qe/build/ql/test/data/warehouse/default_db/person, inputFormat:newprotobuf.mapred.ProtobufInputFormat, outputFormat:newprotobuf.mapred.HiveProtobufOutputFormat, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:org.apache.hadoop.hive.serde2.protobuf.ProtobufSerDe, parameters:{serialization.format=1}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{pb.jar=./auxlib/default_db_person_20140430191013.jar, PB_TABLE=TRUE, pb.outer.class.name=default_db_person_20140430191013, PB_FILE=person.proto, pb.msg.name=person}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, vtables:null, isReplaceOnExit:false)	
+query: explain insert into person(name,id,email) values('allison',28,'xx@qq.com'),('paynie',25,'fsd@qq.com')
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_INSERT (TOK_APPENDDESTINATION (TOK_TABDEST (TOK_TAB person) (TOK_TABLE_OR_COL name) (TOK_TABLE_OR_COL id) (TOK_TABLE_OR_COL email))) (TOK_VALUES (TOK_VALUE 'allison' 28 'xx@qq.com') (TOK_VALUE 'paynie' 25 'fsd@qq.com'))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-4
+    type:;depends on:Stage-1;consists of:Stage-3,Stage-2;
+  Stage-3
+    type:;
+  Stage-0
+    type:;depends on:Stage-3,Stage-2;
+  Stage-2
+    type:;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        insertvaluestmptable 
+          Operator:          TableScan
+            alias: insertvaluestmptable
+            Operator:            Select Operator
+              expressions:
+                    expr: _tmptable_0
+                    type: string
+                    expr: _tmptable_1
+                    type: int
+                    expr: _tmptable_2
+                    type: string
+              outputColumnNames: _col0, _col1, _col2
+              Operator:              Select Operator
+                expressions:
+                      expr: _col0
+                      type: string
+                      expr: _col1
+                      type: int
+                      expr: _col2
+                      type: string
+                      expr: null
+                      type: void
+                outputColumnNames: _col0, _col1, _col2, _col3
+                Operator:                File Output Operator
+                  compressed: false
+                  GlobalTableId: 1
+                  table:
+                    table descs
+                      input format: newprotobuf.mapred.ProtobufInputFormat
+                      output format: newprotobuf.mapred.HiveProtobufOutputFormat
+                      serde: org.apache.hadoop.hive.serde2.protobuf.ProtobufSerDe
+                      name: person
+      Path -> Alias:
+        file:/tmp/492326336 [insertvaluestmptable]
+
+  Stage: Stage-4
+    Conditional Operator
+
+  Stage: Stage-3
+    Move Operator
+      files:
+          hdfs directory: true
+          destination: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201404301110_0.80690723472523_-1_803458414/10000
+
+  Stage: Stage-0
+    Move Operator
+      tables:
+          replace: false
+          table:
+            table descs
+              input format: newprotobuf.mapred.ProtobufInputFormat
+              output format: newprotobuf.mapred.HiveProtobufOutputFormat
+              serde: org.apache.hadoop.hive.serde2.protobuf.ProtobufSerDe
+              name: person
+
+  Stage: Stage-2
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201404301110_0.80690723472523_-1_13416185/10002 
+            Operator:            Reduce Output Operator
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: 
+              output value names: _col0, _col1, _col2, _col3
+              Map-reduce partition columns:
+                    expr: rand()
+                    type: double
+              tag: -1
+              value expressions:
+                    expr: name
+                    type: string
+                    expr: id
+                    type: int
+                    expr: email
+                    type: string
+                    expr: phone
+                    type: array<string>
+      Path -> Alias:
+        file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201404301110_0.80690723472523_-1_13416185/10002 [file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201404301110_0.80690723472523_-1_13416185/10002]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          File Output Operator
+            compressed: false
+            GlobalTableId: 0
+            table:
+              table descs
+                input format: newprotobuf.mapred.ProtobufInputFormat
+                output format: newprotobuf.mapred.HiveProtobufOutputFormat
+                serde: org.apache.hadoop.hive.serde2.protobuf.ProtobufSerDe
+                name: person
+
+query: explain select name,id,email,phone from person order by id
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB person))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL name)) (TOK_SELEXPR (TOK_TABLE_OR_COL id)) (TOK_SELEXPR (TOK_TABLE_OR_COL email)) (TOK_SELEXPR (TOK_TABLE_OR_COL phone))) (TOK_ORDERBY (TOK_TABSORTCOLNAMEASC (TOK_TABLE_OR_COL id)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/person 
+          Operator:          TableScan
+            alias: default_db/person
+            Operator:            Select Operator
+              expressions:
+                    expr: name
+                    type: string
+                    expr: id
+                    type: int
+                    expr: email
+                    type: string
+                    expr: phone
+                    type: array<string>
+              outputColumnNames: _col0, _col1, _col2, _col3
+              Operator:              Reduce Output Operator
+                key expressions:
+                      expr: _col1
+                      type: int
+                key serialize infos:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                sort order: +
+                output key names: reducesinkkey0
+                output value names: _col0, _col1, _col2, _col3
+                tag: -1
+                value expressions:
+                      expr: _col0
+                      type: string
+                      expr: _col1
+                      type: int
+                      expr: _col2
+                      type: string
+                      expr: _col3
+                      type: array<string>
+      Path -> Alias:
+        file:/data/allison/tdw_src/src/qe/build/ql/test/data/warehouse/default_db/person [default_db/person]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          File Output Operator
+            compressed: false
+            GlobalTableId: 0
+            table:
+              table descs
+                input format: org.apache.hadoop.mapred.TextInputFormat
+                output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: explain insert table person select name,id,email,array('13688888','18688888') from person
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB person))) (TOK_INSERT (TOK_APPENDDESTINATION (TOK_TABDEST (TOK_TAB person))) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL name)) (TOK_SELEXPR (TOK_TABLE_OR_COL id)) (TOK_SELEXPR (TOK_TABLE_OR_COL email)) (TOK_SELEXPR (TOK_FUNCTION array '13688888' '18688888')))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-4
+    type:;depends on:Stage-1;consists of:Stage-3,Stage-2;
+  Stage-3
+    type:;
+  Stage-0
+    type:;depends on:Stage-3,Stage-2;
+  Stage-2
+    type:;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/person 
+          Operator:          TableScan
+            alias: default_db/person
+            Operator:            Select Operator
+              expressions:
+                    expr: name
+                    type: string
+                    expr: id
+                    type: int
+                    expr: email
+                    type: string
+                    expr: array('13688888','18688888')
+                    type: array<string>
+              outputColumnNames: _col0, _col1, _col2, _col3
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 1
+                table:
+                  table descs
+                    input format: newprotobuf.mapred.ProtobufInputFormat
+                    output format: newprotobuf.mapred.HiveProtobufOutputFormat
+                    serde: org.apache.hadoop.hive.serde2.protobuf.ProtobufSerDe
+                    name: person
+      Path -> Alias:
+        file:/data/allison/tdw_src/src/qe/build/ql/test/data/warehouse/default_db/person [default_db/person]
+
+  Stage: Stage-4
+    Conditional Operator
+
+  Stage: Stage-3
+    Move Operator
+      files:
+          hdfs directory: true
+          destination: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201404301110_0.80690723472523_-1_1450915716/10000
+
+  Stage: Stage-0
+    Move Operator
+      tables:
+          replace: false
+          table:
+            table descs
+              input format: newprotobuf.mapred.ProtobufInputFormat
+              output format: newprotobuf.mapred.HiveProtobufOutputFormat
+              serde: org.apache.hadoop.hive.serde2.protobuf.ProtobufSerDe
+              name: person
+
+  Stage: Stage-2
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201404301110_0.80690723472523_-1_1084114627/10002 
+            Operator:            Reduce Output Operator
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: 
+              output value names: _col0, _col1, _col2, _col3
+              Map-reduce partition columns:
+                    expr: rand()
+                    type: double
+              tag: -1
+              value expressions:
+                    expr: name
+                    type: string
+                    expr: id
+                    type: int
+                    expr: email
+                    type: string
+                    expr: phone
+                    type: array<string>
+      Path -> Alias:
+        file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201404301110_0.80690723472523_-1_1084114627/10002 [file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201404301110_0.80690723472523_-1_1084114627/10002]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          File Output Operator
+            compressed: false
+            GlobalTableId: 0
+            table:
+              table descs
+                input format: newprotobuf.mapred.ProtobufInputFormat
+                output format: newprotobuf.mapred.HiveProtobufOutputFormat
+                serde: org.apache.hadoop.hive.serde2.protobuf.ProtobufSerDe
+                name: person
+
+query: explain select name,phone[1] from person where id = 25 order by name
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB person))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL name)) (TOK_SELEXPR ([ (TOK_TABLE_OR_COL phone) 1))) (TOK_WHERE (= (TOK_TABLE_OR_COL id) 25)) (TOK_ORDERBY (TOK_TABSORTCOLNAMEASC (TOK_TABLE_OR_COL name)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/person 
+          Operator:          TableScan
+            alias: default_db/person
+            Operator:            Filter Operator
+              predicate:
+                  expr: (id = 25)
+                  type: boolean
+              Operator:              Select Operator
+                expressions:
+                      expr: name
+                      type: string
+                      expr: phone[1]
+                      type: string
+                outputColumnNames: _col0, _col1
+                Operator:                Reduce Output Operator
+                  key expressions:
+                        expr: _col0
+                        type: string
+                  key serialize infos:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                  sort order: +
+                  output key names: reducesinkkey0
+                  output value names: _col0, _col1
+                  tag: -1
+                  value expressions:
+                        expr: _col0
+                        type: string
+                        expr: _col1
+                        type: string
+      Path -> Alias:
+        file:/data/allison/tdw_src/src/qe/build/ql/test/data/warehouse/default_db/person [default_db/person]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          File Output Operator
+            compressed: false
+            GlobalTableId: 0
+            table:
+              table descs
+                input format: org.apache.hadoop.mapred.TextInputFormat
+                output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: explain select name,phone[1] from person where id = 28 order by name
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB person))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL name)) (TOK_SELEXPR ([ (TOK_TABLE_OR_COL phone) 1))) (TOK_WHERE (= (TOK_TABLE_OR_COL id) 28)) (TOK_ORDERBY (TOK_TABSORTCOLNAMEASC (TOK_TABLE_OR_COL name)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/person 
+          Operator:          TableScan
+            alias: default_db/person
+            Operator:            Filter Operator
+              predicate:
+                  expr: (id = 28)
+                  type: boolean
+              Operator:              Select Operator
+                expressions:
+                      expr: name
+                      type: string
+                      expr: phone[1]
+                      type: string
+                outputColumnNames: _col0, _col1
+                Operator:                Reduce Output Operator
+                  key expressions:
+                        expr: _col0
+                        type: string
+                  key serialize infos:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                  sort order: +
+                  output key names: reducesinkkey0
+                  output value names: _col0, _col1
+                  tag: -1
+                  value expressions:
+                        expr: _col0
+                        type: string
+                        expr: _col1
+                        type: string
+      Path -> Alias:
+        file:/data/allison/tdw_src/src/qe/build/ql/test/data/warehouse/default_db/person [default_db/person]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          File Output Operator
+            compressed: false
+            GlobalTableId: 0
+            table:
+              table descs
+                input format: org.apache.hadoop.mapred.TextInputFormat
+                output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: drop table person

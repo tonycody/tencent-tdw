@@ -1,0 +1,76 @@
+query: drop table test_limit_op_1
+query: create table test_limit_op_1(tint_1 INT, tstr_1 STRING, tstr_2 STRING, tint_2 INT)
+query: LOAD DATA LOCAL INPATH '../data/files/kv6.txt' INTO TABLE test_limit_op_1
+query: drop table test_limit_op_2
+query: create table test_limit_op_2(tint_1 INT, tstr_1 STRING, tstr_2 STRING, tint_2 INT) PARTITION by RANGE(tint_1) (partition range_1 VALUES LESS THAN (100))
+query: from test_limit_op_1 insert table test_limit_op_2 select * where 
+tint_1<100
+Output: default_db/test_limit_op_2
+query: alter table  test_limit_op_2 add partition range_2 values less than (200)
+query: from test_limit_op_1 insert table test_limit_op_2 select * where 
+tint_1<200 and tint_1 > 100
+Output: default_db/test_limit_op_2
+query: explain
+select tint_1,tstr_1   from test_limit_op_1 limit 10
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB test_limit_op_1))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL tint_1)) (TOK_SELEXPR (TOK_TABLE_OR_COL tstr_1))) (TOK_LIMIT 10)))
+
+STAGE DEPENDENCIES:
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-0
+    Fetch Operator
+      limit: 10
+
+query: explain
+select tint_1,tstr_1   from test_limit_op_2 limit 10
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB test_limit_op_2))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL tint_1)) (TOK_SELEXPR (TOK_TABLE_OR_COL tstr_1))) (TOK_LIMIT 10)))
+
+STAGE DEPENDENCIES:
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-0
+    Fetch Operator
+      limit: 10
+
+query: select tint_1,tstr_1   from test_limit_op_1 limit 10
+Input: default_db/test_limit_op_1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/990160586/10000
+238	val_238	
+86	val_86	
+311	val_311	
+27	val_27	
+165	val_165	
+409	val_409	
+255	val_255	
+278	val_278	
+98	val_98	
+484	val_484	
+query: select tint_1,tstr_1   from test_limit_op_2 limit 10
+Input: default_db/test_limit_op_2
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1035019378/10000
+86	val_86	
+27	val_27	
+98	val_98	
+66	val_66	
+37	val_37	
+15	val_15	
+82	val_82	
+17	val_17	
+0	val_0	
+57	val_57	
+query: drop table test_limit_op_1
+query: drop table test_limit_op_2
+query: drop table test_limit_op_2
+query: drop table test_limit_op_2
+query: drop table test_limit_op_2
+query: drop table test_limit_op_2
+query: drop table test_limit_op_2
+query: drop table test_limit_op_2
+query: drop table test_limit_op_2
+query: drop table test_limit_op_2

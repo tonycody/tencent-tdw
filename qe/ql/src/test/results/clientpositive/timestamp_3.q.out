@@ -1,0 +1,39 @@
+query: drop table timestamp_3
+query: create table timestamp_3 (t timestamp)
+query: alter table timestamp_3 set serde 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe'
+query: insert overwrite table timestamp_3 
+  select cast(cast('1.3041352164485E9' as double) as timestamp) from src limit 1
+Output: default_db/timestamp_3
+query: select cast(t as boolean) from timestamp_3 limit 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/196036359/10000
+true
+query: select cast(t as tinyint) from timestamp_3 limit 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/495657843/10000
+48
+query: select cast(t as smallint) from timestamp_3 limit 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/664065275/10000
+-31184
+query: select cast(t as int) from timestamp_3 limit 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/58589693/10000
+1304135216
+query: select cast(t as bigint) from timestamp_3 limit 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1047806470/10000
+1304135216
+query: select cast(t as float) from timestamp_3 limit 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1533856032/10000
+1.30413517E9
+query: select cast(t as double) from timestamp_3 limit 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/444448949/10000
+1.3041352164485E9
+query: select cast(t as string) from timestamp_3 limit 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1173873459/10000
+2011-04-29 20:46:56.4485
+query: drop table timestamp_3
+query: drop table timestamp_3
+query: drop table timestamp_3
+query: drop table timestamp_3
+query: drop table timestamp_3
+query: drop table timestamp_3
+query: drop table timestamp_3
+query: drop table timestamp_3
+query: drop table timestamp_3

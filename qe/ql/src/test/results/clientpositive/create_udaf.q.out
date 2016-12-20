@@ -1,0 +1,29 @@
+query: EXPLAIN
+CREATE TEMPORARY FUNCTION test_max AS 'org.apache.hadoop.hive.ql.udf.UDAFTestMax'
+ABSTRACT SYNTAX TREE:
+  (TOK_CREATEFUNCTION test_max 'org.apache.hadoop.hive.ql.udf.UDAFTestMax')
+
+STAGE DEPENDENCIES:
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-0
+
+query: CREATE TEMPORARY FUNCTION test_max AS 'org.apache.hadoop.hive.ql.udf.UDAFTestMax'
+query: CREATE TABLE dest1(col INT)
+query: FROM src INSERT OVERWRITE TABLE dest1 SELECT test_max(length(src.value))
+Output: default_db/dest1
+query: SELECT dest1.* FROM dest1
+Input: default_db/dest1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1585549157/10000
+7
+query: DROP TEMPORARY FUNCTION test_max
+query: DROP TEMPORARY FUNCTION test_max
+query: DROP TEMPORARY FUNCTION test_max
+query: DROP TEMPORARY FUNCTION test_max
+query: DROP TEMPORARY FUNCTION test_max
+query: DROP TEMPORARY FUNCTION test_max
+query: DROP TEMPORARY FUNCTION test_max
+query: DROP TEMPORARY FUNCTION test_max
+query: DROP TEMPORARY FUNCTION test_max

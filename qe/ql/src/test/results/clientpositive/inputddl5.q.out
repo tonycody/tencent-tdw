@@ -1,0 +1,21 @@
+query: -- test for internationalization
+-- kv4.txt contains the utf-8 character 0xE982B5E993AE which we are verifying later on
+CREATE TABLE INPUTDDL5(name STRING) STORED AS TEXTFILE
+query: LOAD DATA LOCAL INPATH '../data/files/kv4.txt' INTO TABLE INPUTDDL5
+query: DESCRIBE INPUTDDL5
+name	string	
+query: SELECT INPUTDDL5.name from INPUTDDL5
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1298777514/10000
+邵铮
+query: SELECT count(1) FROM INPUTDDL5 WHERE INPUTDDL5.name = _UTF-8 0xE982B5E993AE
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/34005113/10000
+1
+query: DROP TABLE INPUTDDL5
+query: DROP TABLE INPUTDDL5
+query: DROP TABLE INPUTDDL5
+query: DROP TABLE INPUTDDL5
+query: DROP TABLE INPUTDDL5
+query: DROP TABLE INPUTDDL5
+query: DROP TABLE INPUTDDL5
+query: DROP TABLE INPUTDDL5
+query: DROP TABLE INPUTDDL5

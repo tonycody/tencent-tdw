@@ -1,0 +1,3 @@
+query: DROP TABLE businesssrc
+query: CREATE TABLE businesssrc(cust_num INT, region_id INT, saler_id INT, year INT, month INT, tot_orders INT, tot_sales INT) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+FAILED: Error in semantic analysis: parameters not equal in order by clauses LEADOVER

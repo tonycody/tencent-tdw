@@ -1,0 +1,11 @@
+query: select count(distinct subq.key) from (FROM src MAP src.key USING 'python ../data/scripts/dumpdata_script.py' AS key WHERE src.key = 10) subq
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1374278786/10000
+1000022
+query: select count(distinct subq.key) from (FROM src MAP src.key USING 'python ../data/scripts/dumpdata_script.py' AS key WHERE src.key = 10) subq
+query: select count(distinct subq.key) from (FROM src MAP src.key USING 'python ../data/scripts/dumpdata_script.py' AS key WHERE src.key = 10) subq
+query: select count(distinct subq.key) from (FROM src MAP src.key USING 'python ../data/scripts/dumpdata_script.py' AS key WHERE src.key = 10) subq
+query: select count(distinct subq.key) from (FROM src MAP src.key USING 'python ../data/scripts/dumpdata_script.py' AS key WHERE src.key = 10) subq
+query: select count(distinct subq.key) from (FROM src MAP src.key USING 'python ../data/scripts/dumpdata_script.py' AS key WHERE src.key = 10) subq
+query: select count(distinct subq.key) from (FROM src MAP src.key USING 'python ../data/scripts/dumpdata_script.py' AS key WHERE src.key = 10) subq
+query: select count(distinct subq.key) from (FROM src MAP src.key USING 'python ../data/scripts/dumpdata_script.py' AS key WHERE src.key = 10) subq
+query: select count(distinct subq.key) from (FROM src MAP src.key USING 'python ../data/scripts/dumpdata_script.py' AS key WHERE src.key = 10) subq

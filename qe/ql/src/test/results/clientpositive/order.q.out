@@ -1,0 +1,152 @@
+query: EXPLAIN
+SELECT x.* FROM SRC x ORDER BY key limit 10
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB SRC) x)) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_ALLCOLREF x))) (TOK_ORDERBY (TOK_TABSORTCOLNAMEASC (TOK_TABLE_OR_COL key))) (TOK_LIMIT 10)))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/src#x 
+          Operator:          TableScan
+            alias: default_db/src#x
+            Operator:            Select Operator
+              expressions:
+                    expr: key
+                    type: string
+                    expr: value
+                    type: string
+              outputColumnNames: _col0, _col1
+              Operator:              HalfSortLimit
+                Operator:                Reduce Output Operator
+                  key expressions:
+                        expr: _col0
+                        type: string
+                  key serialize infos:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                  sort order: +
+                  output key names: reducesinkkey0
+                  output value names: _col0, _col1
+                  tag: -1
+                  value expressions:
+                        expr: _col0
+                        type: string
+                        expr: _col1
+                        type: string
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src [default_db/src#x]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          HalfSortLimit
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 0
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.TextInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: SELECT x.* FROM SRC x ORDER BY key limit 10
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1743572627/10000
+0	val_0
+0	val_0
+0	val_0
+10	val_10
+100	val_100
+100	val_100
+103	val_103
+103	val_103
+104	val_104
+104	val_104
+query: EXPLAIN
+SELECT x.* FROM SRC x ORDER BY key desc limit 10
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB SRC) x)) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_ALLCOLREF x))) (TOK_ORDERBY (TOK_TABSORTCOLNAMEDESC (TOK_TABLE_OR_COL key))) (TOK_LIMIT 10)))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/src#x 
+          Operator:          TableScan
+            alias: default_db/src#x
+            Operator:            Select Operator
+              expressions:
+                    expr: key
+                    type: string
+                    expr: value
+                    type: string
+              outputColumnNames: _col0, _col1
+              Operator:              HalfSortLimit
+                Operator:                Reduce Output Operator
+                  key expressions:
+                        expr: _col0
+                        type: string
+                  key serialize infos:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                  sort order: -
+                  output key names: reducesinkkey0
+                  output value names: _col0, _col1
+                  tag: -1
+                  value expressions:
+                        expr: _col0
+                        type: string
+                        expr: _col1
+                        type: string
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src [default_db/src#x]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          HalfSortLimit
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 0
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.TextInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: SELECT x.* FROM SRC x ORDER BY key desc limit 10
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1003149934/10000
+98	val_98
+98	val_98
+97	val_97
+97	val_97
+96	val_96
+95	val_95
+95	val_95
+92	val_92
+90	val_90
+90	val_90
+query: SELECT x.* FROM SRC x ORDER BY key desc limit 10
+query: SELECT x.* FROM SRC x ORDER BY key desc limit 10
+query: SELECT x.* FROM SRC x ORDER BY key desc limit 10
+query: SELECT x.* FROM SRC x ORDER BY key desc limit 10
+query: SELECT x.* FROM SRC x ORDER BY key desc limit 10
+query: SELECT x.* FROM SRC x ORDER BY key desc limit 10
+query: SELECT x.* FROM SRC x ORDER BY key desc limit 10
+query: SELECT x.* FROM SRC x ORDER BY key desc limit 10

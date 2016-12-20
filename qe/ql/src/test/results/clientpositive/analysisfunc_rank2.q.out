@@ -1,0 +1,144 @@
+query: DROP TABLE datatest
+query: CREATE TABLE datatest(int_data1 INT, int_data2 INT, boolean_data BOOLEAN, double_data DOUBLE, string_data STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/datatest.txt' INTO TABLE datatest
+query: SELECT * FROM (SELECT int_data1 , int_data2, boolean_data, double_data, string_data, RANK() OVER(partition by boolean_data order by double_data) FROM datatest) tmp ORDER BY double_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/812437371/10000
+0	5	false	2.2957055987034902	Analysis	1
+1	0	false	3.1145951928143676	LEAD	2
+0	3	false	5.1726951608379865	TDW	3
+1	8	true	5.621675730832165	etc	1
+2	3	true	8.77171395741883	The	2
+2	1	true	9.589949434284112	For	3
+2	7	false	14.998223744245005	Used	4
+1	9	true	16.91358120533963	TDW	4
+0	2	true	19.398344450148464	To	5
+0	4	true	19.754128235118877	SUM	6
+2	2	false	20.494577702885913	RANK	5
+2	5	true	22.15271891090531	Test	7
+1	1	true	24.506909362217737	Which	8
+2	0	true	32.91569954365889	Include	9
+1	1	false	32.92404678679056	Functions	6
+0	2	false	39.845454645318426	LAG	7
+0	4	true	39.95053934832555	The	10
+0	0	false	41.33606448637874	Data	8
+1	5	true	41.39006188846539	Set	11
+1	5	true	46.927050000959326	Test	12
+query: SELECT * FROM (SELECT int_data1 , int_data2, boolean_data, double_data, string_data, RANK() OVER(partition by boolean_data order by string_data desc) FROM datatest) tmp ORDER BY double_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/617925230/10000
+0	5	false	2.2957055987034902	Analysis	8
+1	0	false	3.1145951928143676	LEAD	4
+0	3	false	5.1726951608379865	TDW	2
+1	8	true	5.621675730832165	etc	1
+2	3	true	8.77171395741883	The	4
+2	1	true	9.589949434284112	For	12
+2	7	false	14.998223744245005	Used	1
+1	9	true	16.91358120533963	TDW	8
+0	2	true	19.398344450148464	To	3
+0	4	true	19.754128235118877	SUM	10
+2	2	false	20.494577702885913	RANK	3
+2	5	true	22.15271891090531	Test	6
+1	1	true	24.506909362217737	Which	2
+2	0	true	32.91569954365889	Include	11
+1	1	false	32.92404678679056	Functions	6
+0	2	false	39.845454645318426	LAG	5
+0	4	true	39.95053934832555	The	4
+0	0	false	41.33606448637874	Data	7
+1	5	true	41.39006188846539	Set	9
+1	5	true	46.927050000959326	Test	6
+query: SELECT * FROM (SELECT int_data1 , int_data2, boolean_data, double_data, string_data, RANK() OVER(partition by boolean_data order by int_data1 desc) FROM datatest) tmp ORDER BY double_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/630073656/10000
+0	5	false	2.2957055987034902	Analysis	5
+1	0	false	3.1145951928143676	LEAD	3
+0	3	false	5.1726951608379865	TDW	5
+1	8	true	5.621675730832165	etc	5
+2	3	true	8.77171395741883	The	1
+2	1	true	9.589949434284112	For	1
+2	7	false	14.998223744245005	Used	1
+1	9	true	16.91358120533963	TDW	5
+0	2	true	19.398344450148464	To	10
+0	4	true	19.754128235118877	SUM	10
+2	2	false	20.494577702885913	RANK	1
+2	5	true	22.15271891090531	Test	1
+1	1	true	24.506909362217737	Which	5
+2	0	true	32.91569954365889	Include	1
+1	1	false	32.92404678679056	Functions	3
+0	2	false	39.845454645318426	LAG	5
+0	4	true	39.95053934832555	The	10
+0	0	false	41.33606448637874	Data	5
+1	5	true	41.39006188846539	Set	5
+1	5	true	46.927050000959326	Test	5
+query: SELECT * FROM (SELECT int_data1 , int_data2, boolean_data, double_data, string_data, RANK() OVER(partition by string_data order by boolean_data) FROM datatest) tmp ORDER BY double_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1770903504/10000
+0	5	false	2.2957055987034902	Analysis	1
+1	0	false	3.1145951928143676	LEAD	1
+0	3	false	5.1726951608379865	TDW	1
+1	8	true	5.621675730832165	etc	1
+2	3	true	8.77171395741883	The	1
+2	1	true	9.589949434284112	For	1
+2	7	false	14.998223744245005	Used	1
+1	9	true	16.91358120533963	TDW	2
+0	2	true	19.398344450148464	To	1
+0	4	true	19.754128235118877	SUM	1
+2	2	false	20.494577702885913	RANK	1
+2	5	true	22.15271891090531	Test	1
+1	1	true	24.506909362217737	Which	1
+2	0	true	32.91569954365889	Include	1
+1	1	false	32.92404678679056	Functions	1
+0	2	false	39.845454645318426	LAG	1
+0	4	true	39.95053934832555	The	1
+0	0	false	41.33606448637874	Data	1
+1	5	true	41.39006188846539	Set	1
+1	5	true	46.927050000959326	Test	1
+query: SELECT * FROM (SELECT int_data1 , int_data2, boolean_data, double_data, string_data, RANK() OVER(partition by double_data order by boolean_data) FROM datatest) tmp ORDER BY double_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1631038522/10000
+0	5	false	2.2957055987034902	Analysis	1
+1	0	false	3.1145951928143676	LEAD	1
+0	3	false	5.1726951608379865	TDW	1
+1	8	true	5.621675730832165	etc	1
+2	3	true	8.77171395741883	The	1
+2	1	true	9.589949434284112	For	1
+2	7	false	14.998223744245005	Used	1
+1	9	true	16.91358120533963	TDW	1
+0	2	true	19.398344450148464	To	1
+0	4	true	19.754128235118877	SUM	1
+2	2	false	20.494577702885913	RANK	1
+2	5	true	22.15271891090531	Test	1
+1	1	true	24.506909362217737	Which	1
+2	0	true	32.91569954365889	Include	1
+1	1	false	32.92404678679056	Functions	1
+0	2	false	39.845454645318426	LAG	1
+0	4	true	39.95053934832555	The	1
+0	0	false	41.33606448637874	Data	1
+1	5	true	41.39006188846539	Set	1
+1	5	true	46.927050000959326	Test	1
+query: SELECT * FROM (SELECT int_data1 , int_data2, boolean_data, double_data, string_data, RANK() OVER(partition by int_data1 order by boolean_data) FROM datatest) tmp ORDER BY double_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/892970179/10000
+0	5	false	2.2957055987034902	Analysis	1
+1	0	false	3.1145951928143676	LEAD	1
+0	3	false	5.1726951608379865	TDW	1
+1	8	true	5.621675730832165	etc	3
+2	3	true	8.77171395741883	The	3
+2	1	true	9.589949434284112	For	3
+2	7	false	14.998223744245005	Used	1
+1	9	true	16.91358120533963	TDW	3
+0	2	true	19.398344450148464	To	5
+0	4	true	19.754128235118877	SUM	5
+2	2	false	20.494577702885913	RANK	1
+2	5	true	22.15271891090531	Test	3
+1	1	true	24.506909362217737	Which	3
+2	0	true	32.91569954365889	Include	3
+1	1	false	32.92404678679056	Functions	1
+0	2	false	39.845454645318426	LAG	1
+0	4	true	39.95053934832555	The	5
+0	0	false	41.33606448637874	Data	1
+1	5	true	41.39006188846539	Set	3
+1	5	true	46.927050000959326	Test	3
+query: DROP TABLE datatest
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 

@@ -1,0 +1,1570 @@
+query: DROP TABLE datatest
+query: DROP TABLE nulltest
+query: CREATE TABLE datatest(int_data1 INT, int_data2 INT, boolean_data BOOLEAN, double_data DOUBLE, string_data STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/datatest.txt' INTO TABLE datatest
+query: CREATE TABLE nulltest(int_data1 INT, int_data2 INT, boolean_data BOOLEAN, double_data DOUBLE, string_data STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/nulltest.txt' INTO TABLE nulltest
+query: EXPLAIN SELECT * FROM datatest t1 WHERE EXISTS(SELECT 1 FROM (SELECT int_data2 AS int_data2, boolean_data FROM nulltest where boolean_data is null) t2 WHERE t1.int_data1=t2.int_data2)  order by int_data2
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_LEFTSEMIJOIN (TOK_TABREF (TOK_TAB datatest) t1) (TOK_SUBQUERY (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB nulltest))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL int_data2) int_data2) (TOK_SELEXPR (TOK_TABLE_OR_COL boolean_data))) (TOK_WHERE (TOK_FUNCTION TOK_ISNULL (TOK_TABLE_OR_COL boolean_data))))) t2) (= (. (TOK_TABLE_OR_COL t1) int_data1) (. (TOK_TABLE_OR_COL t2) int_data2)))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_ALLCOLREF t1))) (TOK_ORDERBY (TOK_TABSORTCOLNAMEASC (. (TOK_TABLE_OR_COL t1) int_data2)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-2
+    type:;depends on:Stage-1;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        t2:default_db/nulltest 
+          Operator:          TableScan
+            alias: default_db/nulltest
+            Operator:            Filter Operator
+              predicate:
+                  expr: boolean_data is null
+                  type: boolean
+              Operator:              Select Operator
+                expressions:
+                      expr: int_data2
+                      type: int
+                outputColumnNames: _col0
+                Operator:                Select Operator
+                  expressions:
+                        expr: _col0
+                        type: int
+                  outputColumnNames: _col0
+                  Operator:                  Group By Operator
+                    keys:
+                          expr: _col0
+                          type: int
+                    mode: hash
+                    outputColumnNames: _col0
+                    UseNewGroupBy: false
+                    Operator:                    Reduce Output Operator
+                      key expressions:
+                            expr: _col0
+                            type: int
+                      key serialize infos:
+                        table descs
+                          input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                          output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                      sort order: +
+                      output key names: reducesinkkey0
+                      Map-reduce partition columns:
+                            expr: _col0
+                            type: int
+                      tag: 1
+        default_db/datatest#t1 
+          Operator:          TableScan
+            alias: default_db/datatest#t1
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: int_data1
+                    type: int
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col0, _col1, _col2, _col3, _col4
+              Map-reduce partition columns:
+                    expr: int_data1
+                    type: int
+              tag: 0
+              value expressions:
+                    expr: int_data1
+                    type: int
+                    expr: int_data2
+                    type: int
+                    expr: boolean_data
+                    type: boolean
+                    expr: double_data
+                    type: double
+                    expr: string_data
+                    type: string
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/nulltest [t2:default_db/nulltest]
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/datatest [default_db/datatest#t1]
+      Reduce Operator Tree:
+        Operator:        Join Operator
+          condition map:
+               Left Semi Join 0 to 1
+          condition expressions:
+            0 {VALUE._col0} {VALUE._col1} {VALUE._col2} {VALUE._col3} {VALUE._col4}
+            1 
+          handleSkewJoin: false
+          outputColumnNames: _col0, _col1, _col2, _col3, _col4
+          Operator:          Select Operator
+            expressions:
+                  expr: _col0
+                  type: int
+                  expr: _col1
+                  type: int
+                  expr: _col2
+                  type: boolean
+                  expr: _col3
+                  type: double
+                  expr: _col4
+                  type: string
+            outputColumnNames: _col0, _col1, _col2, _col3, _col4
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 0
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+
+  Stage: Stage-2
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1827530899/10002 
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: _col1
+                    type: int
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col0, _col1, _col2, _col3, _col4
+              tag: -1
+              value expressions:
+                    expr: _col0
+                    type: int
+                    expr: _col1
+                    type: int
+                    expr: _col2
+                    type: boolean
+                    expr: _col3
+                    type: double
+                    expr: _col4
+                    type: string
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1827530899/10002 [file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1827530899/10002]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          File Output Operator
+            compressed: false
+            GlobalTableId: 0
+            table:
+              table descs
+                input format: org.apache.hadoop.mapred.TextInputFormat
+                output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: SELECT * FROM datatest t1 WHERE EXISTS(SELECT 1 FROM (SELECT int_data2 AS int_data2, boolean_data FROM nulltest where boolean_data is null) t2 WHERE t1.int_data1=t2.int_data2)  order by int_data2
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1984764866/10000
+2	0	true	32.91569954365889	Include
+2	1	true	9.589949434284112	For
+2	2	false	20.494577702885913	RANK
+2	3	true	8.77171395741883	The
+2	5	true	22.15271891090531	Test
+2	7	false	14.998223744245005	Used
+query: EXPLAIN SELECT * FROM datatest t1 WHERE EXISTS(SELECT 1 FROM (SELECT int_data2 AS int_data2, double_data as dbl FROM nulltest where  string_data is null and not boolean_data is null) t2 WHERE t1.double_data=t2.dbl)  order by int_data2
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_LEFTSEMIJOIN (TOK_TABREF (TOK_TAB datatest) t1) (TOK_SUBQUERY (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB nulltest))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL int_data2) int_data2) (TOK_SELEXPR (TOK_TABLE_OR_COL double_data) dbl)) (TOK_WHERE (and (TOK_FUNCTION TOK_ISNULL (TOK_TABLE_OR_COL string_data)) (not (TOK_FUNCTION TOK_ISNULL (TOK_TABLE_OR_COL boolean_data))))))) t2) (= (. (TOK_TABLE_OR_COL t1) double_data) (. (TOK_TABLE_OR_COL t2) dbl)))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_ALLCOLREF t1))) (TOK_ORDERBY (TOK_TABSORTCOLNAMEASC (. (TOK_TABLE_OR_COL t1) int_data2)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-2
+    type:;depends on:Stage-1;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        t2:default_db/nulltest 
+          Operator:          TableScan
+            alias: default_db/nulltest
+            Operator:            Filter Operator
+              predicate:
+                  expr: (string_data is null and (not boolean_data is null))
+                  type: boolean
+              Operator:              Select Operator
+                expressions:
+                      expr: double_data
+                      type: double
+                outputColumnNames: _col1
+                Operator:                Select Operator
+                  expressions:
+                        expr: _col1
+                        type: double
+                  outputColumnNames: _col1
+                  Operator:                  Group By Operator
+                    keys:
+                          expr: _col1
+                          type: double
+                    mode: hash
+                    outputColumnNames: _col0
+                    UseNewGroupBy: false
+                    Operator:                    Reduce Output Operator
+                      key expressions:
+                            expr: _col0
+                            type: double
+                      key serialize infos:
+                        table descs
+                          input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                          output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                      sort order: +
+                      output key names: reducesinkkey0
+                      Map-reduce partition columns:
+                            expr: _col0
+                            type: double
+                      tag: 1
+        default_db/datatest#t1 
+          Operator:          TableScan
+            alias: default_db/datatest#t1
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: double_data
+                    type: double
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col0, _col1, _col2, _col3, _col4
+              Map-reduce partition columns:
+                    expr: double_data
+                    type: double
+              tag: 0
+              value expressions:
+                    expr: int_data1
+                    type: int
+                    expr: int_data2
+                    type: int
+                    expr: boolean_data
+                    type: boolean
+                    expr: double_data
+                    type: double
+                    expr: string_data
+                    type: string
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/nulltest [t2:default_db/nulltest]
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/datatest [default_db/datatest#t1]
+      Reduce Operator Tree:
+        Operator:        Join Operator
+          condition map:
+               Left Semi Join 0 to 1
+          condition expressions:
+            0 {VALUE._col0} {VALUE._col1} {VALUE._col2} {VALUE._col3} {VALUE._col4}
+            1 
+          handleSkewJoin: false
+          outputColumnNames: _col0, _col1, _col2, _col3, _col4
+          Operator:          Select Operator
+            expressions:
+                  expr: _col0
+                  type: int
+                  expr: _col1
+                  type: int
+                  expr: _col2
+                  type: boolean
+                  expr: _col3
+                  type: double
+                  expr: _col4
+                  type: string
+            outputColumnNames: _col0, _col1, _col2, _col3, _col4
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 0
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+
+  Stage: Stage-2
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/969283411/10002 
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: _col1
+                    type: int
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col0, _col1, _col2, _col3, _col4
+              tag: -1
+              value expressions:
+                    expr: _col0
+                    type: int
+                    expr: _col1
+                    type: int
+                    expr: _col2
+                    type: boolean
+                    expr: _col3
+                    type: double
+                    expr: _col4
+                    type: string
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/969283411/10002 [file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/969283411/10002]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          File Output Operator
+            compressed: false
+            GlobalTableId: 0
+            table:
+              table descs
+                input format: org.apache.hadoop.mapred.TextInputFormat
+                output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: SELECT * FROM datatest t1 WHERE EXISTS(SELECT 1 FROM (SELECT int_data2 AS int_data2, double_data as dbl FROM nulltest where  string_data is null and not boolean_data is null) t2 WHERE t1.double_data=t2.dbl)  order by int_data2
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1186690862/10000
+2	1	true	9.589949434284112	For
+0	4	true	19.754128235118877	SUM
+query: EXPLAIN SELECT * FROM datatest t1 WHERE EXISTS(SELECT t2.int_data2 FROM (SELECT int_data2 AS int_data2, boolean_data FROM nulltest WHERE string_data IS NULL order by boolean_data limit 2) t2 WHERE t1.int_data1=t2.int_data2) AND (int_data2=1 OR (boolean_data=false AND int_data2=0) ) order by int_data2
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_LEFTSEMIJOIN (TOK_TABREF (TOK_TAB datatest) t1) (TOK_SUBQUERY (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB nulltest))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL int_data2) int_data2) (TOK_SELEXPR (TOK_TABLE_OR_COL boolean_data))) (TOK_WHERE (TOK_FUNCTION TOK_ISNULL (TOK_TABLE_OR_COL string_data))) (TOK_ORDERBY (TOK_TABSORTCOLNAMEASC (TOK_TABLE_OR_COL boolean_data))) (TOK_LIMIT 2))) t2) (= (. (TOK_TABLE_OR_COL t1) int_data1) (. (TOK_TABLE_OR_COL t2) int_data2)))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_ALLCOLREF t1))) (TOK_WHERE (OR (= (. (TOK_TABLE_OR_COL t1) int_data2) 1) (AND (= (. (TOK_TABLE_OR_COL t1) boolean_data) false) (= (. (TOK_TABLE_OR_COL t1) int_data2) 0)))) (TOK_ORDERBY (TOK_TABSORTCOLNAMEASC (. (TOK_TABLE_OR_COL t1) int_data2)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-2
+    type:;depends on:Stage-1;
+  Stage-3
+    type:;depends on:Stage-2;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        t2:default_db/nulltest 
+          Operator:          TableScan
+            alias: default_db/nulltest
+            Operator:            Filter Operator
+              predicate:
+                  expr: string_data is null
+                  type: boolean
+              Operator:              Select Operator
+                expressions:
+                      expr: int_data2
+                      type: int
+                      expr: boolean_data
+                      type: boolean
+                outputColumnNames: _col0, _col1
+                Operator:                HalfSortLimit
+                  Operator:                  Reduce Output Operator
+                    key expressions:
+                          expr: _col1
+                          type: boolean
+                    key serialize infos:
+                      table descs
+                        input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                        output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                    sort order: +
+                    output key names: reducesinkkey0
+                    output value names: _col0, _col1
+                    tag: -1
+                    value expressions:
+                          expr: _col0
+                          type: int
+                          expr: _col1
+                          type: boolean
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/nulltest [t2:default_db/nulltest]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          HalfSortLimit
+            Operator:            Select Operator
+              expressions:
+                    expr: _col0
+                    type: int
+              outputColumnNames: _col0
+              Operator:              Group By Operator
+                keys:
+                      expr: _col0
+                      type: int
+                mode: hash
+                outputColumnNames: _col0
+                UseNewGroupBy: false
+                Operator:                File Output Operator
+                  compressed: false
+                  GlobalTableId: 0
+                  table:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+
+  Stage: Stage-2
+    Map Reduce
+      Alias -> Map Operator Tree:
+        $INTNAME 
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: _col0
+                    type: int
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              Map-reduce partition columns:
+                    expr: _col0
+                    type: int
+              tag: 1
+        default_db/datatest#t1 
+          Operator:          TableScan
+            alias: default_db/datatest#t1
+            Operator:            Filter Operator
+              predicate:
+                  expr: ((int_data2 = 1) or ((boolean_data = false) and (int_data2 = 0)))
+                  type: boolean
+              Operator:              Reduce Output Operator
+                key expressions:
+                      expr: int_data1
+                      type: int
+                key serialize infos:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                sort order: +
+                output key names: reducesinkkey0
+                output value names: _col0, _col1, _col2, _col3, _col4
+                Map-reduce partition columns:
+                      expr: int_data1
+                      type: int
+                tag: 0
+                value expressions:
+                      expr: int_data1
+                      type: int
+                      expr: int_data2
+                      type: int
+                      expr: boolean_data
+                      type: boolean
+                      expr: double_data
+                      type: double
+                      expr: string_data
+                      type: string
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/870783631/10002 [$INTNAME]
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/datatest [default_db/datatest#t1]
+      Reduce Operator Tree:
+        Operator:        Join Operator
+          condition map:
+               Left Semi Join 0 to 1
+          condition expressions:
+            0 {VALUE._col0} {VALUE._col1} {VALUE._col2} {VALUE._col3} {VALUE._col4}
+            1 
+          handleSkewJoin: false
+          outputColumnNames: _col0, _col1, _col2, _col3, _col4
+          Operator:          Filter Operator
+            predicate:
+                expr: ((_col1 = 1) or ((_col2 = false) and (_col1 = 0)))
+                type: boolean
+            Operator:            Select Operator
+              expressions:
+                    expr: _col0
+                    type: int
+                    expr: _col1
+                    type: int
+                    expr: _col2
+                    type: boolean
+                    expr: _col3
+                    type: double
+                    expr: _col4
+                    type: string
+              outputColumnNames: _col0, _col1, _col2, _col3, _col4
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 0
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+
+  Stage: Stage-3
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/870783631/10003 
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: _col1
+                    type: int
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col0, _col1, _col2, _col3, _col4
+              tag: -1
+              value expressions:
+                    expr: _col0
+                    type: int
+                    expr: _col1
+                    type: int
+                    expr: _col2
+                    type: boolean
+                    expr: _col3
+                    type: double
+                    expr: _col4
+                    type: string
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/870783631/10003 [file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/870783631/10003]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          File Output Operator
+            compressed: false
+            GlobalTableId: 0
+            table:
+              table descs
+                input format: org.apache.hadoop.mapred.TextInputFormat
+                output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: SELECT * FROM datatest t1 WHERE EXISTS(SELECT t2.int_data2 FROM (SELECT int_data2 AS int_data2, boolean_data FROM nulltest WHERE string_data IS NULL order by boolean_data limit 2) t2 WHERE t1.int_data1=t2.int_data2) AND (int_data2=1 OR (boolean_data=false AND int_data2=0) ) order by int_data2
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1214361576/10000
+1	0	false	3.1145951928143676	LEAD
+2	1	true	9.589949434284112	For
+1	1	false	32.92404678679056	Functions
+1	1	true	24.506909362217737	Which
+query: EXPLAIN SELECT * FROM datatest t1 WHERE EXISTS(SELECT t2.int_data2 FROM (SELECT int_data2 AS int_data2, boolean_data FROM nulltest WHERE string_data IS NULL order by boolean_data limit 2) t2 WHERE t1.int_data1=t2.int_data2) and (boolean_data=false or (int_data1=2 and int_data2=3))  order by int_data2
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_LEFTSEMIJOIN (TOK_TABREF (TOK_TAB datatest) t1) (TOK_SUBQUERY (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB nulltest))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL int_data2) int_data2) (TOK_SELEXPR (TOK_TABLE_OR_COL boolean_data))) (TOK_WHERE (TOK_FUNCTION TOK_ISNULL (TOK_TABLE_OR_COL string_data))) (TOK_ORDERBY (TOK_TABSORTCOLNAMEASC (TOK_TABLE_OR_COL boolean_data))) (TOK_LIMIT 2))) t2) (= (. (TOK_TABLE_OR_COL t1) int_data1) (. (TOK_TABLE_OR_COL t2) int_data2)))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_ALLCOLREF t1))) (TOK_WHERE (or (= (. (TOK_TABLE_OR_COL t1) boolean_data) false) (and (= (. (TOK_TABLE_OR_COL t1) int_data1) 2) (= (. (TOK_TABLE_OR_COL t1) int_data2) 3)))) (TOK_ORDERBY (TOK_TABSORTCOLNAMEASC (. (TOK_TABLE_OR_COL t1) int_data2)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-2
+    type:;depends on:Stage-1;
+  Stage-3
+    type:;depends on:Stage-2;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        t2:default_db/nulltest 
+          Operator:          TableScan
+            alias: default_db/nulltest
+            Operator:            Filter Operator
+              predicate:
+                  expr: string_data is null
+                  type: boolean
+              Operator:              Select Operator
+                expressions:
+                      expr: int_data2
+                      type: int
+                      expr: boolean_data
+                      type: boolean
+                outputColumnNames: _col0, _col1
+                Operator:                HalfSortLimit
+                  Operator:                  Reduce Output Operator
+                    key expressions:
+                          expr: _col1
+                          type: boolean
+                    key serialize infos:
+                      table descs
+                        input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                        output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                    sort order: +
+                    output key names: reducesinkkey0
+                    output value names: _col0, _col1
+                    tag: -1
+                    value expressions:
+                          expr: _col0
+                          type: int
+                          expr: _col1
+                          type: boolean
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/nulltest [t2:default_db/nulltest]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          HalfSortLimit
+            Operator:            Select Operator
+              expressions:
+                    expr: _col0
+                    type: int
+              outputColumnNames: _col0
+              Operator:              Group By Operator
+                keys:
+                      expr: _col0
+                      type: int
+                mode: hash
+                outputColumnNames: _col0
+                UseNewGroupBy: false
+                Operator:                File Output Operator
+                  compressed: false
+                  GlobalTableId: 0
+                  table:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+
+  Stage: Stage-2
+    Map Reduce
+      Alias -> Map Operator Tree:
+        $INTNAME 
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: _col0
+                    type: int
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              Map-reduce partition columns:
+                    expr: _col0
+                    type: int
+              tag: 1
+        default_db/datatest#t1 
+          Operator:          TableScan
+            alias: default_db/datatest#t1
+            Operator:            Filter Operator
+              predicate:
+                  expr: ((boolean_data = false) or ((int_data1 = 2) and (int_data2 = 3)))
+                  type: boolean
+              Operator:              Reduce Output Operator
+                key expressions:
+                      expr: int_data1
+                      type: int
+                key serialize infos:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                sort order: +
+                output key names: reducesinkkey0
+                output value names: _col0, _col1, _col2, _col3, _col4
+                Map-reduce partition columns:
+                      expr: int_data1
+                      type: int
+                tag: 0
+                value expressions:
+                      expr: int_data1
+                      type: int
+                      expr: int_data2
+                      type: int
+                      expr: boolean_data
+                      type: boolean
+                      expr: double_data
+                      type: double
+                      expr: string_data
+                      type: string
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1753786175/10002 [$INTNAME]
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/datatest [default_db/datatest#t1]
+      Reduce Operator Tree:
+        Operator:        Join Operator
+          condition map:
+               Left Semi Join 0 to 1
+          condition expressions:
+            0 {VALUE._col0} {VALUE._col1} {VALUE._col2} {VALUE._col3} {VALUE._col4}
+            1 
+          handleSkewJoin: false
+          outputColumnNames: _col0, _col1, _col2, _col3, _col4
+          Operator:          Filter Operator
+            predicate:
+                expr: ((_col2 = false) or ((_col0 = 2) and (_col1 = 3)))
+                type: boolean
+            Operator:            Select Operator
+              expressions:
+                    expr: _col0
+                    type: int
+                    expr: _col1
+                    type: int
+                    expr: _col2
+                    type: boolean
+                    expr: _col3
+                    type: double
+                    expr: _col4
+                    type: string
+              outputColumnNames: _col0, _col1, _col2, _col3, _col4
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 0
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+
+  Stage: Stage-3
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1753786175/10003 
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: _col1
+                    type: int
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col0, _col1, _col2, _col3, _col4
+              tag: -1
+              value expressions:
+                    expr: _col0
+                    type: int
+                    expr: _col1
+                    type: int
+                    expr: _col2
+                    type: boolean
+                    expr: _col3
+                    type: double
+                    expr: _col4
+                    type: string
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1753786175/10003 [file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1753786175/10003]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          File Output Operator
+            compressed: false
+            GlobalTableId: 0
+            table:
+              table descs
+                input format: org.apache.hadoop.mapred.TextInputFormat
+                output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: SELECT * FROM datatest t1 WHERE EXISTS(SELECT t2.int_data2 FROM (SELECT int_data2 AS int_data2, boolean_data FROM nulltest WHERE string_data IS NULL order by boolean_data limit 2) t2 WHERE t1.int_data1=t2.int_data2) and (boolean_data=false or (int_data1=2 and int_data2=3))  order by int_data2
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/757537572/10000
+1	0	false	3.1145951928143676	LEAD
+1	1	false	32.92404678679056	Functions
+2	2	false	20.494577702885913	RANK
+2	3	true	8.77171395741883	The
+2	7	false	14.998223744245005	Used
+query: EXPLAIN select string_data, int_data2 from (SELECT * FROM datatest t1 WHERE EXISTS(SELECT t2.int_data2 FROM (SELECT int_data2 AS int_data2, boolean_data FROM nulltest WHERE string_data IS NULL order by boolean_data limit 2) t2 WHERE t1.int_data1=t2.int_data2) and (boolean_data=false or (int_data1=2 and int_data2=3))  order by int_data2 limit 3) t3 order by string_data
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_SUBQUERY (TOK_QUERY (TOK_FROM (TOK_LEFTSEMIJOIN (TOK_TABREF (TOK_TAB datatest) t1) (TOK_SUBQUERY (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB nulltest))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL int_data2) int_data2) (TOK_SELEXPR (TOK_TABLE_OR_COL boolean_data))) (TOK_WHERE (TOK_FUNCTION TOK_ISNULL (TOK_TABLE_OR_COL string_data))) (TOK_ORDERBY (TOK_TABSORTCOLNAMEASC (TOK_TABLE_OR_COL boolean_data))) (TOK_LIMIT 2))) t2) (= (. (TOK_TABLE_OR_COL t1) int_data1) (. (TOK_TABLE_OR_COL t2) int_data2)))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_ALLCOLREF t1))) (TOK_WHERE (or (= (. (TOK_TABLE_OR_COL t1) boolean_data) false) (and (= (. (TOK_TABLE_OR_COL t1) int_data1) 2) (= (. (TOK_TABLE_OR_COL t1) int_data2) 3)))) (TOK_ORDERBY (TOK_TABSORTCOLNAMEASC (. (TOK_TABLE_OR_COL t1) int_data2))) (TOK_LIMIT 3))) t3)) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL string_data)) (TOK_SELEXPR (TOK_TABLE_OR_COL int_data2))) (TOK_ORDERBY (TOK_TABSORTCOLNAMEASC (TOK_TABLE_OR_COL string_data)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-2
+    type:;depends on:Stage-1;
+  Stage-3
+    type:;depends on:Stage-2;
+  Stage-4
+    type:;depends on:Stage-3;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        t3:t2:default_db/nulltest 
+          Operator:          TableScan
+            alias: default_db/nulltest
+            Operator:            Filter Operator
+              predicate:
+                  expr: string_data is null
+                  type: boolean
+              Operator:              Select Operator
+                expressions:
+                      expr: int_data2
+                      type: int
+                      expr: boolean_data
+                      type: boolean
+                outputColumnNames: _col0, _col1
+                Operator:                HalfSortLimit
+                  Operator:                  Reduce Output Operator
+                    key expressions:
+                          expr: _col1
+                          type: boolean
+                    key serialize infos:
+                      table descs
+                        input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                        output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                    sort order: +
+                    output key names: reducesinkkey0
+                    output value names: _col0, _col1
+                    tag: -1
+                    value expressions:
+                          expr: _col0
+                          type: int
+                          expr: _col1
+                          type: boolean
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/nulltest [t3:t2:default_db/nulltest]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          HalfSortLimit
+            Operator:            Select Operator
+              expressions:
+                    expr: _col0
+                    type: int
+              outputColumnNames: _col0
+              Operator:              Group By Operator
+                keys:
+                      expr: _col0
+                      type: int
+                mode: hash
+                outputColumnNames: _col0
+                UseNewGroupBy: false
+                Operator:                File Output Operator
+                  compressed: false
+                  GlobalTableId: 0
+                  table:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+
+  Stage: Stage-2
+    Map Reduce
+      Alias -> Map Operator Tree:
+        $INTNAME 
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: _col0
+                    type: int
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              Map-reduce partition columns:
+                    expr: _col0
+                    type: int
+              tag: 1
+        t3:default_db/datatest#t1 
+          Operator:          TableScan
+            alias: default_db/datatest#t1
+            Operator:            Filter Operator
+              predicate:
+                  expr: ((boolean_data = false) or ((int_data1 = 2) and (int_data2 = 3)))
+                  type: boolean
+              Operator:              Reduce Output Operator
+                key expressions:
+                      expr: int_data1
+                      type: int
+                key serialize infos:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                sort order: +
+                output key names: reducesinkkey0
+                output value names: _col0, _col1, _col2, _col3, _col4
+                Map-reduce partition columns:
+                      expr: int_data1
+                      type: int
+                tag: 0
+                value expressions:
+                      expr: int_data1
+                      type: int
+                      expr: int_data2
+                      type: int
+                      expr: boolean_data
+                      type: boolean
+                      expr: double_data
+                      type: double
+                      expr: string_data
+                      type: string
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1915812148/10002 [$INTNAME]
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/datatest [t3:default_db/datatest#t1]
+      Reduce Operator Tree:
+        Operator:        Join Operator
+          condition map:
+               Left Semi Join 0 to 1
+          condition expressions:
+            0 {VALUE._col0} {VALUE._col1} {VALUE._col2} {VALUE._col3} {VALUE._col4}
+            1 
+          handleSkewJoin: false
+          outputColumnNames: _col0, _col1, _col2, _col3, _col4
+          Operator:          Filter Operator
+            predicate:
+                expr: ((_col2 = false) or ((_col0 = 2) and (_col1 = 3)))
+                type: boolean
+            Operator:            Select Operator
+              expressions:
+                    expr: _col0
+                    type: int
+                    expr: _col1
+                    type: int
+                    expr: _col2
+                    type: boolean
+                    expr: _col3
+                    type: double
+                    expr: _col4
+                    type: string
+              outputColumnNames: _col0, _col1, _col2, _col3, _col4
+              Operator:              HalfSortLimit
+                Operator:                File Output Operator
+                  compressed: false
+                  GlobalTableId: 0
+                  table:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+
+  Stage: Stage-3
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1915812148/10003 
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: _col1
+                    type: int
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col0, _col1, _col2, _col3, _col4
+              tag: -1
+              value expressions:
+                    expr: _col0
+                    type: int
+                    expr: _col1
+                    type: int
+                    expr: _col2
+                    type: boolean
+                    expr: _col3
+                    type: double
+                    expr: _col4
+                    type: string
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1915812148/10003 [file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1915812148/10003]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          HalfSortLimit
+            Operator:            Select Operator
+              expressions:
+                    expr: _col4
+                    type: string
+                    expr: _col1
+                    type: int
+              outputColumnNames: _col0, _col1
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 0
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+
+  Stage: Stage-4
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1915812148/10004 
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: _col0
+                    type: string
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col0, _col1
+              tag: -1
+              value expressions:
+                    expr: _col0
+                    type: string
+                    expr: _col1
+                    type: int
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1915812148/10004 [file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1915812148/10004]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          File Output Operator
+            compressed: false
+            GlobalTableId: 0
+            table:
+              table descs
+                input format: org.apache.hadoop.mapred.TextInputFormat
+                output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: select string_data, int_data2 from (SELECT * FROM datatest t1 WHERE EXISTS(SELECT t2.int_data2 FROM (SELECT int_data2 AS int_data2, boolean_data FROM nulltest WHERE string_data IS NULL order by boolean_data limit 2) t2 WHERE t1.int_data1=t2.int_data2) and (boolean_data=false or (int_data1=2 and int_data2=3))  order by int_data2 limit 3) t3 order by string_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/2127357108/10000
+Functions	1
+LEAD	0
+RANK	2
+query: explain SELECT * FROM datatest t1 WHERE EXISTS(SELECT t2.int_data2 FROM nulltest t2 WHERE  t1.int_data1=t2.int_data2 and string_data IS NULL and not boolean_data is null) and (boolean_data=false or (int_data1=2 and int_data2=3) )  order by int_data2
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_LEFTSEMIJOIN (TOK_TABREF (TOK_TAB datatest) t1) (TOK_TABREF (TOK_TAB nulltest) t2) (and (and (= (. (TOK_TABLE_OR_COL t1) int_data1) (. (TOK_TABLE_OR_COL t2) int_data2)) (TOK_FUNCTION TOK_ISNULL (. (TOK_TABLE_OR_COL t2) string_data))) (not (TOK_FUNCTION TOK_ISNULL (. (TOK_TABLE_OR_COL t2) boolean_data)))))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_ALLCOLREF t1))) (TOK_WHERE (or (= (. (TOK_TABLE_OR_COL t1) boolean_data) false) (and (= (. (TOK_TABLE_OR_COL t1) int_data1) 2) (= (. (TOK_TABLE_OR_COL t1) int_data2) 3)))) (TOK_ORDERBY (TOK_TABSORTCOLNAMEASC (. (TOK_TABLE_OR_COL t1) int_data2)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-2
+    type:;depends on:Stage-1;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/datatest#t1 
+          Operator:          TableScan
+            alias: default_db/datatest#t1
+            Operator:            Filter Operator
+              predicate:
+                  expr: ((boolean_data = false) or ((int_data1 = 2) and (int_data2 = 3)))
+                  type: boolean
+              Operator:              Reduce Output Operator
+                key expressions:
+                      expr: int_data1
+                      type: int
+                key serialize infos:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                sort order: +
+                output key names: reducesinkkey0
+                output value names: _col0, _col1, _col2, _col3, _col4
+                Map-reduce partition columns:
+                      expr: int_data1
+                      type: int
+                tag: 0
+                value expressions:
+                      expr: int_data1
+                      type: int
+                      expr: int_data2
+                      type: int
+                      expr: boolean_data
+                      type: boolean
+                      expr: double_data
+                      type: double
+                      expr: string_data
+                      type: string
+        default_db/nulltest#t2 
+          Operator:          TableScan
+            alias: default_db/nulltest#t2
+            Operator:            Filter Operator
+              predicate:
+                  expr: (string_data is null and (not boolean_data is null))
+                  type: boolean
+              Operator:              Filter Operator
+                predicate:
+                    expr: string_data is null
+                    type: boolean
+                Operator:                Filter Operator
+                  predicate:
+                      expr: (not boolean_data is null)
+                      type: boolean
+                  Operator:                  Select Operator
+                    expressions:
+                          expr: int_data2
+                          type: int
+                          expr: string_data
+                          type: string
+                          expr: boolean_data
+                          type: boolean
+                    outputColumnNames: int_data2, string_data, boolean_data
+                    Operator:                    Group By Operator
+                      keys:
+                            expr: int_data2
+                            type: int
+                            expr: string_data
+                            type: string
+                            expr: boolean_data
+                            type: boolean
+                      mode: hash
+                      outputColumnNames: _col0, _col1, _col2
+                      UseNewGroupBy: false
+                      Operator:                      Reduce Output Operator
+                        key expressions:
+                              expr: _col0
+                              type: int
+                        key serialize infos:
+                          table descs
+                            input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                            output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                        sort order: +
+                        output key names: reducesinkkey0
+                        Map-reduce partition columns:
+                              expr: _col0
+                              type: int
+                        tag: 1
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/datatest [default_db/datatest#t1]
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/nulltest [default_db/nulltest#t2]
+      Reduce Operator Tree:
+        Operator:        Join Operator
+          condition map:
+               Left Semi Join 0 to 1
+          condition expressions:
+            0 {VALUE._col0} {VALUE._col1} {VALUE._col2} {VALUE._col3} {VALUE._col4}
+            1 
+          handleSkewJoin: false
+          outputColumnNames: _col0, _col1, _col2, _col3, _col4
+          Operator:          Filter Operator
+            predicate:
+                expr: ((_col2 = false) or ((_col0 = 2) and (_col1 = 3)))
+                type: boolean
+            Operator:            Select Operator
+              expressions:
+                    expr: _col0
+                    type: int
+                    expr: _col1
+                    type: int
+                    expr: _col2
+                    type: boolean
+                    expr: _col3
+                    type: double
+                    expr: _col4
+                    type: string
+              outputColumnNames: _col0, _col1, _col2, _col3, _col4
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 0
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+
+  Stage: Stage-2
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1277616844/10002 
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: _col1
+                    type: int
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col0, _col1, _col2, _col3, _col4
+              tag: -1
+              value expressions:
+                    expr: _col0
+                    type: int
+                    expr: _col1
+                    type: int
+                    expr: _col2
+                    type: boolean
+                    expr: _col3
+                    type: double
+                    expr: _col4
+                    type: string
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1277616844/10002 [file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1277616844/10002]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          File Output Operator
+            compressed: false
+            GlobalTableId: 0
+            table:
+              table descs
+                input format: org.apache.hadoop.mapred.TextInputFormat
+                output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: SELECT * FROM datatest t1 WHERE EXISTS(SELECT t2.int_data2 FROM nulltest t2 WHERE  t1.int_data1=t2.int_data2 and string_data IS NULL and not boolean_data is null) and (boolean_data=false or (int_data1=2 and int_data2=3) )  order by int_data2
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/2135837063/10000
+1	0	false	3.1145951928143676	LEAD
+1	1	false	32.92404678679056	Functions
+query: explain SELECT * FROM datatest t1 WHERE EXISTS(SELECT t2.int_data2 FROM nulltest t2 WHERE  t1.int_data1=t2.int_data2 and t1.int_data1= t2.int_data1 and string_data IS NULL and not boolean_data is null) and (boolean_data=false or (int_data1=2 and int_data2=3) )  order by int_data2
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_LEFTSEMIJOIN (TOK_TABREF (TOK_TAB datatest) t1) (TOK_TABREF (TOK_TAB nulltest) t2) (and (and (and (= (. (TOK_TABLE_OR_COL t1) int_data1) (. (TOK_TABLE_OR_COL t2) int_data2)) (= (. (TOK_TABLE_OR_COL t1) int_data1) (. (TOK_TABLE_OR_COL t2) int_data1))) (TOK_FUNCTION TOK_ISNULL (. (TOK_TABLE_OR_COL t2) string_data))) (not (TOK_FUNCTION TOK_ISNULL (. (TOK_TABLE_OR_COL t2) boolean_data)))))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_ALLCOLREF t1))) (TOK_WHERE (or (= (. (TOK_TABLE_OR_COL t1) boolean_data) false) (and (= (. (TOK_TABLE_OR_COL t1) int_data1) 2) (= (. (TOK_TABLE_OR_COL t1) int_data2) 3)))) (TOK_ORDERBY (TOK_TABSORTCOLNAMEASC (. (TOK_TABLE_OR_COL t1) int_data2)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-2
+    type:;depends on:Stage-1;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/datatest#t1 
+          Operator:          TableScan
+            alias: default_db/datatest#t1
+            Operator:            Filter Operator
+              predicate:
+                  expr: ((boolean_data = false) or ((int_data1 = 2) and (int_data2 = 3)))
+                  type: boolean
+              Operator:              Reduce Output Operator
+                key expressions:
+                      expr: int_data1
+                      type: int
+                      expr: int_data1
+                      type: int
+                key serialize infos:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                sort order: ++
+                output key names: reducesinkkey0, reducesinkkey1
+                output value names: _col0, _col1, _col2, _col3, _col4
+                Map-reduce partition columns:
+                      expr: int_data1
+                      type: int
+                      expr: int_data1
+                      type: int
+                tag: 0
+                value expressions:
+                      expr: int_data1
+                      type: int
+                      expr: int_data2
+                      type: int
+                      expr: boolean_data
+                      type: boolean
+                      expr: double_data
+                      type: double
+                      expr: string_data
+                      type: string
+        default_db/nulltest#t2 
+          Operator:          TableScan
+            alias: default_db/nulltest#t2
+            Operator:            Filter Operator
+              predicate:
+                  expr: (string_data is null and (not boolean_data is null))
+                  type: boolean
+              Operator:              Filter Operator
+                predicate:
+                    expr: string_data is null
+                    type: boolean
+                Operator:                Filter Operator
+                  predicate:
+                      expr: (not boolean_data is null)
+                      type: boolean
+                  Operator:                  Select Operator
+                    expressions:
+                          expr: int_data2
+                          type: int
+                          expr: int_data1
+                          type: int
+                          expr: string_data
+                          type: string
+                          expr: boolean_data
+                          type: boolean
+                    outputColumnNames: int_data2, int_data1, string_data, boolean_data
+                    Operator:                    Group By Operator
+                      keys:
+                            expr: int_data2
+                            type: int
+                            expr: int_data1
+                            type: int
+                            expr: string_data
+                            type: string
+                            expr: boolean_data
+                            type: boolean
+                      mode: hash
+                      outputColumnNames: _col0, _col1, _col2, _col3
+                      UseNewGroupBy: false
+                      Operator:                      Reduce Output Operator
+                        key expressions:
+                              expr: _col0
+                              type: int
+                              expr: _col1
+                              type: int
+                        key serialize infos:
+                          table descs
+                            input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                            output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                        sort order: ++
+                        output key names: reducesinkkey0, reducesinkkey1
+                        Map-reduce partition columns:
+                              expr: _col0
+                              type: int
+                              expr: _col1
+                              type: int
+                        tag: 1
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/datatest [default_db/datatest#t1]
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/nulltest [default_db/nulltest#t2]
+      Reduce Operator Tree:
+        Operator:        Join Operator
+          condition map:
+               Left Semi Join 0 to 1
+          condition expressions:
+            0 {VALUE._col0} {VALUE._col1} {VALUE._col2} {VALUE._col3} {VALUE._col4}
+            1 
+          handleSkewJoin: false
+          outputColumnNames: _col0, _col1, _col2, _col3, _col4
+          Operator:          Filter Operator
+            predicate:
+                expr: ((_col2 = false) or ((_col0 = 2) and (_col1 = 3)))
+                type: boolean
+            Operator:            Select Operator
+              expressions:
+                    expr: _col0
+                    type: int
+                    expr: _col1
+                    type: int
+                    expr: _col2
+                    type: boolean
+                    expr: _col3
+                    type: double
+                    expr: _col4
+                    type: string
+              outputColumnNames: _col0, _col1, _col2, _col3, _col4
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 0
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+
+  Stage: Stage-2
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/2018469686/10002 
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: _col1
+                    type: int
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col0, _col1, _col2, _col3, _col4
+              tag: -1
+              value expressions:
+                    expr: _col0
+                    type: int
+                    expr: _col1
+                    type: int
+                    expr: _col2
+                    type: boolean
+                    expr: _col3
+                    type: double
+                    expr: _col4
+                    type: string
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/2018469686/10002 [file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/2018469686/10002]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          File Output Operator
+            compressed: false
+            GlobalTableId: 0
+            table:
+              table descs
+                input format: org.apache.hadoop.mapred.TextInputFormat
+                output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: explain SELECT int_data2,SUM(int_data1) FROM datatest t1 WHERE  EXISTS(SELECT t2.int_data2 FROM nulltest t2 WHERE string_data IS NULL AND t1.int_data2=t2.int_data2) AND (boolean_data=false OR (int_data1=2 AND int_data2=3)) GROUP BY int_data2
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_LEFTSEMIJOIN (TOK_TABREF (TOK_TAB datatest) t1) (TOK_TABREF (TOK_TAB nulltest) t2) (AND (TOK_FUNCTION TOK_ISNULL (. (TOK_TABLE_OR_COL t2) string_data)) (= (. (TOK_TABLE_OR_COL t1) int_data2) (. (TOK_TABLE_OR_COL t2) int_data2))))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (. (TOK_TABLE_OR_COL t1) int_data2)) (TOK_SELEXPR (TOK_FUNCTION SUM (. (TOK_TABLE_OR_COL t1) int_data1)))) (TOK_WHERE (OR (= (. (TOK_TABLE_OR_COL t1) boolean_data) false) (AND (= (. (TOK_TABLE_OR_COL t1) int_data1) 2) (= (. (TOK_TABLE_OR_COL t1) int_data2) 3)))) (TOK_GROUPBY (. (TOK_TABLE_OR_COL t1) int_data2))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-2
+    type:;depends on:Stage-1;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/datatest#t1 
+          Operator:          TableScan
+            alias: default_db/datatest#t1
+            Operator:            Filter Operator
+              predicate:
+                  expr: ((boolean_data = false) or ((int_data1 = 2) and (int_data2 = 3)))
+                  type: boolean
+              Operator:              Reduce Output Operator
+                key expressions:
+                      expr: int_data2
+                      type: int
+                key serialize infos:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                sort order: +
+                output key names: reducesinkkey0
+                output value names: _col0, _col1, _col2
+                Map-reduce partition columns:
+                      expr: int_data2
+                      type: int
+                tag: 0
+                value expressions:
+                      expr: int_data1
+                      type: int
+                      expr: int_data2
+                      type: int
+                      expr: boolean_data
+                      type: boolean
+        default_db/nulltest#t2 
+          Operator:          TableScan
+            alias: default_db/nulltest#t2
+            Operator:            Filter Operator
+              predicate:
+                  expr: string_data is null
+                  type: boolean
+              Operator:              Select Operator
+                expressions:
+                      expr: string_data
+                      type: string
+                      expr: int_data2
+                      type: int
+                outputColumnNames: string_data, int_data2
+                Operator:                Group By Operator
+                  keys:
+                        expr: string_data
+                        type: string
+                        expr: int_data2
+                        type: int
+                  mode: hash
+                  outputColumnNames: _col0, _col1
+                  UseNewGroupBy: false
+                  Operator:                  Reduce Output Operator
+                    key expressions:
+                          expr: _col1
+                          type: int
+                    key serialize infos:
+                      table descs
+                        input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                        output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                    sort order: +
+                    output key names: reducesinkkey0
+                    Map-reduce partition columns:
+                          expr: _col1
+                          type: int
+                    tag: 1
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/datatest [default_db/datatest#t1]
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/nulltest [default_db/nulltest#t2]
+      Reduce Operator Tree:
+        Operator:        Join Operator
+          condition map:
+               Left Semi Join 0 to 1
+          condition expressions:
+            0 {VALUE._col0} {VALUE._col1} {VALUE._col2}
+            1 
+          handleSkewJoin: false
+          outputColumnNames: _col0, _col1, _col2
+          Operator:          Filter Operator
+            predicate:
+                expr: ((_col2 = false) or ((_col0 = 2) and (_col1 = 3)))
+                type: boolean
+            Operator:            Select Operator
+              expressions:
+                    expr: _col1
+                    type: int
+                    expr: _col0
+                    type: int
+              outputColumnNames: _col1, _col0
+              Operator:              Group By Operator
+                aggregations:
+                      expr: sum(_col0)
+                keys:
+                      expr: _col1
+                      type: int
+                mode: hash
+                outputColumnNames: _col0, _col1
+                UseNewGroupBy: true
+                Operator:                File Output Operator
+                  compressed: false
+                  GlobalTableId: 0
+                  table:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+
+  Stage: Stage-2
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/30474430/10002 
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: _col0
+                    type: int
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: ++
+              output key names: _col0, _col1
+              tag: -1
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/30474430/10002 [file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/30474430/10002]
+      Reduce Operator Tree:
+        Operator:        Group By Operator
+          aggregations:
+                expr: sum(KEY._col1:0._col0)
+          keys:
+                expr: KEY._col0
+                type: int
+          mode: mergepartial
+          outputColumnNames: _col0, _col1
+          UseNewGroupBy: true
+          Operator:          Select Operator
+            expressions:
+                  expr: _col0
+                  type: int
+                  expr: _col1
+                  type: bigint
+            outputColumnNames: _col0, _col1
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 0
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.TextInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: SELECT int_data2,SUM(int_data1) FROM datatest t1 WHERE  EXISTS(SELECT t2.int_data2 FROM nulltest t2 WHERE string_data IS NULL AND t1.int_data2=t2.int_data2) AND (boolean_data=false OR (int_data1=2 AND int_data2=3)) GROUP BY int_data2
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1521978558/10000
+1	1
+2	2
+query: DROP TABLE datatest
+query: DROP TABLE nulltest
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 

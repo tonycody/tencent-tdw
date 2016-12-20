@@ -1,0 +1,49 @@
+query: EXPLAIN
+SELECT IF(false, 1, cast(2 as smallint)) + 3 FROM src LIMIT 1
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB src))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (+ (TOK_FUNCTION IF false 1 (TOK_FUNCTION TOK_SMALLINT 2)) 3))) (TOK_LIMIT 1)))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/src 
+          Operator:          TableScan
+            alias: default_db/src
+            Operator:            Select Operator
+              expressions:
+                    expr: (if(false, 1, UDFToShort(2)) + 3)
+                    type: int
+              outputColumnNames: _col0
+              Operator:              Limit
+                Operator:                File Output Operator
+                  compressed: false
+                  GlobalTableId: 0
+                  table:
+                    table descs
+                      input format: org.apache.hadoop.mapred.TextInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src [default_db/src]
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: 1
+
+query: SELECT IF(false, 1, cast(2 as smallint)) + 3 FROM src LIMIT 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/784614765/10000
+5
+query: SELECT IF(false, 1, cast(2 as smallint)) + 3 FROM src LIMIT 1
+query: SELECT IF(false, 1, cast(2 as smallint)) + 3 FROM src LIMIT 1
+query: SELECT IF(false, 1, cast(2 as smallint)) + 3 FROM src LIMIT 1
+query: SELECT IF(false, 1, cast(2 as smallint)) + 3 FROM src LIMIT 1
+query: SELECT IF(false, 1, cast(2 as smallint)) + 3 FROM src LIMIT 1
+query: SELECT IF(false, 1, cast(2 as smallint)) + 3 FROM src LIMIT 1
+query: SELECT IF(false, 1, cast(2 as smallint)) + 3 FROM src LIMIT 1
+query: SELECT IF(false, 1, cast(2 as smallint)) + 3 FROM src LIMIT 1

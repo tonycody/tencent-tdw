@@ -1,0 +1,162 @@
+query: DROP TABLE srcmd
+query: CREATE TABLE srcmd(key STRING, value STRING, ds STRING, hr STRING)
+query: LOAD DATA LOCAL INPATH '../data/files/kv6.txt' INTO TABLE srcmd
+query: DROP TABLE dest_mt2
+query: CREATE TABLE dest_mt2(cnt INT, keysum INT, keynum INT, dsnum INT) STORED AS TEXTFILE
+query: EXPLAIN
+FROM srcmd
+INSERT OVERWRITE TABLE dest_mt2 SELECT count(1), sum(srcmd.key), count(distinct srcmd.key), count(distinct srcmd.ds) group by srcmd.hr
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB srcmd))) (TOK_INSERT (TOK_DESTINATION (TOK_TABDEST (TOK_TAB dest_mt2))) (TOK_SELECT (TOK_SELEXPR (TOK_FUNCTION count 1)) (TOK_SELEXPR (TOK_FUNCTION sum (. (TOK_TABLE_OR_COL srcmd) key))) (TOK_SELEXPR (TOK_FUNCTIONDI count (. (TOK_TABLE_OR_COL srcmd) key))) (TOK_SELEXPR (TOK_FUNCTIONDI count (. (TOK_TABLE_OR_COL srcmd) ds)))) (TOK_GROUPBY (. (TOK_TABLE_OR_COL srcmd) hr))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:;depends on:Stage-1;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/srcmd 
+          Operator:          TableScan
+            alias: default_db/srcmd
+            Operator:            Select Operator
+              expressions:
+                    expr: hr
+                    type: string
+                    expr: key
+                    type: string
+                    expr: ds
+                    type: string
+              outputColumnNames: hr, key, ds
+              Operator:              Group By Operator
+                aggregations:
+                      expr: count(1)
+                      expr: sum(key)
+                      expr: count(DISTINCT key)
+                      expr: count(DISTINCT ds)
+                keys:
+                      expr: hr
+                      type: string
+                      expr: key
+                      type: string
+                      expr: ds
+                      type: string
+                mode: hash
+                outputColumnNames: _col0, _col1, _col2, _col3, _col4, _col5, _col6
+                Operator:                Reduce Output Operator
+                  key expressions:
+                        expr: _col0
+                        type: string
+                        expr: _col1
+                        type: string
+                        expr: _col2
+                        type: string
+                  key serialize infos:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                  sort order: +++
+                  output key names: _col0, _col1
+                  output value names: _col0, _col1, _col2, _col3
+                  Map-reduce partition columns:
+                        expr: _col0
+                        type: string
+                  tag: -1
+                  value expressions:
+                        expr: _col3
+                        type: bigint
+                        expr: _col4
+                        type: double
+                        expr: _col5
+                        type: bigint
+                        expr: _col6
+                        type: bigint
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcmd [default_db/srcmd]
+      Reduce Operator Tree:
+        Operator:        Group By Operator
+          aggregations:
+                expr: count(VALUE._col0)
+                expr: sum(VALUE._col1)
+                expr: count(DISTINCT KEY._col1:0._col0)
+                expr: count(DISTINCT KEY._col1:1._col0)
+          keys:
+                expr: KEY._col0
+                type: string
+          mode: mergepartial
+          outputColumnNames: _col0, _col1, _col2, _col3, _col4
+          Operator:          Select Operator
+            expressions:
+                  expr: _col1
+                  type: bigint
+                  expr: _col2
+                  type: double
+                  expr: _col3
+                  type: bigint
+                  expr: _col4
+                  type: bigint
+            outputColumnNames: _col0, _col1, _col2, _col3
+            Operator:            Select Operator
+              expressions:
+                    expr: UDFToInteger(_col0)
+                    type: int
+                    expr: UDFToInteger(_col1)
+                    type: int
+                    expr: UDFToInteger(_col2)
+                    type: int
+                    expr: UDFToInteger(_col3)
+                    type: int
+              outputColumnNames: _col0, _col1, _col2, _col3
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 1
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.TextInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                    serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                    name: dest_mt2
+
+  Stage: Stage-0
+    Move Operator
+      tables:
+          replace: true
+          table:
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: dest_mt2
+
+query: FROM srcmd
+INSERT OVERWRITE TABLE dest_mt2 SELECT count(1), sum(srcmd.key), count(distinct srcmd.key), count(distinct srcmd.ds) group by srcmd.hr
+Output: default_db/dest_mt2
+query: SELECT dest_mt2.* FROM dest_mt2
+Input: default_db/dest_mt2
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/16907866/10000
+10	2351	10	1
+10	2282	10	1
+151	41639	127	1
+26	7204	25	1
+51	11750	50	1
+20	4374	19	1
+36	10499	36	1
+16	4177	16	1
+16	4089	16	1
+44	12079	43	1
+44	10244	43	1
+26	7099	26	1
+50	12304	47	2
+query: DROP TABLE dest_mt2
+query: DROP TABLE srcmd
+query: DROP TABLE srcmd
+query: DROP TABLE srcmd
+query: DROP TABLE srcmd
+query: DROP TABLE srcmd
+query: DROP TABLE srcmd
+query: DROP TABLE srcmd
+query: DROP TABLE srcmd
+query: DROP TABLE srcmd

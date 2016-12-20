@@ -1,0 +1,46 @@
+query: DROP TABLE table1
+query: DROP TABLE table2
+query: CREATE TABLE table1 (a STRING, b STRING, pkey STRING) partition by list(pkey) (partition p1 values in ("helloworld")) STORED AS TEXTFILE
+query: DESCRIBE table1
+a	string	
+b	string	
+pkey	string	
+query: DESCRIBE EXTENDED table1
+a	string	
+b	string	
+pkey	string	
+	 	 
+Detailed Table Information	Table(tableName:table1, dbName:default_db, owner:root, createTime:1329298197, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:a, type:string, comment:null), FieldSchema(name:b, type:string, comment:null), FieldSchema(name:pkey, type:string, comment:null)], location:file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/table1, inputFormat:org.apache.hadoop.mapred.TextInputFormat, outputFormat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe, parameters:{serialization.format=1}), bucketCols:[], sortCols:[], parameters:{}), priPartition:Partition(dbName:default_db, tableName:table1, level:0, parType:list, parKey:FieldSchema(name:pkey, type:string, comment:null), parSpaces:{p1=[helloworld]}), subPartition:null, parameters:{}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, vtables:null)	
+query: CREATE TABLE table2 LIKE table1
+query: DESCRIBE table2
+a	string	
+b	string	
+pkey	string	
+query: DESCRIBE EXTENDED table2
+a	string	
+b	string	
+pkey	string	
+	 	 
+Detailed Table Information	Table(tableName:table2, dbName:default_db, owner:root, createTime:1329298197, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:a, type:string, comment:null), FieldSchema(name:b, type:string, comment:null), FieldSchema(name:pkey, type:string, comment:null)], location:file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/table2, inputFormat:org.apache.hadoop.mapred.TextInputFormat, outputFormat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe, parameters:{serialization.format=1}), bucketCols:[], sortCols:[], parameters:{}), priPartition:Partition(dbName:default_db, tableName:table2, level:0, parType:list, parKey:FieldSchema(name:pkey, type:string, comment:null), parSpaces:{p1=[helloworld]}), subPartition:null, parameters:{}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, vtables:null)	
+query: CREATE TABLE IF NOT EXISTS table2 LIKE table1
+query: INSERT OVERWRITE TABLE table1 SELECT key, value, "helloworld" FROM src WHERE key = 86
+Output: default_db/table1
+query: INSERT OVERWRITE TABLE table2 SELECT key, value, "helloworld" FROM src WHERE key = 100
+Output: default_db/table2
+query: SELECT * FROM table1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1948690759/10000
+86	val_86	helloworld
+query: SELECT * FROM table2
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/616254878/10000
+100	val_100	helloworld
+100	val_100	helloworld
+query: DROP TABLE table1
+query: DROP TABLE table2
+query: DROP TABLE table2
+query: DROP TABLE table2
+query: DROP TABLE table2
+query: DROP TABLE table2
+query: DROP TABLE table2
+query: DROP TABLE table2
+query: DROP TABLE table2
+query: DROP TABLE table2

@@ -1,0 +1,31 @@
+query: drop table texttbl
+query: explain create table texttbl(col_name1 int, col_name2 int)
+ABSTRACT SYNTAX TREE:
+  (TOK_CREATETABLE texttbl TOK_LIKETABLE (TOK_TABCOLLIST (TOK_TABCOL col_name1 TOK_INT) (TOK_TABCOL col_name2 TOK_INT)))
+
+STAGE DEPENDENCIES:
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-0
+      Create Table Operator:
+        Create Table
+          columns: col_name1 int, col_name2 int
+          if compressed: false
+          if not exists: false
+          input format: org.apache.hadoop.mapred.TextInputFormat
+          # buckets: -1
+          output format: org.apache.hadoop.hive.ql.io.IgnoreKeyTextOutputFormat
+          name: texttbl
+          isExternal: false
+
+query: drop table texttbl
+query: drop table texttbl
+query: drop table texttbl
+query: drop table texttbl
+query: drop table texttbl
+query: drop table texttbl
+query: drop table texttbl
+query: drop table texttbl
+query: drop table texttbl

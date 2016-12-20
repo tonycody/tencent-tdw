@@ -1,0 +1,141 @@
+query: CREATE TABLE dest1(len STRING)
+query: EXPLAIN FROM src1 INSERT OVERWRITE TABLE dest1 SELECT reverse(src1.value)
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB src1))) (TOK_INSERT (TOK_DESTINATION (TOK_TABDEST (TOK_TAB dest1))) (TOK_SELECT (TOK_SELEXPR (TOK_FUNCTION reverse (. (TOK_TABLE_OR_COL src1) value))))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-4
+    type:;depends on:Stage-1;consists of:Stage-3,Stage-2;
+  Stage-3
+    type:;
+  Stage-0
+    type:;depends on:Stage-3,Stage-2;
+  Stage-2
+    type:;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/src1 
+          Operator:          TableScan
+            alias: default_db/src1
+            Operator:            Select Operator
+              expressions:
+                    expr: reverse(value)
+                    type: string
+              outputColumnNames: _col0
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 1
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.TextInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                    serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                    name: dest1
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src1 [default_db/src1]
+
+  Stage: Stage-4
+    Conditional Operator
+
+  Stage: Stage-3
+    Move Operator
+      files:
+          hdfs directory: true
+          destination: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/863182792/10000
+
+  Stage: Stage-0
+    Move Operator
+      tables:
+          replace: true
+          table:
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: dest1
+
+  Stage: Stage-2
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/635205023/10002 
+            Operator:            Reduce Output Operator
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: 
+              output value names: _col0
+              Map-reduce partition columns:
+                    expr: rand()
+                    type: double
+              tag: -1
+              value expressions:
+                    expr: len
+                    type: string
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/635205023/10002 [file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/635205023/10002]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          File Output Operator
+            compressed: false
+            GlobalTableId: 0
+            table:
+              table descs
+                input format: org.apache.hadoop.mapred.TextInputFormat
+                output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                name: dest1
+
+query: FROM src1 INSERT OVERWRITE TABLE dest1 SELECT reverse(src1.value)
+Output: default_db/dest1
+query: SELECT dest1.* FROM dest1
+Input: default_db/dest1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1270788425/10000
+832_lav
+
+113_lav
+72_lav
+561_lav
+904_lav
+552_lav
+872_lav
+89_lav
+484_lav
+562_lav
+391_lav
+104_lav
+051_lav
+372_lav
+
+
+66_lav
+
+312_lav
+641_lav
+604_lav
+
+
+
+query: DROP TABLE dest1
+query: -- Test with non-ascii characters
+-- kv4.txt contains the text 0xE982B5E993AE, which should be reversed to
+-- 0xE993AEE982B5
+CREATE TABLE dest1(name STRING) STORED AS TEXTFILE
+query: LOAD DATA LOCAL INPATH '../data/files/kv4.txt' INTO TABLE dest1
+query: SELECT count(1) FROM dest1 WHERE reverse(dest1.name) = _UTF-8 0xE993AEE982B5
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1440394047/10000
+1
+query: DROP TABLE dest1
+query: DROP TABLE dest1
+query: DROP TABLE dest1
+query: DROP TABLE dest1
+query: DROP TABLE dest1
+query: DROP TABLE dest1
+query: DROP TABLE dest1
+query: DROP TABLE dest1
+query: DROP TABLE dest1

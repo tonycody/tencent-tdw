@@ -1,0 +1,44 @@
+query: DROP TABLE covar_tab
+query: CREATE TABLE covar_tab (a INT, b INT, c INT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+STORED AS TEXTFILE
+query: LOAD DATA LOCAL INPATH '../data/files/covar_tab.txt' OVERWRITE
+INTO TABLE covar_tab
+query: DESCRIBE FUNCTION covar_pop
+covar_pop(x,y) - Returns the population covariance of a set of number pairs
+query: DESCRIBE FUNCTION EXTENDED covar_pop
+covar_pop(x,y) - Returns the population covariance of a set of number pairs
+The function takes as arguments any pair of numeric types and returns a double.
+Any pair with a NULL is ignored. If the function is applied to an empty set, NULL
+will be returned. Otherwise, it computes the following:
+   (SUM(x*y)-SUM(x)*SUM(y)/COUNT(x,y))/COUNT(x,y)
+where neither x nor y is null.
+query: SELECT covar_pop(b, c) FROM covar_tab WHERE a < 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/906369961/10000
+NULL
+query: SELECT covar_pop(b, c) FROM covar_tab WHERE a < 3
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1323815508/10000
+NULL
+query: SELECT covar_pop(b, c) FROM covar_tab WHERE a = 3
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/863831230/10000
+0.0
+query: SELECT a, covar_pop(b, c) FROM covar_tab GROUP BY a ORDER BY a
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/616809341/10000
+1	NULL
+2	NULL
+3	0.0
+4	0.0
+5	0.0
+6	0.0
+query: SELECT covar_pop(b, c) FROM covar_tab
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1612770204/10000
+3.624999999999999
+query: DROP TABLE covar_tab
+query: DROP TABLE covar_tab
+query: DROP TABLE covar_tab
+query: DROP TABLE covar_tab
+query: DROP TABLE covar_tab
+query: DROP TABLE covar_tab
+query: DROP TABLE covar_tab
+query: DROP TABLE covar_tab
+query: DROP TABLE covar_tab

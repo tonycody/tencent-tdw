@@ -1,0 +1,8 @@
+query: SELECT
+  to_number("2010"),
+  to_number("2010.12"),
+  to_number("20abc"),
+  to_number("abc")
+ FROM src LIMIT 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/1692000435/10000
+2010	NULL	NULL	NULL

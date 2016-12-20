@@ -1,0 +1,174 @@
+query: drop table timestamp_1
+query: create table timestamp_1 (t timestamp)
+query: alter table timestamp_1 set serde 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe'
+query: insert overwrite table timestamp_1 
+  select cast('2011-01-01 01:01:01' as timestamp) from src limit 1
+Output: default_db/timestamp_1
+query: select cast(t as boolean) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1758021776/10000
+true
+query: select cast(t as tinyint) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_228876042/10000
+77
+query: select cast(t as smallint) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_505711170/10000
+3149
+query: select cast(t as int) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1151859281/10000
+1293814861
+query: select cast(t as bigint) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_171635225/10000
+1293814861
+query: select cast(t as float) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1901140409/10000
+1.29381491E9
+query: select cast(t as double) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1622161264/10000
+1.293814861E9
+query: select cast(t as string) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1433458199/10000
+2011-01-01 01:01:01
+query: insert overwrite table timestamp_1
+  select '2011-01-01 01:01:01' from src limit 1
+Output: default_db/timestamp_1
+query: select cast(t as boolean) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_795763965/10000
+true
+query: select cast(t as tinyint) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1175744817/10000
+77
+query: select cast(t as smallint) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_102073205/10000
+3149
+query: select cast(t as int) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_947728179/10000
+1293814861
+query: select cast(t as bigint) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1972693485/10000
+1293814861
+query: select cast(t as float) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_2055442914/10000
+1.29381491E9
+query: select cast(t as double) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_171076569/10000
+1.293814861E9
+query: select cast(t as string) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_402851855/10000
+2011-01-01 01:01:01
+query: insert overwrite table timestamp_1
+  select '2011-01-01 01:01:01.1' from src limit 1
+Output: default_db/timestamp_1
+query: select cast(t as boolean) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_2048619593/10000
+true
+query: select cast(t as tinyint) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1882196361/10000
+77
+query: select cast(t as smallint) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1845537343/10000
+3149
+query: select cast(t as int) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1800699581/10000
+1293814861
+query: select cast(t as bigint) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1255846699/10000
+1293814861
+query: select cast(t as float) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1435325159/10000
+1.29381491E9
+query: select cast(t as double) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_853573273/10000
+1.2938148611E9
+query: select cast(t as string) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1010801547/10000
+2011-01-01 01:01:01.1
+query: insert overwrite table timestamp_1
+  select '2011-01-01 01:01:01.0001' from src limit 1
+Output: default_db/timestamp_1
+query: select cast(t as boolean) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1677425513/10000
+true
+query: select cast(t as tinyint) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_422881567/10000
+77
+query: select cast(t as smallint) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_92054024/10000
+3149
+query: select cast(t as int) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1398199458/10000
+1293814861
+query: select cast(t as bigint) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1499551594/10000
+1293814861
+query: select cast(t as float) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_810373123/10000
+1.29381491E9
+query: select cast(t as double) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1455304587/10000
+1.2938148610001E9
+query: select cast(t as string) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1154551475/10000
+2011-01-01 01:01:01.0001
+query: insert overwrite table timestamp_1
+  select '2011-01-01 01:01:01.000100000' from src limit 1
+Output: default_db/timestamp_1
+query: select cast(t as boolean) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1496724199/10000
+true
+query: select cast(t as tinyint) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_923931074/10000
+77
+query: select cast(t as smallint) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1694269704/10000
+3149
+query: select cast(t as int) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_538277752/10000
+1293814861
+query: select cast(t as bigint) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_248823889/10000
+1293814861
+query: select cast(t as float) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1224078092/10000
+1.29381491E9
+query: select cast(t as double) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_2095998993/10000
+1.2938148610001E9
+query: select cast(t as string) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_2121887383/10000
+2011-01-01 01:01:01.0001
+query: insert overwrite table timestamp_1
+  select '2011-01-01 01:01:01.001000011' from src limit 1
+Output: default_db/timestamp_1
+query: select cast(t as boolean) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1843874346/10000
+true
+query: select cast(t as tinyint) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1796824467/10000
+77
+query: select cast(t as smallint) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1453381941/10000
+3149
+query: select cast(t as int) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_322945920/10000
+1293814861
+query: select cast(t as bigint) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_551106283/10000
+1293814861
+query: select cast(t as float) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_259032500/10000
+1.29381491E9
+query: select cast(t as double) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_72295898/10000
+1.293814861001E9
+query: select cast(t as string) from timestamp_1 limit 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_350512618/10000
+2011-01-01 01:01:01.001000011
+query: drop table timestamp_1
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 

@@ -1,0 +1,80 @@
+query: drop table tst
+query: create table tst(a int, b int, d string) partition by list(d)
+(partition p0 values in ('2008-12-31'))
+query: alter table tst add partition p1 values in ('2009-01-01')
+query: explain
+select count(1) from tst x where x.d='2009-01-01'
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB tst) x)) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_FUNCTION count 1))) (TOK_WHERE (= (. (TOK_TABLE_OR_COL x) d) '2009-01-01'))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/tst#x 
+          Operator:          TableScan
+            alias: default_db/tst#x
+            Operator:            Filter Operator
+              predicate:
+                  expr: (d = '2009-01-01')
+                  type: boolean
+              Operator:              Select Operator
+                Operator:                Group By Operator
+                  aggregations:
+                        expr: count(1)
+                  mode: hash
+                  outputColumnNames: _col0
+                  Operator:                  Reduce Output Operator
+                    key serialize infos:
+                      table descs
+                        input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                        output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                    sort order: 
+                    output value names: _col0
+                    tag: -1
+                    value expressions:
+                          expr: _col0
+                          type: bigint
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/tst/p1 [default_db/tst#x]
+      Reduce Operator Tree:
+        Operator:        Group By Operator
+          aggregations:
+                expr: count(VALUE._col0)
+          mode: mergepartial
+          outputColumnNames: _col0
+          Operator:          Select Operator
+            expressions:
+                  expr: _col0
+                  type: bigint
+            outputColumnNames: _col0
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 0
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.TextInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: select count(1) from tst x where x.d='2009-01-01'
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1877094050/10000
+0
+query: drop table tst
+query: drop table tst
+query: drop table tst
+query: drop table tst
+query: drop table tst
+query: drop table tst
+query: drop table tst
+query: drop table tst
+query: drop table tst

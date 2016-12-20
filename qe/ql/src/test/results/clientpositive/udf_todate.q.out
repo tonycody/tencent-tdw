@@ -1,0 +1,17 @@
+query: SELECT
+  to_date("20100203", "yyyymmdd"),
+  to_date("201002", "yyyymm"),
+  to_date("2010", "yyyy"),
+  to_date("02", "mm"),
+  to_date("03", "dd"),
+  to_date("2010-02-03", "yyyy-mm-dd"),
+  to_date("2010-02", "yyyy-mm"),
+  to_date("20100203142332", "yyyymmddhh24miss"),
+  to_date("2010-02-03 14:23:32", "yyyy-mm-dd hh24:mi:ss"),
+  to_date("142332", "hh24miss"),
+  to_date("20100203142332998", "yyyymmddhh24missff3"),
+  to_date("20100203 14:23:32:998", "abc"),
+  to_date("2010-02-03 14:23:32:998", "yyyy-mm-dd hh24")
+ FROM src LIMIT 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/1507730935/10000
+2010-02-03 00:00:00:000	2010-02-01 00:00:00:000	2010-01-01 00:00:00:000	1970-02-01 00:00:00:000	1970-01-03 00:00:00:000	2010-02-03 00:00:00:000	2010-02-01 00:00:00:000	2010-02-03 14:23:32:000	2010-02-03 14:23:32:000	1970-01-01 14:23:32:000	2010-02-03 14:23:32:998	NULL	NULL

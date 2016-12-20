@@ -1,0 +1,16 @@
+query: DESCRIBE FUNCTION array_contains
+array_contains(array, value) - Returns TRUE if the array contains value.
+query: DESCRIBE FUNCTION EXTENDED array_contains
+array_contains(array, value) - Returns TRUE if the array contains value.
+Example:
+  > SELECT array_contains(array(1, 2, 3), 2) FROM src LIMIT 1;
+  true
+query: -- evalutes function for array of primitives
+SELECT array_contains(array(1, 2, 3), 1) FROM src LIMIT 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/1453385152/10000
+true
+query: -- evaluates function for nested arrays
+SELECT array_contains(array(array(1,2), array(2,3), array(3,4)), array(1,2))
+FROM src LIMIT 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/1904768806/10000
+true

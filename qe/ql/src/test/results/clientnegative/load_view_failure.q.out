@@ -1,0 +1,4 @@
+query: DROP VIEW xxx11
+query: CREATE VIEW xxx11 AS SELECT * FROM src
+Output: file:/data/brant/trunk/build/ql/tmp/750053812/10000
+FAILED: Error in semantic analysis: A view cannot be used as target table for LOAD or INSERT

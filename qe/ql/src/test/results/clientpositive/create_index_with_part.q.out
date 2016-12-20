@@ -1,0 +1,30 @@
+query: explain create table part(a int, b int) partition by range(a) (partition p1 values less than(2), partition p2 values less than(10)) index(a) stored as formatfile
+ABSTRACT SYNTAX TREE:
+  (TOK_CREATETABLE part TOK_LIKETABLE (TOK_TABCOLLIST (TOK_TABCOL a TOK_INT) (TOK_TABCOL b TOK_INT)) TOK_TBLFORMATFILE (TOK_TABLEPARTITION (TOK_PARTITION (TOK_PARTITIONHEAD range a) (TOK_PARTITIONBODY (TOK_PARTITIONSPACE p1 (TOK_RANGEPARTITIONDEFINE 2)) (TOK_PARTITIONSPACE p2 (TOK_RANGEPARTITIONDEFINE 10))))) (TOK_INDEX (TOK_INDEXFIELD a)))
+
+STAGE DEPENDENCIES:
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-0
+      Create Table Operator:
+        Create Table
+          columns: a int, b int
+          if compressed: false
+          if not exists: false
+          input format: StorageEngineClient.FormatStorageInputFormat
+          # buckets: -1
+          output format: StorageEngineClient.FormatStorageHiveOutputFormat
+          serde name: StorageEngineClient.FormatStorageSerDe
+          name: part
+          isExternal: false
+
+query: explain create table part(a int, b int) partition by range(a) (partition p1 values less than(2), partition p2 values less than(10)) index(a) stored as formatfile
+query: explain create table part(a int, b int) partition by range(a) (partition p1 values less than(2), partition p2 values less than(10)) index(a) stored as formatfile
+query: explain create table part(a int, b int) partition by range(a) (partition p1 values less than(2), partition p2 values less than(10)) index(a) stored as formatfile
+query: explain create table part(a int, b int) partition by range(a) (partition p1 values less than(2), partition p2 values less than(10)) index(a) stored as formatfile
+query: explain create table part(a int, b int) partition by range(a) (partition p1 values less than(2), partition p2 values less than(10)) index(a) stored as formatfile
+query: explain create table part(a int, b int) partition by range(a) (partition p1 values less than(2), partition p2 values less than(10)) index(a) stored as formatfile
+query: explain create table part(a int, b int) partition by range(a) (partition p1 values less than(2), partition p2 values less than(10)) index(a) stored as formatfile
+query: explain create table part(a int, b int) partition by range(a) (partition p1 values less than(2), partition p2 values less than(10)) index(a) stored as formatfile

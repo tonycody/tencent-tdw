@@ -1,0 +1,31 @@
+query: explain create table testColumn(a int, b int) stored as columnfile projection(a,b)
+ABSTRACT SYNTAX TREE:
+  (TOK_CREATETABLE testColumn TOK_LIKETABLE (TOK_TABCOLLIST (TOK_TABCOL a TOK_INT) (TOK_TABCOL b TOK_INT)) (TOK_TBLCOLUMNFILE (TOK_PROJECTION (TOK_SUBPROJECTION a b))))
+
+STAGE DEPENDENCIES:
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-0
+      Create Table Operator:
+        Create Table
+          columns: a int, b int
+          if compressed: false
+          if not exists: false
+          input format: StorageEngineClient.ColumnStorageInputFormat
+          # buckets: -1
+          output format: StorageEngineClient.ColumnStorageHiveOutputFormat
+          projection infos:
+          serde name: StorageEngineClient.FormatStorageSerDe
+          name: testColumn
+          isExternal: false
+
+query: explain create table testColumn(a int, b int) stored as columnfile projection(a,b)
+query: explain create table testColumn(a int, b int) stored as columnfile projection(a,b)
+query: explain create table testColumn(a int, b int) stored as columnfile projection(a,b)
+query: explain create table testColumn(a int, b int) stored as columnfile projection(a,b)
+query: explain create table testColumn(a int, b int) stored as columnfile projection(a,b)
+query: explain create table testColumn(a int, b int) stored as columnfile projection(a,b)
+query: explain create table testColumn(a int, b int) stored as columnfile projection(a,b)
+query: explain create table testColumn(a int, b int) stored as columnfile projection(a,b)

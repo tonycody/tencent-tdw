@@ -1,0 +1,209 @@
+query: DROP TABLE testtbl
+query: CREATE TABLE testtbl(KEY STRING, VALUE STRING) STORED AS TEXTFILE
+query: LOAD DATA LOCAL INPATH '../data/files/kv1.txt' INTO TABLE testtbl
+query: explain
+select count(1) from testtbl
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB testtbl))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_FUNCTION count 1)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/testtbl 
+          Operator:          TableScan
+            alias: default_db/testtbl
+            Operator:            Select Operator
+              Operator:              Group By Operator
+                aggregations:
+                      expr: count(1)
+                mode: hash
+                outputColumnNames: _col0
+                Operator:                Reduce Output Operator
+                  key serialize infos:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                  sort order: 
+                  output value names: _col0
+                  tag: -1
+                  value expressions:
+                        expr: _col0
+                        type: bigint
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/testtbl [default_db/testtbl]
+      Reduce Operator Tree:
+        Operator:        Group By Operator
+          aggregations:
+                expr: count(VALUE._col0)
+          mode: mergepartial
+          outputColumnNames: _col0
+          Operator:          Select Operator
+            expressions:
+                  expr: _col0
+                  type: bigint
+            outputColumnNames: _col0
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 0
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.TextInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: select count(1) from testtbl
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/2093402939/10000
+500
+query: DROP TABLE testtbl2
+query: CREATE TABLE testtbl2(KEY STRING, VALUE STRING) STORED AS TEXTFILE
+query: LOAD DATA LOCAL INPATH '../data/files/nullfile.txt' INTO TABLE testtbl2
+query: explain
+select count(1) from testtbl2
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB testtbl2))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_FUNCTION count 1)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/testtbl2 
+          Operator:          TableScan
+            alias: default_db/testtbl2
+            Operator:            Select Operator
+              Operator:              Group By Operator
+                aggregations:
+                      expr: count(1)
+                mode: hash
+                outputColumnNames: _col0
+                Operator:                Reduce Output Operator
+                  key serialize infos:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                  sort order: 
+                  output value names: _col0
+                  tag: -1
+                  value expressions:
+                        expr: _col0
+                        type: bigint
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/testtbl2 [default_db/testtbl2]
+      Reduce Operator Tree:
+        Operator:        Group By Operator
+          aggregations:
+                expr: count(VALUE._col0)
+          mode: mergepartial
+          outputColumnNames: _col0
+          Operator:          Select Operator
+            expressions:
+                  expr: _col0
+                  type: bigint
+            outputColumnNames: _col0
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 0
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.TextInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: select count(1) from testtbl2
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/130141697/10000
+0
+query: DROP TABLE testtbl
+query: CREATE TABLE testtbl(KEY STRING, VALUE STRING)STORED AS TEXTFILE
+query: LOAD DATA LOCAL INPATH '../data/files/kv1.txt' INTO TABLE testtbl
+query: LOAD DATA LOCAL INPATH '../data/files/nullfile.txt' INTO TABLE testtbl
+query: explain
+select count(1) from testtbl
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB testtbl))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_FUNCTION count 1)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/testtbl 
+          Operator:          TableScan
+            alias: default_db/testtbl
+            Operator:            Select Operator
+              Operator:              Group By Operator
+                aggregations:
+                      expr: count(1)
+                mode: hash
+                outputColumnNames: _col0
+                Operator:                Reduce Output Operator
+                  key serialize infos:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                  sort order: 
+                  output value names: _col0
+                  tag: -1
+                  value expressions:
+                        expr: _col0
+                        type: bigint
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/testtbl [default_db/testtbl]
+      Reduce Operator Tree:
+        Operator:        Group By Operator
+          aggregations:
+                expr: count(VALUE._col0)
+          mode: mergepartial
+          outputColumnNames: _col0
+          Operator:          Select Operator
+            expressions:
+                  expr: _col0
+                  type: bigint
+            outputColumnNames: _col0
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 0
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.TextInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: select count(1) from testtbl
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/93873661/10000
+500
+query: DROP TABLE testtbl
+query: DROP TABLE testtbl2
+query: DROP TABLE testtbl2
+query: DROP TABLE testtbl2
+query: DROP TABLE testtbl2
+query: DROP TABLE testtbl2
+query: DROP TABLE testtbl2
+query: DROP TABLE testtbl2
+query: DROP TABLE testtbl2
+query: DROP TABLE testtbl2

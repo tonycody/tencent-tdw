@@ -1,0 +1,2 @@
+query: drop table hashtable1
+FAILED: Unknown exception : null

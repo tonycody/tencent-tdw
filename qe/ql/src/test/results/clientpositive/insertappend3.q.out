@@ -1,0 +1,231 @@
+query: DROP TABLE dest1
+query: CREATE TABLE dest1(key INT, value STRING, ds STRING, hr INT)
+PARTITION BY list(ds) SUBPARTITION BY range(hr)
+(SUBPARTITION sp0 VALUES LESS THAN (12),
+SUBPARTITION sp1 VALUES LESS THAN (24))
+(PARTITION p0 VALUES IN ('2008-08-01'),
+PARTITION p1 VALUES IN ('2008-09-01'))
+STORED AS TEXTFILE
+query: EXPLAIN
+FROM src
+INSERT TABLE dest1 SELECT src.key, src.value, '2008-08-01', 11 WHERE src.key < 100
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB src))) (TOK_INSERT (TOK_APPENDDESTINATION (TOK_TABDEST (TOK_TAB dest1))) (TOK_SELECT (TOK_SELEXPR (. (TOK_TABLE_OR_COL src) key)) (TOK_SELEXPR (. (TOK_TABLE_OR_COL src) value)) (TOK_SELEXPR '2008-08-01') (TOK_SELEXPR 11)) (TOK_WHERE (< (. (TOK_TABLE_OR_COL src) key) 100))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:;depends on:Stage-1;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/src 
+          Operator:          TableScan
+            alias: default_db/src
+            Operator:            Filter Operator
+              predicate:
+                  expr: (key < 100)
+                  type: boolean
+              Operator:              Select Operator
+                expressions:
+                      expr: key
+                      type: string
+                      expr: value
+                      type: string
+                      expr: '2008-08-01'
+                      type: string
+                      expr: 11
+                      type: int
+                outputColumnNames: _col0, _col1, _col2, _col3
+                Operator:                Select Operator
+                  expressions:
+                        expr: UDFToInteger(_col0)
+                        type: int
+                        expr: _col1
+                        type: string
+                        expr: _col2
+                        type: string
+                        expr: _col3
+                        type: int
+                  outputColumnNames: _col0, _col1, _col2, _col3
+                  Operator:                  Partition Output Operator
+                    compressed: false
+                    GlobalTableId: 1
+                    partition keys:
+                          expr: _col2
+                          type: string
+                          expr: _col3
+                          type: int
+                    partition values:
+                        Partition Space Spec
+                          Partition space:
+                            p0 
+                              Partition values list
+                                values list: 2008-08-01
+                            p1 
+                              Partition values list
+                                values list: 2008-09-01
+                        Partition Space Spec
+                          Partition space:
+                            sp0 
+                              Partition values list
+                                values list: 12
+                            sp1 
+                              Partition values list
+                                values list: 24
+                    partition field typeinfos: string, int
+                    partition types: list, range
+                    table:
+                      table descs
+                        input format: org.apache.hadoop.mapred.TextInputFormat
+                        output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                        serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                        name: dest1
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src [default_db/src]
+
+  Stage: Stage-0
+    Move Operator
+      tables:
+          replace: false
+          table:
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: dest1
+
+query: EXPLAIN
+FROM src
+INSERT TABLE dest1 SELECT src.key, src.value, '2008-09-01', 23 WHERE src.key < 100
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB src))) (TOK_INSERT (TOK_APPENDDESTINATION (TOK_TABDEST (TOK_TAB dest1))) (TOK_SELECT (TOK_SELEXPR (. (TOK_TABLE_OR_COL src) key)) (TOK_SELEXPR (. (TOK_TABLE_OR_COL src) value)) (TOK_SELEXPR '2008-09-01') (TOK_SELEXPR 23)) (TOK_WHERE (< (. (TOK_TABLE_OR_COL src) key) 100))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:;depends on:Stage-1;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/src 
+          Operator:          TableScan
+            alias: default_db/src
+            Operator:            Filter Operator
+              predicate:
+                  expr: (key < 100)
+                  type: boolean
+              Operator:              Select Operator
+                expressions:
+                      expr: key
+                      type: string
+                      expr: value
+                      type: string
+                      expr: '2008-09-01'
+                      type: string
+                      expr: 23
+                      type: int
+                outputColumnNames: _col0, _col1, _col2, _col3
+                Operator:                Select Operator
+                  expressions:
+                        expr: UDFToInteger(_col0)
+                        type: int
+                        expr: _col1
+                        type: string
+                        expr: _col2
+                        type: string
+                        expr: _col3
+                        type: int
+                  outputColumnNames: _col0, _col1, _col2, _col3
+                  Operator:                  Partition Output Operator
+                    compressed: false
+                    GlobalTableId: 1
+                    partition keys:
+                          expr: _col2
+                          type: string
+                          expr: _col3
+                          type: int
+                    partition values:
+                        Partition Space Spec
+                          Partition space:
+                            p0 
+                              Partition values list
+                                values list: 2008-08-01
+                            p1 
+                              Partition values list
+                                values list: 2008-09-01
+                        Partition Space Spec
+                          Partition space:
+                            sp0 
+                              Partition values list
+                                values list: 12
+                            sp1 
+                              Partition values list
+                                values list: 24
+                    partition field typeinfos: string, int
+                    partition types: list, range
+                    table:
+                      table descs
+                        input format: org.apache.hadoop.mapred.TextInputFormat
+                        output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                        serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                        name: dest1
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src [default_db/src]
+
+  Stage: Stage-0
+    Move Operator
+      tables:
+          replace: false
+          table:
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: dest1
+
+query: FROM src
+INSERT TABLE dest1 SELECT src.key, src.value, '2008-08-01', 11 WHERE src.key < 100
+Output: default_db/dest1
+query: FROM src
+INSERT TABLE dest1 SELECT src.key, src.value, '2008-09-01', 23 WHERE src.key < 100
+Output: default_db/dest1
+query: SELECT count(1) FROM dest1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1849281930/10000
+168
+query: FROM src
+INSERT TABLE dest1 SELECT src.key, src.value, '2008-08-01', 11 WHERE src.key < 100
+Output: default_db/dest1
+query: FROM src
+INSERT TABLE dest1 SELECT src.key, src.value, '2008-09-01', 23 WHERE src.key < 100
+Output: default_db/dest1
+query: SELECT count(1) FROM dest1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1147433341/10000
+336
+query: FROM src
+INSERT OVERWRITE TABLE dest1 SELECT src.key, src.value, '2008-08-01', 11 WHERE src.key < 100
+Output: default_db/dest1
+query: SELECT count(1) FROM dest1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/873675702/10000
+84
+query: FROM src
+INSERT TABLE dest1 SELECT src.key, src.value, '2008-09-01', 23 WHERE src.key < 100
+Output: default_db/dest1
+query: SELECT count(1) FROM dest1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1248556142/10000
+168
+query: DROP TABLE dest1
+query: DROP TABLE dest1
+query: DROP TABLE dest1
+query: DROP TABLE dest1
+query: DROP TABLE dest1
+query: DROP TABLE dest1
+query: DROP TABLE dest1
+query: DROP TABLE dest1
+query: DROP TABLE dest1

@@ -1,0 +1,30 @@
+query: explain create table testFormatc(a int) stored as formatfile compress
+ABSTRACT SYNTAX TREE:
+  (TOK_CREATETABLE testFormatc TOK_LIKETABLE (TOK_TABCOLLIST (TOK_TABCOL a TOK_INT)) (TOK_TBLFORMATFILE TOK_COMPRESS))
+
+STAGE DEPENDENCIES:
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-0
+      Create Table Operator:
+        Create Table
+          columns: a int
+          if compressed: true
+          if not exists: false
+          input format: StorageEngineClient.FormatStorageInputFormat
+          # buckets: -1
+          output format: StorageEngineClient.FormatStorageHiveOutputFormat
+          serde name: StorageEngineClient.FormatStorageSerDe
+          name: testFormatc
+          isExternal: false
+
+query: explain create table testFormatc(a int) stored as formatfile compress
+query: explain create table testFormatc(a int) stored as formatfile compress
+query: explain create table testFormatc(a int) stored as formatfile compress
+query: explain create table testFormatc(a int) stored as formatfile compress
+query: explain create table testFormatc(a int) stored as formatfile compress
+query: explain create table testFormatc(a int) stored as formatfile compress
+query: explain create table testFormatc(a int) stored as formatfile compress
+query: explain create table testFormatc(a int) stored as formatfile compress

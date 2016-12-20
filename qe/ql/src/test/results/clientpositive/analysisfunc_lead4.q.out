@@ -1,0 +1,92 @@
+query: DROP TABLE datatest
+query: CREATE TABLE datatest(int_data1 INT, int_data2 INT, boolean_data BOOLEAN, double_data DOUBLE, string_data STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/datatest.txt' INTO TABLE datatest
+query: SELECT * FROM (SELECT int_data1 , int_data2, boolean_data, double_data, string_data, LEAD(boolean_data, 2, false) OVER(partition by int_data1 order by int_data2) FROM datatest) tmp ORDER BY double_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/614345365/10000
+0	5	false	2.2957055987034902	Analysis	false
+1	0	false	3.1145951928143676	LEAD	false
+0	3	false	5.1726951608379865	TDW	true
+1	8	true	5.621675730832165	etc	false
+2	3	true	8.77171395741883	The	false
+2	1	true	9.589949434284112	For	true
+2	7	false	14.998223744245005	Used	false
+1	9	true	16.91358120533963	TDW	false
+0	2	true	19.398344450148464	To	false
+0	4	true	19.754128235118877	SUM	false
+2	2	false	20.494577702885913	RANK	true
+2	5	true	22.15271891090531	Test	false
+1	1	true	24.506909362217737	Which	true
+2	0	true	32.91569954365889	Include	false
+1	1	false	32.92404678679056	Functions	true
+0	2	false	39.845454645318426	LAG	true
+0	4	true	39.95053934832555	The	false
+0	0	false	41.33606448637874	Data	false
+1	5	true	41.39006188846539	Set	true
+1	5	true	46.927050000959326	Test	true
+query: SELECT * FROM (SELECT int_data1 , int_data2, boolean_data, double_data, string_data, LEAD(double_data, 1, 0.0) OVER(partition by int_data1 order by int_data2) FROM datatest) tmp ORDER BY double_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/207468098/10000
+0	5	false	2.2957055987034902	Analysis	0.0
+1	0	false	3.1145951928143676	LEAD	24.506909362217737
+0	3	false	5.1726951608379865	TDW	19.754128235118877
+1	8	true	5.621675730832165	etc	16.91358120533963
+2	3	true	8.77171395741883	The	22.15271891090531
+2	1	true	9.589949434284112	For	20.494577702885913
+2	7	false	14.998223744245005	Used	0.0
+1	9	true	16.91358120533963	TDW	0.0
+0	2	true	19.398344450148464	To	39.845454645318426
+0	4	true	19.754128235118877	SUM	39.95053934832555
+2	2	false	20.494577702885913	RANK	8.77171395741883
+2	5	true	22.15271891090531	Test	14.998223744245005
+1	1	true	24.506909362217737	Which	32.92404678679056
+2	0	true	32.91569954365889	Include	9.589949434284112
+1	1	false	32.92404678679056	Functions	46.927050000959326
+0	2	false	39.845454645318426	LAG	5.1726951608379865
+0	4	true	39.95053934832555	The	2.2957055987034902
+0	0	false	41.33606448637874	Data	19.398344450148464
+1	5	true	41.39006188846539	Set	5.621675730832165
+1	5	true	46.927050000959326	Test	41.39006188846539
+query: SELECT * FROM (SELECT int_data1, int_data2, boolean_data, double_data, string_data, LEAD(string_data, 2, "OK") OVER(partition by int_data1 order by int_data2) FROM datatest) tmp ORDER BY double_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1489572917/10000
+0	5	false	2.2957055987034902	Analysis	OK
+1	0	false	3.1145951928143676	LEAD	Functions
+0	3	false	5.1726951608379865	TDW	The
+1	8	true	5.621675730832165	etc	OK
+2	3	true	8.77171395741883	The	Used
+2	1	true	9.589949434284112	For	The
+2	7	false	14.998223744245005	Used	OK
+1	9	true	16.91358120533963	TDW	OK
+0	2	true	19.398344450148464	To	TDW
+0	4	true	19.754128235118877	SUM	Analysis
+2	2	false	20.494577702885913	RANK	Test
+2	5	true	22.15271891090531	Test	OK
+1	1	true	24.506909362217737	Which	Test
+2	0	true	32.91569954365889	Include	RANK
+1	1	false	32.92404678679056	Functions	Set
+0	2	false	39.845454645318426	LAG	SUM
+0	4	true	39.95053934832555	The	OK
+0	0	false	41.33606448637874	Data	LAG
+1	5	true	41.39006188846539	Set	TDW
+1	5	true	46.927050000959326	Test	etc
+query: SELECT * FROM (SELECT int_data1, int_data2, boolean_data, double_data, string_data, LEAD(string_data, 2, 'OK') OVER(partition by int_data1 order by int_data2) FROM datatest) tmp ORDER BY double_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/45585286/10000
+0	5	false	2.2957055987034902	Analysis	OK
+1	0	false	3.1145951928143676	LEAD	Functions
+0	3	false	5.1726951608379865	TDW	The
+1	8	true	5.621675730832165	etc	OK
+2	3	true	8.77171395741883	The	Used
+2	1	true	9.589949434284112	For	The
+2	7	false	14.998223744245005	Used	OK
+1	9	true	16.91358120533963	TDW	OK
+0	2	true	19.398344450148464	To	TDW
+0	4	true	19.754128235118877	SUM	Analysis
+2	2	false	20.494577702885913	RANK	Test
+2	5	true	22.15271891090531	Test	OK
+1	1	true	24.506909362217737	Which	Test
+2	0	true	32.91569954365889	Include	RANK
+1	1	false	32.92404678679056	Functions	Set
+0	2	false	39.845454645318426	LAG	SUM
+0	4	true	39.95053934832555	The	OK
+0	0	false	41.33606448637874	Data	LAG
+1	5	true	41.39006188846539	Set	TDW
+1	5	true	46.927050000959326	Test	etc
+query: DROP TABLE datatest

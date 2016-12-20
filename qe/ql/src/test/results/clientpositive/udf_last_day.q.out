@@ -1,0 +1,31 @@
+query: CREATE TABLE test_last_day (tdate STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/test_udf_last_day' OVERWRITE INTO TABLE test_last_day
+query: SELECT * 
+FROM test_last_day
+Input: default_db/test_last_day
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/69206767/10000
+2000-02-11
+2001-02-16
+2005-12-08
+fjkldssjfkl
+2003-06-21
+2009-04-06
+query: SELECT 
+  last_day(test_last_day.tdate)
+FROM test_last_day
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/2078041559/10000
+29
+28
+31
+NULL
+30
+30
+query: DROP TABLE test_last_day
+query: DROP TABLE test_last_day
+query: DROP TABLE test_last_day
+query: DROP TABLE test_last_day
+query: DROP TABLE test_last_day
+query: DROP TABLE test_last_day
+query: DROP TABLE test_last_day
+query: DROP TABLE test_last_day
+query: DROP TABLE test_last_day

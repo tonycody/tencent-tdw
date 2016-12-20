@@ -1,0 +1,7 @@
+query: DROP VIEW xxx4
+query: -- views and tables share the same namespace
+CREATE VIEW xxx4 AS SELECT key FROM src
+Output: file:/data/brant/trunk/build/ql/tmp/1038197598/10000
+query: CREATE TABLE xxx4(key int)
+FAILED: Error in metadata: AlreadyExistsException(message:Table xxx4 already exists)
+FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask

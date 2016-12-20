@@ -1,0 +1,90 @@
+query: CREATE TABLE INPUT4(KEY STRING, VALUE STRING) STORED AS TEXTFILE
+query: LOAD DATA LOCAL INPATH '../data/files/kv1.txt' INTO TABLE INPUT4
+query: EXPLAIN
+SELECT a.KEY2
+FROM (SELECT INPUT4.*, INPUT4.KEY as KEY2
+      FROM INPUT4) a
+ORDER BY KEY2 LIMIT 10
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_SUBQUERY (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB INPUT4))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_ALLCOLREF INPUT4)) (TOK_SELEXPR (. (TOK_TABLE_OR_COL INPUT4) KEY) KEY2)))) a)) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (. (TOK_TABLE_OR_COL a) KEY2))) (TOK_ORDERBY (TOK_TABSORTCOLNAMEASC (TOK_TABLE_OR_COL KEY2))) (TOK_LIMIT 10)))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        a:default_db/input4 
+          Operator:          TableScan
+            alias: default_db/input4
+            Operator:            Select Operator
+              expressions:
+                    expr: key
+                    type: string
+              outputColumnNames: _col2
+              Operator:              Select Operator
+                expressions:
+                      expr: _col2
+                      type: string
+                outputColumnNames: _col0
+                Operator:                HalfSortLimit
+                  Operator:                  Reduce Output Operator
+                    key expressions:
+                          expr: _col0
+                          type: string
+                    key serialize infos:
+                      table descs
+                        input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                        output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                    sort order: +
+                    output key names: reducesinkkey0
+                    output value names: _col0
+                    tag: -1
+                    value expressions:
+                          expr: _col0
+                          type: string
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/input4 [a:default_db/input4]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          HalfSortLimit
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 0
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.TextInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: SELECT a.KEY2
+FROM (SELECT INPUT4.*, INPUT4.KEY as KEY2
+      FROM INPUT4) a
+ORDER BY KEY2 LIMIT 10
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1569846816/10000
+0
+0
+0
+10
+100
+100
+103
+103
+104
+104
+query: DROP TABLE INPUT4
+query: DROP TABLE INPUT4
+query: DROP TABLE INPUT4
+query: DROP TABLE INPUT4
+query: DROP TABLE INPUT4
+query: DROP TABLE INPUT4
+query: DROP TABLE INPUT4
+query: DROP TABLE INPUT4
+query: DROP TABLE INPUT4

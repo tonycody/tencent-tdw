@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+
+<!-- Hive Configuration can either be stored in this file or in the hadoop configuration files  -->
+<!-- that are implied by Hadoop setup variables.                                                -->
+<!-- Aside from Hadoop setup variables - this file is provided as a convenience so that Hive    -->
+<!-- users do not have to edit hadoop configuration files (that may be managed as a centralized -->
+<!-- resource).                                                                                 -->
+
+<!-- Hive Execution Parameters -->
+<property>
+  <name>hadoop.tmp.dir</name>
+  <value>/tmp/tdw_qe_${user.name}/hadoop-tmp</value>
+  <description>A base for other temporary directories.</description>
+</property>
+
+<property>
+  <name>mapreduce.job.max.split.locations</name>
+  <value>1000</value>
+  <description>need for hadoop 2.x</description>
+</property>
+
+<property>
+  <name>hive.exec.scratchdir</name>
+  <value>/tmp/tdw_qe_${user.name}/ql/tmp</value>
+  <description>Scratch space for Hive jobs</description>
+</property>
+
+<property>
+  <name>hive.metastore.warehouse.dir</name>
+  <value>file:///tmp/tdw_qe_${user.name}/data/warehouse/</value>
+  <description></description>
+</property>
+
+<property>
+  <name>fs.default.name</name>
+  <value>file:///</value>
+  <description></description>
+</property>
+
+<property>
+  <name>mapred.job.tracker</name>
+  <value>local</value>
+  <description></description>
+</property>
+
+<property>
+  <name>hive.metastore.global.url</name>
+  <value>jdbc:postgresql://127.0.0.1:5432/global</value>
+  <description>global metastore db</description>
+</property>
+
+<property>
+  <name>hive.metastore.pbjar.url</name>
+  <value>jdbc:postgresql://127.0.0.1:5432/pbjar</value>
+  <description>metastore pb jar db</description>
+</property>
+
+<property>
+  <name>hive.metastore.user</name>
+  <value>tdwmeta</value>
+  <description>global,pbjar,segment meta database user</description>
+</property>
+
+<property>
+  <name>hive.metastore.passwd</name>
+  <value>tdwmeta</value>
+  <description>global,pbjar,segment meta database user passwd</description>
+</property>
+
+<property>
+  <name>hive.pgdata.storage.url</name>
+  <value>jdbc:postgresql://127.0.0.1:5432/tdw_query_info</value>
+  <description>pg server, port and database name,used for pgdata table</description>
+</property>
+
+<property>
+  <name>hive.query.info.log.url</name>
+  <value>jdbc:postgresql://127.0.0.1:5432/tdw_query_info</value>
+  <description>send hive query info to this PG database</description>
+</property>
+
+<property>
+  <name>hive.query.info.log.user</name>
+  <value>tdw</value>
+  <description>query info database user name</description>
+</property>
+
+<property>
+  <name>hive.query.info.log.passwd</name>
+  <value>tdw</value>
+  <description>query info database user password</description>
+</property>
+
+<property>
+  <name>hive.querylog.location</name>
+  <value>/tmp/${user.name}</value>
+  <description>Location of the structured hive logs</description>
+</property>
+
+<property>
+  <name>hive.delete.dir.error.throw</name>
+  <value>false</value>
+  <description>when drop table,do not throw error when dir can't be deleted.
+  				used for test suit </description>
+</property>
+
+<property>
+  <name>hive.default.fileformat</name>
+  <value>TextFile</value>
+  <description>Default file format for CREATE TABLE statement. Users can explicitly say CREATE TABLE ... STORED AS TEXTFILE|SEQUENCEFILE|RCFILE|FORMATFIE|PGDATA to override</description>
+</property>
+
+<property>
+  <name>hive.default.formatcompress</name>
+  <value>true</value>
+  <description>if the default file format is FormatFile then if it is compressed is determined by this param</description>
+</property>
+
+</configuration>

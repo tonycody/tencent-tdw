@@ -1,0 +1,34 @@
+query: DROP TABLE columnTable
+query: CREATE table columnTable (key STRING, value STRING)
+ROW FORMAT SERDE
+  'org.apache.hadoop.hive.serde2.columnar.ColumnarSerDe'
+STORED AS
+  INPUTFORMAT 'org.apache.hadoop.hive.ql.io.RCFileInputFormat'
+  OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.RCFileOutputFormat'
+query: FROM src
+INSERT OVERWRITE TABLE columnTable SELECT src.key, src.value LIMIT 10
+Output: default_db/columntable
+query: describe columnTable
+key	string	from deserializer
+value	string	from deserializer
+query: SELECT columnTable.* FROM columnTable order by key
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1214618938/10000
+165	val_165
+238	val_238
+255	val_255
+27	val_27
+278	val_278
+311	val_311
+409	val_409
+484	val_484
+86	val_86
+98	val_98
+query: DROP TABLE columnTable
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 

@@ -1,0 +1,14 @@
+query: DROP TABLE testtbl
+query: CREATE TABLE testtbl(KEY INT, VALUE STRING) ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' WITH SERDEPROPERTIES("charset"="gbk")
+query: LOAD DATA LOCAL INPATH '../data/files/kv.txt' INTO TABLE testtbl
+query: SELECT COUNT(*) FROM testtbl
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1367366360/10000
+3
+query: SELECT COUNT(*) FROM testtbl
+query: SELECT COUNT(*) FROM testtbl
+query: SELECT COUNT(*) FROM testtbl
+query: SELECT COUNT(*) FROM testtbl
+query: SELECT COUNT(*) FROM testtbl
+query: SELECT COUNT(*) FROM testtbl
+query: SELECT COUNT(*) FROM testtbl
+query: SELECT COUNT(*) FROM testtbl

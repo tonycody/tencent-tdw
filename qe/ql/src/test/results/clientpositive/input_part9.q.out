@@ -1,0 +1,381 @@
+query: EXPLAIN EXTENDED
+SELECT x.* FROM SRCPART x WHERE key IS NOT NULL AND ds = '2008-04-08' sort by key
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB SRCPART) x)) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_ALLCOLREF x))) (TOK_WHERE (AND (TOK_FUNCTION TOK_ISNOTNULL (TOK_TABLE_OR_COL key)) (= (TOK_TABLE_OR_COL ds) '2008-04-08'))) (TOK_SORTBY (TOK_TABSORTCOLNAMEASC (TOK_TABLE_OR_COL key)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/srcpart#x 
+          Operator:          TableScan
+            alias: default_db/srcpart#x
+            Operator:            Filter Operator
+              isSamplingPred: false
+              predicate:
+                  expr: (key is not null and (ds = '2008-04-08'))
+                  type: boolean
+              Operator:              Select Operator
+                expressions:
+                      expr: key
+                      type: string
+                      expr: value
+                      type: string
+                      expr: ds
+                      type: string
+                      expr: hr
+                      type: string
+                outputColumnNames: _col0, _col1, _col2, _col3
+                Operator:                Reduce Output Operator
+                  key expressions:
+                        expr: _col0
+                        type: string
+                  key serialize infos:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                      properties:
+                        columns reducesinkkey0
+                        serialization.sort.order +
+                        columns.types string
+                  sort order: +
+                  output key names: reducesinkkey0
+                  output value names: _col0, _col1, _col2, _col3
+                  tag: -1
+                  value expressions:
+                        expr: _col0
+                        type: string
+                        expr: _col1
+                        type: string
+                        expr: _col2
+                        type: string
+                        expr: _col3
+                        type: string
+      Needs Tagging: false
+      Path -> Alias:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp1 [default_db/srcpart#x]
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp2 [default_db/srcpart#x]
+      Path -> Partition:
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp1 
+          Partition
+          
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              properties:
+                name srcpart
+                columns.types string:string:string:string
+                serialization.ddl struct srcpart { string key, string value, string ds, string hr}
+                serialization.format 1
+                columns key,value,ds,hr
+                bucket_count -1
+                serialization.lib org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                file.inputformat org.apache.hadoop.mapred.TextInputFormat
+                file.outputformat org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                location file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/srcpart
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: srcpart
+        file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp2 
+          Partition
+          
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              properties:
+                name srcpart
+                columns.types string:string:string:string
+                serialization.ddl struct srcpart { string key, string value, string ds, string hr}
+                serialization.format 1
+                columns key,value,ds,hr
+                bucket_count -1
+                serialization.lib org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                file.inputformat org.apache.hadoop.mapred.TextInputFormat
+                file.outputformat org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                location file:/data/tdwadmin/testroach/QE050/qe/build/ql/test/data/warehouse/default_db/srcpart
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: srcpart
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          File Output Operator
+            compressed: false
+            GlobalTableId: 0
+            directory: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1546707349/10001
+            table:
+              table descs
+                input format: org.apache.hadoop.mapred.TextInputFormat
+                output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                properties:
+                  columns _col0,_col1,_col2,_col3
+                  serialization.format 1
+                  columns.types string:string:string:string
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: SELECT x.* FROM SRCPART x WHERE key IS NOT NULL AND ds = '2008-04-08' sort by key, hr
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1332542489/10000
+0	val_0	2008-04-08	04
+0	val_0	2008-04-08	09
+0	val_0	2008-04-08	18
+10	val_10	2008-04-08	09
+100	val_100	2008-04-08	22
+103	val_103	2008-04-08	05
+111	val_111	2008-04-08	05
+113	val_113	2008-04-08	04
+118	val_118	2008-04-08	09
+118	val_118	2008-04-08	09
+119	val_119	2008-04-08	18
+12	val_12	2008-04-08	21
+120	val_120	2008-04-08	13
+125	val_125	2008-04-08	05
+128	val_128	2008-04-08	01
+128	val_128	2008-04-08	04
+129	val_129	2008-04-08	04
+129	val_129	2008-04-08	18
+131	val_131	2008-04-08	13
+134	val_134	2008-04-08	09
+137	val_137	2008-04-08	05
+137	val_137	2008-04-08	13
+138	val_138	2008-04-08	05
+138	val_138	2008-04-08	09
+138	val_138	2008-04-08	21
+145	val_145	2008-04-08	02
+146	val_146	2008-04-08	02
+149	val_149	2008-04-08	04
+15	val_15	2008-04-08	02
+15	val_15	2008-04-08	09
+150	val_150	2008-04-08	01
+152	val_152	2008-04-08	02
+153	val_153	2008-04-08	02
+155	val_155	2008-04-08	04
+156	val_156	2008-04-08	13
+157	val_157	2008-04-08	04
+158	val_158	2008-04-08	18
+162	val_162	2008-04-08	04
+165	val_165	2008-04-08	00
+165	val_165	2008-04-08	22
+166	val_166	2008-04-08	02
+167	val_167	2008-04-08	04
+169	val_169	2008-04-08	05
+169	val_169	2008-04-08	09
+17	val_17	2008-04-08	04
+170	val_170	2008-04-08	04
+172	val_172	2008-04-08	18
+174	val_174	2008-04-08	02
+174	val_174	2008-04-08	04
+176	val_176	2008-04-08	05
+176	val_176	2008-04-08	05
+179	val_179	2008-04-08	09
+179	val_179	2008-04-08	18
+180	val_180	2008-04-08	21
+181	val_181	2008-04-08	21
+187	val_187	2008-04-08	05
+187	val_187	2008-04-08	13
+19	val_19	2008-04-08	09
+191	val_191	2008-04-08	22
+192	val_192	2008-04-08	05
+193	val_193	2008-04-08	01
+193	val_193	2008-04-08	02
+195	val_195	2008-04-08	04
+196	val_196	2008-04-08	13
+197	val_197	2008-04-08	13
+197	val_197	2008-04-08	22
+199	val_199	2008-04-08	02
+199	val_199	2008-04-08	22
+20	val_20	2008-04-08	04
+203	val_203	2008-04-08	04
+205	val_205	2008-04-08	04
+205	val_205	2008-04-08	22
+207	val_207	2008-04-08	02
+208	val_208	2008-04-08	04
+208	val_208	2008-04-08	05
+208	val_208	2008-04-08	18
+209	val_209	2008-04-08	02
+213	val_213	2008-04-08	01
+213	val_213	2008-04-08	05
+216	val_216	2008-04-08	05
+217	val_217	2008-04-08	21
+219	val_219	2008-04-08	02
+221	val_221	2008-04-08	04
+221	val_221	2008-04-08	05
+224	val_224	2008-04-08	01
+224	val_224	2008-04-08	09
+230	val_230	2008-04-08	18
+230	val_230	2008-04-08	21
+230	val_230	2008-04-08	22
+237	val_237	2008-04-08	02
+238	val_238	2008-04-08	00
+238	val_238	2008-04-08	09
+239	val_239	2008-04-08	05
+24	val_24	2008-04-08	18
+241	val_241	2008-04-08	05
+247	val_247	2008-04-08	04
+252	val_252	2008-04-08	02
+255	val_255	2008-04-08	00
+26	val_26	2008-04-08	22
+260	val_260	2008-04-08	21
+265	val_265	2008-04-08	01
+266	val_266	2008-04-08	04
+27	val_27	2008-04-08	00
+272	val_272	2008-04-08	21
+273	val_273	2008-04-08	01
+273	val_273	2008-04-08	09
+275	val_275	2008-04-08	05
+277	val_277	2008-04-08	02
+277	val_277	2008-04-08	05
+277	val_277	2008-04-08	09
+278	val_278	2008-04-08	00
+278	val_278	2008-04-08	05
+280	val_280	2008-04-08	05
+281	val_281	2008-04-08	02
+282	val_282	2008-04-08	09
+282	val_282	2008-04-08	13
+284	val_284	2008-04-08	21
+286	val_286	2008-04-08	05
+287	val_287	2008-04-08	02
+288	val_288	2008-04-08	13
+289	val_289	2008-04-08	05
+292	val_292	2008-04-08	02
+298	val_298	2008-04-08	22
+302	val_302	2008-04-08	04
+306	val_306	2008-04-08	09
+307	val_307	2008-04-08	09
+308	val_308	2008-04-08	13
+309	val_309	2008-04-08	04
+311	val_311	2008-04-08	00
+311	val_311	2008-04-08	04
+311	val_311	2008-04-08	05
+316	val_316	2008-04-08	04
+316	val_316	2008-04-08	13
+318	val_318	2008-04-08	05
+318	val_318	2008-04-08	13
+318	val_318	2008-04-08	13
+322	val_322	2008-04-08	22
+325	val_325	2008-04-08	04
+327	val_327	2008-04-08	02
+327	val_327	2008-04-08	22
+332	val_332	2008-04-08	05
+333	val_333	2008-04-08	21
+338	val_338	2008-04-08	02
+339	val_339	2008-04-08	04
+342	val_342	2008-04-08	04
+345	val_345	2008-04-08	04
+348	val_348	2008-04-08	18
+348	val_348	2008-04-08	18
+35	val_35	2008-04-08	05
+353	val_353	2008-04-08	21
+356	val_356	2008-04-08	05
+364	val_364	2008-04-08	09
+365	val_365	2008-04-08	04
+367	val_367	2008-04-08	04
+369	val_369	2008-04-08	01
+369	val_369	2008-04-08	13
+37	val_37	2008-04-08	02
+373	val_373	2008-04-08	21
+374	val_374	2008-04-08	02
+377	val_377	2008-04-08	04
+378	val_378	2008-04-08	04
+382	val_382	2008-04-08	05
+384	val_384	2008-04-08	21
+386	val_386	2008-04-08	05
+393	val_393	2008-04-08	22
+394	val_394	2008-04-08	02
+395	val_395	2008-04-08	09
+396	val_396	2008-04-08	04
+397	val_397	2008-04-08	04
+399	val_399	2008-04-08	04
+399	val_399	2008-04-08	05
+4	val_4	2008-04-08	05
+401	val_401	2008-04-08	01
+403	val_403	2008-04-08	02
+404	val_404	2008-04-08	13
+404	val_404	2008-04-08	21
+406	val_406	2008-04-08	02
+409	val_409	2008-04-08	00
+409	val_409	2008-04-08	13
+411	val_411	2008-04-08	18
+413	val_413	2008-04-08	02
+413	val_413	2008-04-08	09
+417	val_417	2008-04-08	02
+417	val_417	2008-04-08	04
+418	val_418	2008-04-08	22
+419	val_419	2008-04-08	09
+42	val_42	2008-04-08	18
+427	val_427	2008-04-08	05
+429	val_429	2008-04-08	02
+43	val_43	2008-04-08	13
+430	val_430	2008-04-08	02
+430	val_430	2008-04-08	05
+431	val_431	2008-04-08	18
+435	val_435	2008-04-08	09
+436	val_436	2008-04-08	13
+437	val_437	2008-04-08	05
+438	val_438	2008-04-08	04
+439	val_439	2008-04-08	04
+446	val_446	2008-04-08	02
+454	val_454	2008-04-08	22
+455	val_455	2008-04-08	04
+457	val_457	2008-04-08	13
+459	val_459	2008-04-08	02
+459	val_459	2008-04-08	05
+463	val_463	2008-04-08	18
+466	val_466	2008-04-08	04
+466	val_466	2008-04-08	18
+468	val_468	2008-04-08	13
+468	val_468	2008-04-08	22
+469	val_469	2008-04-08	02
+469	val_469	2008-04-08	05
+469	val_469	2008-04-08	13
+47	val_47	2008-04-08	05
+470	val_470	2008-04-08	13
+475	val_475	2008-04-08	04
+481	val_481	2008-04-08	13
+482	val_482	2008-04-08	02
+484	val_484	2008-04-08	00
+489	val_489	2008-04-08	04
+489	val_489	2008-04-08	04
+489	val_489	2008-04-08	21
+490	val_490	2008-04-08	09
+494	val_494	2008-04-08	02
+495	val_495	2008-04-08	02
+496	val_496	2008-04-08	18
+498	val_498	2008-04-08	05
+51	val_51	2008-04-08	05
+51	val_51	2008-04-08	13
+54	val_54	2008-04-08	05
+57	val_57	2008-04-08	04
+58	val_58	2008-04-08	18
+65	val_65	2008-04-08	05
+66	val_66	2008-04-08	01
+67	val_67	2008-04-08	21
+72	val_72	2008-04-08	05
+72	val_72	2008-04-08	09
+77	val_77	2008-04-08	09
+8	val_8	2008-04-08	18
+82	val_82	2008-04-08	02
+83	val_83	2008-04-08	05
+84	val_84	2008-04-08	18
+85	val_85	2008-04-08	09
+86	val_86	2008-04-08	00
+87	val_87	2008-04-08	09
+90	val_90	2008-04-08	09
+92	val_92	2008-04-08	05
+95	val_95	2008-04-08	13
+96	val_96	2008-04-08	22
+98	val_98	2008-04-08	00
+98	val_98	2008-04-08	13
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 

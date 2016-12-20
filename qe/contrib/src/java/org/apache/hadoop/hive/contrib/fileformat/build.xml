@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="protobufRIO" basedir="." default="jar">
+    <property name="hive.root" location="${basedir}/../../../../../../../../../"/>
+    <property name="build.dir.hive" location="${hive.root}/build"/>
+    <property name="build.dir" location="${build.dir.hive}/${ant.project.name}"/>
+    
+    <property file="${hive.root}/build.properties"/> 
+    
+    <property name="src.dir" value="protobuf"/>
+    <property name="newsrc.dir" value="newprotobuf"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="lib.dir" value="${hive.root}/lib"/>
+    
+    <import file="${hive.root}/build-common.xml"/> 
+    
+    <path id="classpath">
+	    <fileset dir="${hive.root}/lib" includes="**/*.jar" excludes="hive_contrib.jar"/>
+        <pathelement location="${hadoop.jar}"/>
+        <pathelement location="${hadoop.common.jar}"/>
+        <pathelement location="${hadoop.hdfs.jar}"/>
+        <pathelement location="${hadoop.mapreduce.jar}"/>
+    	<pathelement location="${hadoop.cdh3.core.jar}"/>
+        <pathelement location="${hadoop.cdh3.hdfs.jar}"/>
+        <fileset dir="${build.dir.hive}" includes="*/*.jar" excludes="hive_contrib.jar"/>
+    </path>
+    
+    <!--
+    <target name="clean" description="Del all generated files">
+	    <delete dir="${classes.dir}" failonerror="false"/>
+	    <delete file="${ant.project.name}.jar"/>
+    </target>
+    -->
+
+    <target name="test">
+        <echo message="nothing to do"/>            
+    </target>
+    
+    <target name="compile" description="Compiles the task">
+	    <mkdir dir="${classes.dir}"/>
+	    <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+        <javac srcdir="${newsrc.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+    </target>
+
+    <target name="jar" description="JARs the task" depends="compile">
+	    <echo message="Jar: ${ant.project.name}"/>
+	    <unzip src="${lib.dir}/recordio.jar" dest="${classes.dir}">
+	        <patternset>
+		    <exclude name="META-INF"/>
+		    <exclude name="META-INF/MANIFEST.MF"/>
+	        </patternset>
+	    </unzip>
+	    <unzip src="${lib.dir}/protobuf-java-2.5.0.jar" dest="${classes.dir}">
+	        <patternset>
+		    <exclude name="META-INF"/>
+		    <exclude name="META-INF/MANIFEST.MF"/>
+	        </patternset>
+	    </unzip>
+	    <jar destfile="${build.dir}/${ant.project.name}.jar" basedir="${classes.dir}"/>
+        <jar jarfile="${build.dir.hive}/ql/hive_exec.jar">
+            <fileset dir="${build.dir.hive}/common/classes" includes="**/*.class"/> 
+            <fileset dir="${build.dir.hive}/ql/classes" includes="**/*.class"/>
+            <fileset dir="${build.dir.hive}/serde/classes" includes="**/*.class"/>
+            <fileset dir="${build.dir.hive}/thrift/classes" includes="**/*.class"/>
+            <fileset dir="${build.dir.hive}/commons-lang/classes" includes="**/StringUtils.class,**/WordUtils.class"/>
+            <fileset dir="${build.dir.hive}/json/classes" includes="**/*.class"/>
+            <fileset dir="${build.dir.hive}/shims/classes" includes="**/*.class"/>
+            <fileset dir="${build.dir.hive}/protobufRIO/classes" includes="**/*.class"/>
+        </jar>
+    </target>
+
+</project>

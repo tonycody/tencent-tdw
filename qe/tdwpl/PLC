@@ -1,0 +1,209 @@
+#!/bin/sh
+if [ "$PLCLIENT_PATH" = "" ]
+then
+   echo please set env PLCLIENT_PATH
+   exit 255
+fi
+
+HOME_PATH="$PLCLIENT_PATH/tdwpl/bin/PLClient"
+
+user="";
+pw="";
+serverip="";
+port="";
+SQL="";
+mark="";
+waittime="";
+reconnecttime="";
+waitconnect="";
+plctype=""
+
+plctype=$1
+if [ $plctype = "-getcols" ]
+then
+   shift 1
+   if [ $# -eq 5 ]
+   then
+      user=$1;
+      pw=$2;
+      serverip=$3;
+      port=$4;
+      SQL=$5;
+   elif [ $# -eq 6 ]
+   then
+      user=$1;
+      pw=$2;
+      serverip=$3;
+      port=$4;
+      SQL=$5;
+      mark=$6;
+   elif [ $# -eq 7 ]
+   then
+      user=$1;
+      pw=$2;
+      serverip=$3;
+      port=$4;
+      SQL=$5;
+      mark=$6;
+      waittime=$7;
+   elif [ $# -eq 9 ]
+   then
+      user=$1;
+      pw=$2;
+      serverip=$3;
+      port=$4;
+      SQL=$5;
+      mark=$6;
+      waittime=$7;
+      reconnecttime=$8;
+      waitconnect=$9;
+   else
+      echo "usage:${0##*/} getcols user  pw serverip   port  SQL" 
+      exit 255
+   fi
+
+   cd $HOME_PATH
+	
+   if [ -z ${waitconnect} ]
+   then
+	if [ -z ${waittime} ]
+	then
+		if [ -z ${mark} ]
+		then
+			./tdwpl -v "$serverip" -p "$port" -x "$user" -y "$pw" --getcols "$SQL"
+		else
+			./tdwpl -v "$serverip" -p "$port" -x "$user" -y "$pw" --getcols "$SQL"  --mark "$mark"
+		fi
+	else
+		./tdwpl -v "$serverip" -p "$port" -x "$user" -y "$pw" --getcols "$SQL" --mark "$mark" --wait "$waittime"
+	fi
+   else
+	./tdwpl -v "$serverip" -p "$port" -x "$user" -y "$pw" --getcols "$SQL" --mark "$mark" --wait "$waittime" --recont "$reconnecttime" --waitco "$waitconnect"
+   fi
+   
+elif [ $plctype = "-setdb" ]
+then
+   shift 1
+   if [ $# -eq 6 ]
+   then
+	  db=$1;
+      user=$2;
+      pw=$3;
+      serverip=$4;
+      port=$5;
+      SQL=$6;
+   elif [ $# -eq 7 ]
+   then
+	  db=$1;
+      user=$2;
+      pw=$3;
+      serverip=$4;
+      port=$5;
+      SQL=$6;
+      mark=$7;
+   elif [ $# -eq 8 ]
+   then
+	  db=$1;
+      user=$2;
+      pw=$3;
+      serverip=$4;
+      port=$5;
+      SQL=$6;
+      mark=$7;
+      waittime=$8;
+   elif [ $# -eq 10 ]
+   then
+	  db=$1;
+      user=$2;
+      pw=$3;
+      serverip=$4;
+      port=$5;
+      SQL=$6;
+      mark=$7;
+      waittime=$8;
+      reconnecttime=$9;
+      waitconnect=$10;
+   else
+      echo "usage:${0##*/} -setdb dbname user pw serverip port SQL" 
+      exit 255
+   fi
+
+   cd $HOME_PATH
+	
+   if [ -z ${waitconnect} ]
+   then
+	if [ -z ${waittime} ]
+	then
+		if [ -z ${mark} ]
+		then
+			./tdwpl -v "$serverip" -p "$port" -x "$user" -y "$pw" -d "$db" --exec "$SQL"
+		else
+			./tdwpl -v "$serverip" -p "$port" -x "$user" -y "$pw" -d "$db" --exec "$SQL"  --mark "$mark"
+		fi
+	else
+		./tdwpl -v "$serverip" -p "$port" -x "$user" -y "$pw" -d "$db" --exec "$SQL" --mark "$mark" --wait "$waittime"
+	fi
+   else
+	./tdwpl -v "$serverip" -p "$port" -x "$user" -y "$pw" -d "$db" --exec "$SQL" --mark "$mark" --wait "$waittime" --recont "$reconnecttime" --waitco "$waitconnect"
+   fi
+   
+else
+   if [ $# -eq 5 ]
+   then
+      user=$1;
+      pw=$2;
+      serverip=$3;
+      port=$4;
+      SQL=$5;
+   elif [ $# -eq 6 ]
+   then
+      user=$1;
+      pw=$2;
+      serverip=$3;
+      port=$4;
+      SQL=$5;
+      mark=$6;
+   elif [ $# -eq 7 ]
+   then
+      user=$1;
+      pw=$2;
+      serverip=$3;
+      port=$4;
+      SQL=$5;
+      mark=$6;
+      waittime=$7;
+   elif [ $# -eq 9 ]
+   then
+      pw=$2;
+      serverip=$3;
+      port=$4;
+      SQL=$5;
+      mark=$6;
+      waittime=$7;
+      reconnecttime=$8;
+      waitconnect=$9;
+   else
+      echo "usage:${0##*/} user  pw serverip   port  SQL" 
+      exit 255
+   fi
+
+   cd $HOME_PATH
+
+   if [ -z ${waitconnect} ]
+   then
+        if [ -z ${waittime} ]
+        then
+                if [ -z ${mark} ]
+                then
+                        ./tdwpl -v "$serverip" -p "$port" -x "$user" -y "$pw" --exec "$SQL"
+                else
+                        ./tdwpl -v "$serverip" -p "$port" -x "$user" -y "$pw" --exec "$SQL"  --mark "$mark"
+                fi
+        else
+                ./tdwpl -v "$serverip" -p "$port" -x "$user" -y "$pw" --exec "$SQL" --mark "$mark" --wait "$waittime"
+        fi
+   else
+        ./tdwpl -v "$serverip" -p "$port" -x "$user" -y "$pw" --exec "$SQL" --mark "$mark" --wait "$waittime" --recont "$reconne
+cttime" --waitco "$waitconnect"
+   fi
+fi

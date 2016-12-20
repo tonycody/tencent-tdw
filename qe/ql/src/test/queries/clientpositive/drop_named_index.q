@@ -1,0 +1,1 @@
+explain alter table altertable drop index idx_ab;

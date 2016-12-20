@@ -1,0 +1,2 @@
+query: DROP VIEW xxx14
+FAILED: Error in semantic analysis: Duplicate column name: key

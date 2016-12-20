@@ -1,0 +1,35 @@
+query: EXPLAIN
+CREATE TABLE INPUTDDL1(key INT, value STRING) STORED AS TEXTFILE
+ABSTRACT SYNTAX TREE:
+  (TOK_CREATETABLE INPUTDDL1 TOK_LIKETABLE (TOK_TABCOLLIST (TOK_TABCOL key TOK_INT) (TOK_TABCOL value TOK_STRING)) TOK_TBLTEXTFILE)
+
+STAGE DEPENDENCIES:
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-0
+      Create Table Operator:
+        Create Table
+          columns: key int, value string
+          if compressed: false
+          if not exists: false
+          input format: org.apache.hadoop.mapred.TextInputFormat
+          # buckets: -1
+          output format: org.apache.hadoop.hive.ql.io.IgnoreKeyTextOutputFormat
+          name: INPUTDDL1
+          isExternal: false
+
+query: CREATE TABLE INPUTDDL1(key INT, value STRING) STORED AS TEXTFILE
+query: SELECT INPUTDDL1.* from INPUTDDL1
+Input: default_db/inputddl1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/390516087/10000
+query: DROP TABLE INPUTDDL1
+query: DROP TABLE INPUTDDL1
+query: DROP TABLE INPUTDDL1
+query: DROP TABLE INPUTDDL1
+query: DROP TABLE INPUTDDL1
+query: DROP TABLE INPUTDDL1
+query: DROP TABLE INPUTDDL1
+query: DROP TABLE INPUTDDL1
+query: DROP TABLE INPUTDDL1

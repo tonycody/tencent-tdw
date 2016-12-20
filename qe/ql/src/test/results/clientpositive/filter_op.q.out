@@ -1,0 +1,542 @@
+query: create table test_op_s1 (tint_1 INT, tstr_1 STRING, tstr_2 STRING, tint_2 INT)
+query: LOAD DATA LOCAL INPATH '../data/files/kv6.txt' INTO TABLE  test_op_s1
+query: create table test_op_s2 (tint_1 INT, tstr_1 STRING)
+query: LOAD DATA LOCAL INPATH '../data/files/kv1.txt' INTO TABLE  test_op_s2
+query: create table mytmp1(tsum INT, tavg INT, tcount INT)
+query: create table mytmp2(tavg INT, tcount INT, tsum INT)
+query: create table test_op_t1 (tint_1 INT, tstr_1 STRING)
+query: create table test_op_t2 (tint_1 INT, tstr_1 STRING)
+query: create table test_op_t3 (tint_1 INT, tstr_1 STRING)
+query: create table test_op_t4 (tint_1 INT, tstr_1 STRING)
+query: FROM test_op_s1
+INSERT OVERWRITE TABLE test_op_t1
+SELECT test_op_s1.tint_1,test_op_s1.tstr_1
+where test_op_s1.tint_1>100 and test_op_s1.tint_1<200
+order by test_op_s1.tint_1
+INSERT OVERWRITE TABLE test_op_t2
+SELECT test_op_s1.tint_1,test_op_s1.tstr_2
+where test_op_s1.tint_1>100 and test_op_s1.tint_1<200
+order by test_op_s1.tint_1
+INSERT OVERWRITE TABLE test_op_t3
+SELECT test_op_s1.tint_2,test_op_s1.tstr_1
+where test_op_s1.tint_1>100 and test_op_s1.tint_1<200
+order by test_op_s1.tint_2
+INSERT OVERWRITE TABLE test_op_t4
+SELECT test_op_s1.tint_2,test_op_s1.tstr_2
+where test_op_s1.tint_1>100 and test_op_s1.tint_1<200
+order by test_op_s1.tint_2
+Output: default_db/test_op_t1
+Output: default_db/test_op_t2
+Output: default_db/test_op_t3
+Output: default_db/test_op_t4
+query: FROM test_op_s1  
+INSERT OVERWRITE TABLE mytmp1
+SELECT sum(test_op_s1.tint_2), avg(test_op_s1.tint_2) as tmpavg, count(test_op_s1.tint_2)
+where test_op_s1.tint_2 > 5  and test_op_s1.tint_2 < 20
+GROUP BY test_op_s1.tint_2  sort by tmpavg  
+
+INSERT OVERWRITE TABLE mytmp2
+SELECT avg(test_op_s1.tint_2), count(test_op_s1.tint_2) as tmpcount, sum(test_op_s1.tint_2)
+where test_op_s1.tint_2 <20 and  test_op_s1.tint_2 > 5
+GROUP BY test_op_s1.tint_2   sort by tmpcount
+Output: default_db/mytmp1
+Output: default_db/mytmp2
+query: select * from test_op_t1 order by tint_1, tstr_1
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1592414222/10000
+103	val_103
+103	val_103
+104	val_104
+104	val_104
+105	val_105
+111	val_111
+113	val_113
+113	val_113
+114	val_114
+116	val_116
+118	val_118
+118	val_118
+119	val_119
+119	val_119
+119	val_119
+120	val_120
+120	val_120
+125	val_125
+125	val_125
+126	val_126
+128	val_128
+128	val_128
+128	val_128
+129	val_129
+129	val_129
+131	val_131
+133	val_133
+134	val_134
+134	val_134
+136	val_136
+137	val_137
+137	val_137
+138	val_138
+138	val_138
+138	val_138
+138	val_138
+143	val_143
+145	val_145
+146	val_146
+146	val_146
+149	val_149
+149	val_149
+150	val_150
+152	val_152
+152	val_152
+153	val_153
+155	val_155
+156	val_156
+157	val_157
+158	val_158
+160	val_160
+162	val_162
+163	val_163
+164	val_164
+164	val_164
+165	val_165
+165	val_165
+166	val_166
+167	val_167
+167	val_167
+167	val_167
+168	val_168
+169	val_169
+169	val_169
+169	val_169
+169	val_169
+170	val_170
+172	val_172
+172	val_172
+174	val_174
+174	val_174
+175	val_175
+175	val_175
+176	val_176
+176	val_176
+177	val_177
+178	val_178
+179	val_179
+179	val_179
+180	val_180
+181	val_181
+183	val_183
+186	val_186
+187	val_187
+187	val_187
+187	val_187
+189	val_189
+190	val_190
+191	val_191
+191	val_191
+192	val_192
+193	val_193
+193	val_193
+193	val_193
+194	val_194
+195	val_195
+195	val_195
+196	val_196
+197	val_197
+197	val_197
+199	val_199
+199	val_199
+199	val_199
+query: select * from test_op_t2 order by tint_1, tstr_1
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1319387062/10000
+103	2008-04-08
+103	2008-04-09
+104	2008-04-09
+104	2008-04-09
+105	2008-04-09
+111	2008-04-08
+113	2008-04-08
+113	2008-04-09
+114	2008-04-09
+116	2008-04-09
+118	2008-04-08
+118	2008-04-08
+119	2008-04-08
+119	2008-04-09
+119	2008-04-09
+120	2008-04-08
+120	2008-04-09
+125	2008-04-08
+125	2008-04-09
+126	2008-04-09
+128	2008-04-08
+128	2008-04-08
+128	2008-04-09
+129	2008-04-08
+129	2008-04-08
+131	2008-04-08
+133	2008-04-09
+134	2008-04-08
+134	2008-04-09
+136	2008-04-09
+137	2008-04-08
+137	2008-04-08
+138	2008-04-08
+138	2008-04-08
+138	2008-04-08
+138	2008-04-09
+143	2008-04-09
+145	2008-04-08
+146	2008-04-08
+146	2008-04-09
+149	2008-04-08
+149	2008-04-09
+150	2008-04-08
+152	2008-04-08
+152	2008-04-09
+153	2008-04-08
+155	2008-04-08
+156	2008-04-08
+157	2008-04-08
+158	2008-04-08
+160	2008-04-09
+162	2008-04-08
+163	2008-04-09
+164	2008-04-09
+164	2008-04-09
+165	2008-04-08
+165	2008-04-08
+166	2008-04-08
+167	2008-04-08
+167	2008-04-09
+167	2008-04-09
+168	2008-04-09
+169	2008-04-08
+169	2008-04-08
+169	2008-04-09
+169	2008-04-09
+170	2008-04-08
+172	2008-04-08
+172	2008-04-09
+174	2008-04-08
+174	2008-04-08
+175	2008-04-09
+175	2008-04-09
+176	2008-04-08
+176	2008-04-08
+177	2008-04-09
+178	2008-04-09
+179	2008-04-08
+179	2008-04-08
+180	2008-04-08
+181	2008-04-08
+183	2008-04-09
+186	2008-04-09
+187	2008-04-08
+187	2008-04-08
+187	2008-04-09
+189	2008-04-09
+190	2008-04-09
+191	2008-04-08
+191	2008-04-09
+192	2008-04-08
+193	2008-04-08
+193	2008-04-08
+193	2008-04-09
+194	2008-04-09
+195	2008-04-08
+195	2008-04-09
+196	2008-04-08
+197	2008-04-08
+197	2008-04-08
+199	2008-04-08
+199	2008-04-08
+199	2008-04-09
+query: select * from test_op_t3 order by tint_1, tstr_1
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/486438311/10000
+0	val_165
+1	val_128
+1	val_150
+1	val_193
+2	val_145
+2	val_146
+2	val_152
+2	val_153
+2	val_166
+2	val_174
+2	val_193
+2	val_199
+4	val_113
+4	val_128
+4	val_129
+4	val_149
+4	val_155
+4	val_157
+4	val_162
+4	val_167
+4	val_170
+4	val_174
+4	val_195
+5	val_103
+5	val_111
+5	val_125
+5	val_137
+5	val_138
+5	val_169
+5	val_176
+5	val_176
+5	val_187
+5	val_192
+7	val_116
+7	val_128
+7	val_191
+9	val_118
+9	val_118
+9	val_134
+9	val_138
+9	val_169
+9	val_177
+9	val_179
+12	val_104
+12	val_104
+12	val_105
+12	val_114
+12	val_119
+12	val_120
+12	val_125
+12	val_126
+12	val_133
+12	val_134
+12	val_136
+12	val_146
+12	val_152
+12	val_163
+12	val_164
+12	val_164
+12	val_167
+12	val_169
+12	val_169
+12	val_172
+12	val_175
+12	val_175
+12	val_178
+12	val_183
+12	val_186
+12	val_187
+12	val_189
+12	val_190
+12	val_193
+12	val_194
+12	val_199
+13	val_120
+13	val_131
+13	val_137
+13	val_156
+13	val_187
+13	val_196
+13	val_197
+14	val_103
+14	val_113
+14	val_119
+14	val_138
+14	val_143
+14	val_149
+14	val_160
+14	val_167
+14	val_168
+14	val_195
+18	val_119
+18	val_129
+18	val_158
+18	val_172
+18	val_179
+21	val_138
+21	val_180
+21	val_181
+22	val_165
+22	val_191
+22	val_197
+22	val_199
+query: select * from test_op_t4 order by tint_1, tstr_1
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1575589903/10000
+0	2008-04-08
+1	2008-04-08
+1	2008-04-08
+1	2008-04-08
+2	2008-04-08
+2	2008-04-08
+2	2008-04-08
+2	2008-04-08
+2	2008-04-08
+2	2008-04-08
+2	2008-04-08
+2	2008-04-08
+4	2008-04-08
+4	2008-04-08
+4	2008-04-08
+4	2008-04-08
+4	2008-04-08
+4	2008-04-08
+4	2008-04-08
+4	2008-04-08
+4	2008-04-08
+4	2008-04-08
+4	2008-04-08
+5	2008-04-08
+5	2008-04-08
+5	2008-04-08
+5	2008-04-08
+5	2008-04-08
+5	2008-04-08
+5	2008-04-08
+5	2008-04-08
+5	2008-04-08
+5	2008-04-08
+7	2008-04-09
+7	2008-04-09
+7	2008-04-09
+9	2008-04-08
+9	2008-04-08
+9	2008-04-08
+9	2008-04-08
+9	2008-04-08
+9	2008-04-08
+9	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+12	2008-04-09
+13	2008-04-08
+13	2008-04-08
+13	2008-04-08
+13	2008-04-08
+13	2008-04-08
+13	2008-04-08
+13	2008-04-08
+14	2008-04-09
+14	2008-04-09
+14	2008-04-09
+14	2008-04-09
+14	2008-04-09
+14	2008-04-09
+14	2008-04-09
+14	2008-04-09
+14	2008-04-09
+14	2008-04-09
+18	2008-04-08
+18	2008-04-08
+18	2008-04-08
+18	2008-04-08
+18	2008-04-08
+21	2008-04-08
+21	2008-04-08
+21	2008-04-08
+22	2008-04-08
+22	2008-04-08
+22	2008-04-08
+22	2008-04-08
+query: select * from mytmp1
+Input: default_db/mytmp1
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/57848180/10000
+182	7	26
+450	9	50
+1812	12	151
+338	13	26
+714	14	51
+360	18	20
+query: select * from mytmp2
+Input: default_db/mytmp2
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1766541824/10000
+18	20	360
+13	26	338
+7	26	182
+9	50	450
+14	51	714
+12	151	1812
+query: select * from test_op_s2  where test_op_s2.tint_1<100 and test_op_s2.tint_1>50 order by test_op_s2.tint_1
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1888752656/10000
+51	val_51
+51	val_51
+53	val_53
+54	val_54
+57	val_57
+58	val_58
+58	val_58
+64	val_64
+65	val_65
+66	val_66
+67	val_67
+67	val_67
+69	val_69
+70	val_70
+70	val_70
+70	val_70
+72	val_72
+72	val_72
+74	val_74
+76	val_76
+76	val_76
+77	val_77
+78	val_78
+80	val_80
+82	val_82
+83	val_83
+83	val_83
+84	val_84
+84	val_84
+85	val_85
+86	val_86
+87	val_87
+90	val_90
+90	val_90
+90	val_90
+92	val_92
+95	val_95
+95	val_95
+96	val_96
+97	val_97
+97	val_97
+98	val_98
+98	val_98
+query: drop table test_op_t1
+query: drop table test_op_t2
+query: drop table test_op_t3
+query: drop table test_op_t4
+query: drop table test_op_s1
+query: drop table test_op_s2
+query: drop table mytmp1
+query: drop table mytmp2
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 

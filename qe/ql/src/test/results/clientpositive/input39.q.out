@@ -1,0 +1,183 @@
+query: drop table t1
+query: drop table t2
+query: create table t1(key string, value string, ds string) partition by list(ds)
+(partition p0 values in ('1'),
+partition p1 values in ('2'),
+partition p2 values in ('3'))
+query: create table t2(key string, value string, ds string) partition by list(ds)
+(partition p0 values in ('1'),
+partition p1 values in ('2'),
+partition p2 values in ('3'))
+query: insert overwrite table t1
+select key, value, '1' from src
+Output: default_db/t1
+query: select count(1) from t1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1123179717/10000
+500
+query: insert overwrite table t1
+select key, value, '2' from src
+Output: default_db/t1
+query: insert overwrite table t2
+select key, value, '1' from src
+Output: default_db/t2
+query: select count(1) from t2
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1026052680/10000
+500
+query: explain
+select count(1) from t1 join t2 on t1.key=t2.key where t1.ds='2' and t2.ds='1'
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_JOIN (TOK_TABREF (TOK_TAB t1)) (TOK_TABREF (TOK_TAB t2)) (= (. (TOK_TABLE_OR_COL t1) key) (. (TOK_TABLE_OR_COL t2) key)))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_FUNCTION count 1))) (TOK_WHERE (and (= (. (TOK_TABLE_OR_COL t1) ds) '2') (= (. (TOK_TABLE_OR_COL t2) ds) '1')))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-2
+    type:;depends on:Stage-1;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/t1 
+          Operator:          TableScan
+            alias: default_db/t1
+            Operator:            Filter Operator
+              predicate:
+                  expr: ((((hash(rand(460476415)) & 2147483647) % 32) = 0) and (ds = '2'))
+                  type: boolean
+              Operator:              Filter Operator
+                predicate:
+                    expr: (((hash(rand(460476415)) & 2147483647) % 32) = 0)
+                    type: boolean
+                Operator:                Reduce Output Operator
+                  key expressions:
+                        expr: key
+                        type: string
+                  key serialize infos:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                  sort order: +
+                  output key names: reducesinkkey0
+                  output value names: _col2
+                  Map-reduce partition columns:
+                        expr: key
+                        type: string
+                  tag: 0
+                  value expressions:
+                        expr: ds
+                        type: string
+        default_db/t2 
+          Operator:          TableScan
+            alias: default_db/t2
+            Operator:            Filter Operator
+              predicate:
+                  expr: ((((hash(rand(460476415)) & 2147483647) % 32) = 0) and (ds = '1'))
+                  type: boolean
+              Operator:              Filter Operator
+                predicate:
+                    expr: (((hash(rand(460476415)) & 2147483647) % 32) = 0)
+                    type: boolean
+                Operator:                Reduce Output Operator
+                  key expressions:
+                        expr: key
+                        type: string
+                  key serialize infos:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                  sort order: +
+                  output key names: reducesinkkey0
+                  output value names: _col2
+                  Map-reduce partition columns:
+                        expr: key
+                        type: string
+                  tag: 1
+                  value expressions:
+                        expr: ds
+                        type: string
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/t1/p1 [default_db/t1]
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/t2/p0 [default_db/t2]
+      Reduce Operator Tree:
+        Operator:        Join Operator
+          condition map:
+               Inner Join 0 to 1
+          condition expressions:
+            0 {VALUE._col2}
+            1 {VALUE._col2}
+          handleSkewJoin: false
+          outputColumnNames: _col2, _col5
+          Operator:          Filter Operator
+            predicate:
+                expr: ((_col2 = '2') and (_col5 = '1'))
+                type: boolean
+            Operator:            Select Operator
+              Operator:              Group By Operator
+                aggregations:
+                      expr: count(1)
+                mode: hash
+                outputColumnNames: _col0
+                Operator:                File Output Operator
+                  compressed: false
+                  GlobalTableId: 0
+                  table:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+
+  Stage: Stage-2
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1852709538/10002 
+            Operator:            Reduce Output Operator
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: 
+              output value names: _col0
+              tag: -1
+              value expressions:
+                    expr: _col0
+                    type: bigint
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1852709538/10002 [file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1852709538/10002]
+      Reduce Operator Tree:
+        Operator:        Group By Operator
+          aggregations:
+                expr: count(VALUE._col0)
+          mode: mergepartial
+          outputColumnNames: _col0
+          Operator:          Select Operator
+            expressions:
+                  expr: _col0
+                  type: bigint
+            outputColumnNames: _col0
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 0
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.TextInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: select count(1) from t1 join t2 on t1.key=t2.key where t1.ds='2' and t2.ds='1'
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1569100725/10000
+1
+query: drop table t1
+query: drop table t2
+query: drop table t2
+query: drop table t2
+query: drop table t2
+query: drop table t2
+query: drop table t2
+query: drop table t2
+query: drop table t2
+query: drop table t2

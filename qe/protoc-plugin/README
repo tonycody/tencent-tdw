@@ -1,0 +1,22 @@
+Tdw Protoc Plugin
+
+* 介绍
+ 本 Plugin 用于使用 proto 文件创建表时的 preproto 步骤。将用户输入的一个或一组 proto 文件解析并合并输出为单个 proto 文件，并在 genjar 步骤中生成单一的、无名字冲突的 jar 包。
+
+* 设计思路
+ 本模块使用 Protobuf 的 Plugin Api 接口，说明参见 (http://code.google.com/intl/zh-CN/apis/protocolbuffers/docs/reference/other.html)。
+ 特殊的部分在于对输入 proto 文件的依赖文件的处理逻辑中，将所有依赖文件的内容合并入最终的单个结果文件。
+
+* 子模块介绍
+ - plugin_main: 本 Plugin 的调用入口，通过 Protoc Plugin Api 与 Protoc 协作工作。
+ - tdw_generator: 本 Plugin 的主 Generator, 组织其他子模块的调用
+ - tdw_file: 输入文件的 Generator
+ - tdw_dependent_file: 输入文件的所有依赖文件的 Generator
+ - tdw_message: Protobuf Message 的 Generator（不包含Group类型）
+ - tdw_field: Protobuf Message Field 的 Generator
+ - tdw_helpers: 相关辅助函数，部分为本Plugin 的独立需求，其他代码均来自于 protobuf/stubs/strutil.h 及 protobuf/compiler/cpp/cpp_helpers.h
+
+* 注意点
+ - 由于 TDW 目前尚未支持 Enum 类型，本Plugin中，将输入文件的 enum 类型都转换为了 int32 类型。
+ - 由于 TDW 只能支持 utf-8 编码，故 protobuf bytes 类型在 TDW 中无明显意义，本 Plugin 的逻辑中，将所有 bytes 类型转换为 string 类型, 设计到此问题，需要在上下游做相关约定或数据转换。
+

@@ -1,0 +1,97 @@
+query: EXPLAIN
+SELECT src.key, sum(substr(src.value,5)) FROM src GROUP BY src.key LIMIT 5
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB src))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (. (TOK_TABLE_OR_COL src) key)) (TOK_SELEXPR (TOK_FUNCTION sum (TOK_FUNCTION substr (. (TOK_TABLE_OR_COL src) value) 5)))) (TOK_GROUPBY (. (TOK_TABLE_OR_COL src) key)) (TOK_LIMIT 5)))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/src 
+          Operator:          TableScan
+            alias: default_db/src
+            Operator:            Select Operator
+              expressions:
+                    expr: key
+                    type: string
+                    expr: value
+                    type: string
+              outputColumnNames: key, value
+              Operator:              Group By Operator
+                aggregations:
+                      expr: sum(substr(value, 5))
+                keys:
+                      expr: key
+                      type: string
+                mode: hash
+                outputColumnNames: _col0, _col1
+                Operator:                Reduce Output Operator
+                  key expressions:
+                        expr: _col0
+                        type: string
+                  key serialize infos:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                  sort order: +
+                  output key names: _col0
+                  output value names: _col0
+                  Map-reduce partition columns:
+                        expr: _col0
+                        type: string
+                  tag: -1
+                  value expressions:
+                        expr: _col1
+                        type: double
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src [default_db/src]
+      Reduce Operator Tree:
+        Operator:        Group By Operator
+          aggregations:
+                expr: sum(VALUE._col0)
+          keys:
+                expr: KEY._col0
+                type: string
+          mode: mergepartial
+          outputColumnNames: _col0, _col1
+          Operator:          Select Operator
+            expressions:
+                  expr: _col0
+                  type: string
+                  expr: _col1
+                  type: double
+            outputColumnNames: _col0, _col1
+            Operator:            Limit
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 0
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.TextInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: 5
+
+query: SELECT src.key, sum(substr(src.value,5)) FROM src GROUP BY src.key LIMIT 5
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1315691104/10000
+0	0.0
+10	10.0
+100	200.0
+103	206.0
+104	208.0
+query: SELECT src.key, sum(substr(src.value,5)) FROM src GROUP BY src.key LIMIT 5
+query: SELECT src.key, sum(substr(src.value,5)) FROM src GROUP BY src.key LIMIT 5
+query: SELECT src.key, sum(substr(src.value,5)) FROM src GROUP BY src.key LIMIT 5
+query: SELECT src.key, sum(substr(src.value,5)) FROM src GROUP BY src.key LIMIT 5
+query: SELECT src.key, sum(substr(src.value,5)) FROM src GROUP BY src.key LIMIT 5
+query: SELECT src.key, sum(substr(src.value,5)) FROM src GROUP BY src.key LIMIT 5
+query: SELECT src.key, sum(substr(src.value,5)) FROM src GROUP BY src.key LIMIT 5
+query: SELECT src.key, sum(substr(src.value,5)) FROM src GROUP BY src.key LIMIT 5

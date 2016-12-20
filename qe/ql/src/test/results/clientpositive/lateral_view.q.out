@@ -1,0 +1,821 @@
+query: DROP TABLE tmp_pyang_lv
+query: DROP TABLE tmp_pyang_src
+query: CREATE TABLE tmp_pyang_lv (inputs string)
+query: INSERT OVERWRITE TABLE tmp_pyang_lv SELECT key FROM src
+Output: default_db/tmp_pyang_lv
+query: EXPLAIN SELECT * FROM src LATERAL VIEW explode(array(1,2,3)) myTable AS myCol SORT BY key ASC, myCol ASC LIMIT 1
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_LATERAL_VIEW (TOK_SELECT (TOK_SELEXPR (TOK_FUNCTION explode (TOK_FUNCTION array 1 2 3)) myCol (TOK_TABALIAS myTable))) (TOK_TABREF (TOK_TAB src)))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR TOK_ALLCOLREF)) (TOK_SORTBY (TOK_TABSORTCOLNAMEASC (TOK_TABLE_OR_COL key)) (TOK_TABSORTCOLNAMEASC (TOK_TABLE_OR_COL myCol))) (TOK_LIMIT 1)))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-2
+    type:;depends on:Stage-1;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/src 
+          Operator:          TableScan
+            alias: default_db/src
+            Operator:            Lateral View Forward
+              Operator:              Select Operator
+                Operator:                Lateral View Join Operator
+                  outputColumnNames: _col0, _col1, _col2
+                  Operator:                  Select Operator
+                    expressions:
+                          expr: _col0
+                          type: string
+                          expr: _col1
+                          type: string
+                          expr: _col2
+                          type: int
+                    outputColumnNames: _col0, _col1, _col2
+                    Operator:                    Reduce Output Operator
+                      key expressions:
+                            expr: _col0
+                            type: string
+                            expr: _col2
+                            type: int
+                      key serialize infos:
+                        table descs
+                          input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                          output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                      sort order: ++
+                      output key names: reducesinkkey0, reducesinkkey1
+                      output value names: _col0, _col1, _col2
+                      tag: -1
+                      value expressions:
+                            expr: _col0
+                            type: string
+                            expr: _col1
+                            type: string
+                            expr: _col2
+                            type: int
+              Operator:              Select Operator
+                expressions:
+                      expr: array(1,2,3)
+                      type: array<int>
+                outputColumnNames: _col0
+                Operator:                UDTF Operator
+                  function name: explode
+                  Operator:                  Lateral View Join Operator
+                    outputColumnNames: _col0, _col1, _col2
+                    Operator:                    Select Operator
+                      expressions:
+                            expr: _col0
+                            type: string
+                            expr: _col1
+                            type: string
+                            expr: _col2
+                            type: int
+                      outputColumnNames: _col0, _col1, _col2
+                      Operator:                      Reduce Output Operator
+                        key expressions:
+                              expr: _col0
+                              type: string
+                              expr: _col2
+                              type: int
+                        key serialize infos:
+                          table descs
+                            input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                            output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                        sort order: ++
+                        output key names: reducesinkkey0, reducesinkkey1
+                        output value names: _col0, _col1, _col2
+                        tag: -1
+                        value expressions:
+                              expr: _col0
+                              type: string
+                              expr: _col1
+                              type: string
+                              expr: _col2
+                              type: int
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src [default_db/src]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          Limit
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 0
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+
+  Stage: Stage-2
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/2143724926/10002 
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: _col0
+                    type: string
+                    expr: _col2
+                    type: int
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: ++
+              output key names: reducesinkkey0, reducesinkkey1
+              output value names: _col0, _col1, _col2
+              tag: -1
+              value expressions:
+                    expr: _col0
+                    type: string
+                    expr: _col1
+                    type: string
+                    expr: _col2
+                    type: int
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/2143724926/10002 [file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/2143724926/10002]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          Limit
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 0
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.TextInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: 1
+
+query: EXPLAIN SELECT myTable.* FROM src LATERAL VIEW explode(array(1,2,3)) myTable AS myCol LIMIT 3
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_LATERAL_VIEW (TOK_SELECT (TOK_SELEXPR (TOK_FUNCTION explode (TOK_FUNCTION array 1 2 3)) myCol (TOK_TABALIAS myTable))) (TOK_TABREF (TOK_TAB src)))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_ALLCOLREF myTable))) (TOK_LIMIT 3)))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/src 
+          Operator:          TableScan
+            alias: default_db/src
+            Operator:            Lateral View Forward
+              Operator:              Select Operator
+                Operator:                Lateral View Join Operator
+                  outputColumnNames: _col0, _col1, _col2
+                  Operator:                  Select Operator
+                    expressions:
+                          expr: _col2
+                          type: int
+                    outputColumnNames: _col0
+                    Operator:                    Limit
+                      Operator:                      File Output Operator
+                        compressed: false
+                        GlobalTableId: 0
+                        table:
+                          table descs
+                            input format: org.apache.hadoop.mapred.TextInputFormat
+                            output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              Operator:              Select Operator
+                expressions:
+                      expr: array(1,2,3)
+                      type: array<int>
+                outputColumnNames: _col0
+                Operator:                UDTF Operator
+                  function name: explode
+                  Operator:                  Lateral View Join Operator
+                    outputColumnNames: _col0, _col1, _col2
+                    Operator:                    Select Operator
+                      expressions:
+                            expr: _col2
+                            type: int
+                      outputColumnNames: _col0
+                      Operator:                      Limit
+                        Operator:                        File Output Operator
+                          compressed: false
+                          GlobalTableId: 0
+                          table:
+                            table descs
+                              input format: org.apache.hadoop.mapred.TextInputFormat
+                              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src [default_db/src]
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: 3
+
+query: EXPLAIN SELECT myTable.*, myTable2.myCol2 FROM src LATERAL VIEW explode(array(1,2,3)) myTable AS myCol LATERAL VIEW explode(array('a', 'b', 'c')) myTable2 AS myCol2 LIMIT 9
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_LATERAL_VIEW (TOK_SELECT (TOK_SELEXPR (TOK_FUNCTION explode (TOK_FUNCTION array 'a' 'b' 'c')) myCol2 (TOK_TABALIAS myTable2))) (TOK_LATERAL_VIEW (TOK_SELECT (TOK_SELEXPR (TOK_FUNCTION explode (TOK_FUNCTION array 1 2 3)) myCol (TOK_TABALIAS myTable))) (TOK_TABREF (TOK_TAB src))))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_ALLCOLREF myTable)) (TOK_SELEXPR (. (TOK_TABLE_OR_COL myTable2) myCol2))) (TOK_LIMIT 9)))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/src 
+          Operator:          TableScan
+            alias: default_db/src
+            Operator:            Lateral View Forward
+              Operator:              Select Operator
+                Operator:                Lateral View Join Operator
+                  outputColumnNames: _col0, _col1, _col2
+                  Operator:                  Lateral View Forward
+                    Operator:                    Select Operator
+                      Operator:                      Lateral View Join Operator
+                        outputColumnNames: _col0, _col1, _col2, _col3
+                        Operator:                        Select Operator
+                          expressions:
+                                expr: _col2
+                                type: int
+                                expr: _col3
+                                type: string
+                          outputColumnNames: _col0, _col1
+                          Operator:                          Limit
+                            Operator:                            File Output Operator
+                              compressed: false
+                              GlobalTableId: 0
+                              table:
+                                table descs
+                                  input format: org.apache.hadoop.mapred.TextInputFormat
+                                  output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                    Operator:                    Select Operator
+                      expressions:
+                            expr: array('a','b','c')
+                            type: array<string>
+                      outputColumnNames: _col0
+                      Operator:                      UDTF Operator
+                        function name: explode
+                        Operator:                        Lateral View Join Operator
+                          outputColumnNames: _col0, _col1, _col2, _col3
+                          Operator:                          Select Operator
+                            expressions:
+                                  expr: _col2
+                                  type: int
+                                  expr: _col3
+                                  type: string
+                            outputColumnNames: _col0, _col1
+                            Operator:                            Limit
+                              Operator:                              File Output Operator
+                                compressed: false
+                                GlobalTableId: 0
+                                table:
+                                  table descs
+                                    input format: org.apache.hadoop.mapred.TextInputFormat
+                                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              Operator:              Select Operator
+                expressions:
+                      expr: array(1,2,3)
+                      type: array<int>
+                outputColumnNames: _col0
+                Operator:                UDTF Operator
+                  function name: explode
+                  Operator:                  Lateral View Join Operator
+                    outputColumnNames: _col0, _col1, _col2
+                    Operator:                    Lateral View Forward
+                      Operator:                      Select Operator
+                        Operator:                        Lateral View Join Operator
+                          outputColumnNames: _col0, _col1, _col2, _col3
+                          Operator:                          Select Operator
+                            expressions:
+                                  expr: _col2
+                                  type: int
+                                  expr: _col3
+                                  type: string
+                            outputColumnNames: _col0, _col1
+                            Operator:                            Limit
+                              Operator:                              File Output Operator
+                                compressed: false
+                                GlobalTableId: 0
+                                table:
+                                  table descs
+                                    input format: org.apache.hadoop.mapred.TextInputFormat
+                                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                      Operator:                      Select Operator
+                        expressions:
+                              expr: array('a','b','c')
+                              type: array<string>
+                        outputColumnNames: _col0
+                        Operator:                        UDTF Operator
+                          function name: explode
+                          Operator:                          Lateral View Join Operator
+                            outputColumnNames: _col0, _col1, _col2, _col3
+                            Operator:                            Select Operator
+                              expressions:
+                                    expr: _col2
+                                    type: int
+                                    expr: _col3
+                                    type: string
+                              outputColumnNames: _col0, _col1
+                              Operator:                              Limit
+                                Operator:                                File Output Operator
+                                  compressed: false
+                                  GlobalTableId: 0
+                                  table:
+                                    table descs
+                                      input format: org.apache.hadoop.mapred.TextInputFormat
+                                      output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src [default_db/src]
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: 9
+
+query: EXPLAIN SELECT myTable2.* FROM src LATERAL VIEW explode(array(array(1,2,3))) myTable AS myCol LATERAL VIEW explode(myTable.myCol) myTable2 AS myCol2 LIMIT 3
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_LATERAL_VIEW (TOK_SELECT (TOK_SELEXPR (TOK_FUNCTION explode (. (TOK_TABLE_OR_COL myTable) myCol)) myCol2 (TOK_TABALIAS myTable2))) (TOK_LATERAL_VIEW (TOK_SELECT (TOK_SELEXPR (TOK_FUNCTION explode (TOK_FUNCTION array (TOK_FUNCTION array 1 2 3))) myCol (TOK_TABALIAS myTable))) (TOK_TABREF (TOK_TAB src))))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_ALLCOLREF myTable2))) (TOK_LIMIT 3)))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/src 
+          Operator:          TableScan
+            alias: default_db/src
+            Operator:            Lateral View Forward
+              Operator:              Select Operator
+                Operator:                Lateral View Join Operator
+                  outputColumnNames: _col0, _col1, _col2
+                  Operator:                  Lateral View Forward
+                    Operator:                    Select Operator
+                      Operator:                      Lateral View Join Operator
+                        outputColumnNames: _col0, _col1, _col2, _col3
+                        Operator:                        Select Operator
+                          expressions:
+                                expr: _col3
+                                type: int
+                          outputColumnNames: _col0
+                          Operator:                          Limit
+                            Operator:                            File Output Operator
+                              compressed: false
+                              GlobalTableId: 0
+                              table:
+                                table descs
+                                  input format: org.apache.hadoop.mapred.TextInputFormat
+                                  output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                    Operator:                    Select Operator
+                      expressions:
+                            expr: _col2
+                            type: array<int>
+                      outputColumnNames: _col0
+                      Operator:                      UDTF Operator
+                        function name: explode
+                        Operator:                        Lateral View Join Operator
+                          outputColumnNames: _col0, _col1, _col2, _col3
+                          Operator:                          Select Operator
+                            expressions:
+                                  expr: _col3
+                                  type: int
+                            outputColumnNames: _col0
+                            Operator:                            Limit
+                              Operator:                              File Output Operator
+                                compressed: false
+                                GlobalTableId: 0
+                                table:
+                                  table descs
+                                    input format: org.apache.hadoop.mapred.TextInputFormat
+                                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              Operator:              Select Operator
+                expressions:
+                      expr: array(array(1,2,3))
+                      type: array<array<int>>
+                outputColumnNames: _col0
+                Operator:                UDTF Operator
+                  function name: explode
+                  Operator:                  Lateral View Join Operator
+                    outputColumnNames: _col0, _col1, _col2
+                    Operator:                    Lateral View Forward
+                      Operator:                      Select Operator
+                        Operator:                        Lateral View Join Operator
+                          outputColumnNames: _col0, _col1, _col2, _col3
+                          Operator:                          Select Operator
+                            expressions:
+                                  expr: _col3
+                                  type: int
+                            outputColumnNames: _col0
+                            Operator:                            Limit
+                              Operator:                              File Output Operator
+                                compressed: false
+                                GlobalTableId: 0
+                                table:
+                                  table descs
+                                    input format: org.apache.hadoop.mapred.TextInputFormat
+                                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                      Operator:                      Select Operator
+                        expressions:
+                              expr: _col2
+                              type: array<int>
+                        outputColumnNames: _col0
+                        Operator:                        UDTF Operator
+                          function name: explode
+                          Operator:                          Lateral View Join Operator
+                            outputColumnNames: _col0, _col1, _col2, _col3
+                            Operator:                            Select Operator
+                              expressions:
+                                    expr: _col3
+                                    type: int
+                              outputColumnNames: _col0
+                              Operator:                              Limit
+                                Operator:                                File Output Operator
+                                  compressed: false
+                                  GlobalTableId: 0
+                                  table:
+                                    table descs
+                                      input format: org.apache.hadoop.mapred.TextInputFormat
+                                      output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src [default_db/src]
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: 3
+
+query: -- Verify that * selects columns from both tables
+SELECT * FROM src LATERAL VIEW explode(array(1,2,3)) myTable AS myCol SORT BY key ASC, myCol ASC LIMIT 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/2063660107/10000
+0	val_0	1
+query: -- TABLE.* should be supported 
+SELECT myTable.* FROM src LATERAL VIEW explode(array(1,2,3)) myTable AS myCol LIMIT 3
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/926985033/10000
+1
+2
+3
+query: -- Multiple lateral views should result in a Cartesian product
+SELECT myTable.myCol, myTable2.myCol2 FROM src LATERAL VIEW explode(array(1,2,3)) myTable AS myCol LATERAL VIEW explode(array('a', 'b', 'c')) myTable2 AS myCol2 LIMIT 9
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/2069132417/10000
+1	a
+1	b
+1	c
+2	a
+2	b
+2	c
+3	a
+3	b
+3	c
+query: -- Should be able to reference tables generated earlier
+SELECT myTable2.* FROM src LATERAL VIEW explode(array(array(1,2,3))) myTable AS myCol LATERAL VIEW explode(myTable.myCol) myTable2 AS myCol2 LIMIT 3
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/160020821/10000
+1
+2
+3
+query: EXPLAIN SELECT myCol from tmp_pyang_lv LATERAL VIEW explode(array(1,2,3)) myTab as myCol limit 3
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_LATERAL_VIEW (TOK_SELECT (TOK_SELEXPR (TOK_FUNCTION explode (TOK_FUNCTION array 1 2 3)) myCol (TOK_TABALIAS myTab))) (TOK_TABREF (TOK_TAB tmp_pyang_lv)))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL myCol))) (TOK_LIMIT 3)))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/tmp_pyang_lv 
+          Operator:          TableScan
+            alias: default_db/tmp_pyang_lv
+            Operator:            Lateral View Forward
+              Operator:              Select Operator
+                Operator:                Lateral View Join Operator
+                  outputColumnNames: _col0, _col1
+                  Operator:                  Select Operator
+                    expressions:
+                          expr: _col1
+                          type: int
+                    outputColumnNames: _col0
+                    Operator:                    Limit
+                      Operator:                      File Output Operator
+                        compressed: false
+                        GlobalTableId: 0
+                        table:
+                          table descs
+                            input format: org.apache.hadoop.mapred.TextInputFormat
+                            output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              Operator:              Select Operator
+                expressions:
+                      expr: array(1,2,3)
+                      type: array<int>
+                outputColumnNames: _col0
+                Operator:                UDTF Operator
+                  function name: explode
+                  Operator:                  Lateral View Join Operator
+                    outputColumnNames: _col0, _col1
+                    Operator:                    Select Operator
+                      expressions:
+                            expr: _col1
+                            type: int
+                      outputColumnNames: _col0
+                      Operator:                      Limit
+                        Operator:                        File Output Operator
+                          compressed: false
+                          GlobalTableId: 0
+                          table:
+                            table descs
+                              input format: org.apache.hadoop.mapred.TextInputFormat
+                              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/tmp_pyang_lv [default_db/tmp_pyang_lv]
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: 3
+
+query: SELECT myCol from tmp_PYANG_lv LATERAL VIEW explode(array(1,2,3)) myTab as myCol limit 3
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/425465655/10000
+1
+2
+3
+query: CREATE TABLE tmp_pyang_src (key string, value array<string>)
+query: INSERT OVERWRITE TABLE tmp_pyang_src SELECT key, array(value) FROM src ORDER BY key LIMIT 20
+Output: default_db/tmp_pyang_src
+query: SELECT key,value from tmp_pyang_src LATERAL VIEW explode(value) myTable AS myCol
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/62969729/10000
+0	["val_0"]
+0	["val_0"]
+0	["val_0"]
+10	["val_10"]
+100	["val_100"]
+100	["val_100"]
+103	["val_103"]
+103	["val_103"]
+104	["val_104"]
+104	["val_104"]
+105	["val_105"]
+11	["val_11"]
+111	["val_111"]
+113	["val_113"]
+113	["val_113"]
+114	["val_114"]
+116	["val_116"]
+118	["val_118"]
+118	["val_118"]
+119	["val_119"]
+query: SELECT myCol from tmp_pyang_src LATERAL VIEW explode(value) myTable AS myCol
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/677754729/10000
+val_0
+val_0
+val_0
+val_10
+val_100
+val_100
+val_103
+val_103
+val_104
+val_104
+val_105
+val_11
+val_111
+val_113
+val_113
+val_114
+val_116
+val_118
+val_118
+val_119
+query: SELECT * from tmp_pyang_src LATERAL VIEW explode(value) myTable AS myCol
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1226768059/10000
+0	["val_0"]	val_0
+0	["val_0"]	val_0
+0	["val_0"]	val_0
+10	["val_10"]	val_10
+100	["val_100"]	val_100
+100	["val_100"]	val_100
+103	["val_103"]	val_103
+103	["val_103"]	val_103
+104	["val_104"]	val_104
+104	["val_104"]	val_104
+105	["val_105"]	val_105
+11	["val_11"]	val_11
+111	["val_111"]	val_111
+113	["val_113"]	val_113
+113	["val_113"]	val_113
+114	["val_114"]	val_114
+116	["val_116"]	val_116
+118	["val_118"]	val_118
+118	["val_118"]	val_118
+119	["val_119"]	val_119
+query: SELECT subq.key,subq.value FROM (SELECT * from tmp_pyang_src LATERAL VIEW explode(value) myTable AS myCol )subq
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/330617621/10000
+0	["val_0"]
+0	["val_0"]
+0	["val_0"]
+10	["val_10"]
+100	["val_100"]
+100	["val_100"]
+103	["val_103"]
+103	["val_103"]
+104	["val_104"]
+104	["val_104"]
+105	["val_105"]
+11	["val_11"]
+111	["val_111"]
+113	["val_113"]
+113	["val_113"]
+114	["val_114"]
+116	["val_116"]
+118	["val_118"]
+118	["val_118"]
+119	["val_119"]
+query: SELECT subq.myCol FROM (SELECT * from tmp_pyang_src LATERAL VIEW explode(value) myTable AS myCol)subq
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1109887361/10000
+val_0
+val_0
+val_0
+val_10
+val_100
+val_100
+val_103
+val_103
+val_104
+val_104
+val_105
+val_11
+val_111
+val_113
+val_113
+val_114
+val_116
+val_118
+val_118
+val_119
+query: SELECT subq.key FROM (SELECT key, value from tmp_pyang_src LATERAL VIEW explode(value) myTable AS myCol)subq
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1210681182/10000
+0
+0
+0
+10
+100
+100
+103
+103
+104
+104
+105
+11
+111
+113
+113
+114
+116
+118
+118
+119
+query: EXPLAIN SELECT value, myCol from (SELECT key, array(value[0]) AS value FROM tmp_pyang_src GROUP BY value[0], key) a LATERAL VIEW explode(value) myTable AS myCol
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_LATERAL_VIEW (TOK_SELECT (TOK_SELEXPR (TOK_FUNCTION explode (TOK_TABLE_OR_COL value)) myCol (TOK_TABALIAS myTable))) (TOK_SUBQUERY (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB tmp_pyang_src))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL key)) (TOK_SELEXPR (TOK_FUNCTION array ([ (TOK_TABLE_OR_COL value) 0)) value)) (TOK_GROUPBY ([ (TOK_TABLE_OR_COL value) 0) (TOK_TABLE_OR_COL key)))) a))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL value)) (TOK_SELEXPR (TOK_TABLE_OR_COL myCol)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        a:default_db/tmp_pyang_src 
+          Operator:          TableScan
+            alias: default_db/tmp_pyang_src
+            Operator:            Select Operator
+              expressions:
+                    expr: key
+                    type: string
+                    expr: value
+                    type: array<string>
+              outputColumnNames: key, value
+              Operator:              Group By Operator
+                keys:
+                      expr: value[0]
+                      type: string
+                      expr: key
+                      type: string
+                mode: hash
+                outputColumnNames: _col0, _col1
+                Operator:                Reduce Output Operator
+                  key expressions:
+                        expr: _col0
+                        type: string
+                        expr: _col1
+                        type: string
+                  key serialize infos:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                  sort order: ++
+                  output key names: _col0, _col1
+                  Map-reduce partition columns:
+                        expr: _col0
+                        type: string
+                        expr: _col1
+                        type: string
+                  tag: -1
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/tmp_pyang_src [a:default_db/tmp_pyang_src]
+      Reduce Operator Tree:
+        Operator:        Group By Operator
+          keys:
+                expr: KEY._col0
+                type: string
+                expr: KEY._col1
+                type: string
+          mode: mergepartial
+          outputColumnNames: _col0, _col1
+          Operator:          Select Operator
+            expressions:
+                  expr: _col1
+                  type: string
+                  expr: array(_col0)
+                  type: array<string>
+            outputColumnNames: _col0, _col1
+            Operator:            Lateral View Forward
+              Operator:              Select Operator
+                Operator:                Lateral View Join Operator
+                  outputColumnNames: _col0, _col1, _col2
+                  Operator:                  Select Operator
+                    expressions:
+                          expr: _col1
+                          type: array<string>
+                          expr: _col2
+                          type: string
+                    outputColumnNames: _col0, _col1
+                    Operator:                    File Output Operator
+                      compressed: false
+                      GlobalTableId: 0
+                      table:
+                        table descs
+                          input format: org.apache.hadoop.mapred.TextInputFormat
+                          output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              Operator:              Select Operator
+                expressions:
+                      expr: _col1
+                      type: array<string>
+                outputColumnNames: _col0
+                Operator:                UDTF Operator
+                  function name: explode
+                  Operator:                  Lateral View Join Operator
+                    outputColumnNames: _col0, _col1, _col2
+                    Operator:                    Select Operator
+                      expressions:
+                            expr: _col1
+                            type: array<string>
+                            expr: _col2
+                            type: string
+                      outputColumnNames: _col0, _col1
+                      Operator:                      File Output Operator
+                        compressed: false
+                        GlobalTableId: 0
+                        table:
+                          table descs
+                            input format: org.apache.hadoop.mapred.TextInputFormat
+                            output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: SELECT value, myCol from (SELECT key, array(value[0]) AS value FROM tmp_pyang_src GROUP BY value[0], key) a LATERAL VIEW explode(value) myTable AS myCol
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/543998700/10000
+["val_0"]	val_0
+["val_10"]	val_10
+["val_100"]	val_100
+["val_103"]	val_103
+["val_104"]	val_104
+["val_105"]	val_105
+["val_11"]	val_11
+["val_111"]	val_111
+["val_113"]	val_113
+["val_114"]	val_114
+["val_116"]	val_116
+["val_118"]	val_118
+["val_119"]	val_119
+query: SELECT value, myCol from (SELECT key, array(value[0]) AS value FROM tmp_pyang_src GROUP BY value[0], key) a LATERAL VIEW explode(value) myTable AS myCol
+query: SELECT value, myCol from (SELECT key, array(value[0]) AS value FROM tmp_pyang_src GROUP BY value[0], key) a LATERAL VIEW explode(value) myTable AS myCol
+query: SELECT value, myCol from (SELECT key, array(value[0]) AS value FROM tmp_pyang_src GROUP BY value[0], key) a LATERAL VIEW explode(value) myTable AS myCol
+query: SELECT value, myCol from (SELECT key, array(value[0]) AS value FROM tmp_pyang_src GROUP BY value[0], key) a LATERAL VIEW explode(value) myTable AS myCol
+query: SELECT value, myCol from (SELECT key, array(value[0]) AS value FROM tmp_pyang_src GROUP BY value[0], key) a LATERAL VIEW explode(value) myTable AS myCol
+query: SELECT value, myCol from (SELECT key, array(value[0]) AS value FROM tmp_pyang_src GROUP BY value[0], key) a LATERAL VIEW explode(value) myTable AS myCol
+query: SELECT value, myCol from (SELECT key, array(value[0]) AS value FROM tmp_pyang_src GROUP BY value[0], key) a LATERAL VIEW explode(value) myTable AS myCol
+query: SELECT value, myCol from (SELECT key, array(value[0]) AS value FROM tmp_pyang_src GROUP BY value[0], key) a LATERAL VIEW explode(value) myTable AS myCol

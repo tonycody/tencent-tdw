@@ -1,0 +1,42 @@
+query: drop table alter3_src
+query: drop table alter3
+query: drop table alter3_renamed
+query: create table alter3_src ( col1 string ) stored as textfile
+query: load data local inpath '../data/files/test.dat' overwrite into table alter3_src
+query: create table alter3 ( col1 string, pcol1 string, pcol2 string) partition by list(pcol1) subpartition by list(pcol2) (subpartition sp1 values in ("test_part")) (partition p1 values in ("test_part")) stored as sequencefile
+query: insert overwrite table alter3 select col1, "test_part", "test_part" from alter3_src
+Output: default_db/alter3
+query: select * from alter3 where pcol1="test_part" and pcol2="test_part"
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1161913805/10000
+1	test_part	test_part
+2	test_part	test_part
+3	test_part	test_part
+4	test_part	test_part
+5	test_part	test_part
+6	test_part	test_part
+query: alter table alter3 rename to alter3_renamed
+query: describe extended alter3_renamed
+col1	string	
+pcol1	string	
+pcol2	string	
+	 	 
+Detailed Table Information	Table(tableName:alter3_renamed, dbName:default_db, owner:root, createTime:1329297658, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:col1, type:string, comment:null), FieldSchema(name:pcol1, type:string, comment:null), FieldSchema(name:pcol2, type:string, comment:null)], location:file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/alter3_renamed, inputFormat:org.apache.hadoop.mapred.SequenceFileInputFormat, outputFormat:org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe, parameters:{serialization.format=1}), bucketCols:[], sortCols:[], parameters:{}), priPartition:Partition(dbName:default_db, tableName:alter3_renamed, level:0, parType:list, parKey:FieldSchema(name:pcol1, type:string, comment:null), parSpaces:{p1=[test_part]}), subPartition:Partition(dbName:default_db, tableName:alter3_renamed, level:1, parType:list, parKey:FieldSchema(name:pcol2, type:string, comment:null), parSpaces:{sp1=[test_part]}), parameters:{last_modified_by=tdwadmin, last_modified_time=1329297664}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, vtables:null)	
+query: select * from alter3_renamed where pcol1='test_part' and pcol2='test_part'
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1796455853/10000
+1	test_part	test_part
+2	test_part	test_part
+3	test_part	test_part
+4	test_part	test_part
+5	test_part	test_part
+6	test_part	test_part
+query: drop table alter3_src
+query: drop table alter3
+query: drop table alter3_renamed
+query: drop table alter3_renamed
+query: drop table alter3_renamed
+query: drop table alter3_renamed
+query: drop table alter3_renamed
+query: drop table alter3_renamed
+query: drop table alter3_renamed
+query: drop table alter3_renamed
+query: drop table alter3_renamed

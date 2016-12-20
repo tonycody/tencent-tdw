@@ -1,0 +1,5 @@
+query: SELECT 
+  sessiontimezone()
+FROM src LIMIT 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/1597073262/10000
+-08:00

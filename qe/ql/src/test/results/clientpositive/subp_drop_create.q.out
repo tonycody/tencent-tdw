@@ -1,0 +1,35 @@
+query: drop database sub_drop_create
+query: create database sub_drop_create
+query: use sub_drop_create
+query: create table subp(key int,value string)
+partition by list(key)
+subpartition by list(value)(
+subpartition sp1 values in('1','2'),
+subpartition default
+)
+(
+partition p1 values in(1,2),
+partition default
+)
+query: drop table subp
+query: create table subp(key int,value string)
+partition by list(key)
+subpartition by list(value)(
+subpartition sp1 values in('1','2'),
+subpartition default
+)
+(
+partition p1 values in(1,2),
+partition default
+)
+query: drop table subp
+query: use default_db
+query: drop database sub_drop_create
+query: drop database sub_drop_create
+query: drop database sub_drop_create
+query: drop database sub_drop_create
+query: drop database sub_drop_create
+query: drop database sub_drop_create
+query: drop database sub_drop_create
+query: drop database sub_drop_create
+query: drop database sub_drop_create

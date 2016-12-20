@@ -1,0 +1,611 @@
+query: drop table insert1
+query: create table insert1(key int, value string) stored as textfile
+query: explain 
+insert overwrite table insert1(key) select key from src where key > 10
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB src))) (TOK_INSERT (TOK_DESTINATION (TOK_TABDEST (TOK_TAB insert1) (TOK_TABLE_OR_COL key))) (TOK_SELECT (TOK_SELEXPR (TOK_TABLE_OR_COL key))) (TOK_WHERE (> (TOK_TABLE_OR_COL key) 10))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-4
+    type:;depends on:Stage-1;consists of:Stage-3,Stage-2;
+  Stage-3
+    type:;
+  Stage-0
+    type:;depends on:Stage-3,Stage-2;
+  Stage-2
+    type:;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/src 
+          Operator:          TableScan
+            alias: default_db/src
+            Operator:            Filter Operator
+              predicate:
+                  expr: (key > 10)
+                  type: boolean
+              Operator:              Select Operator
+                expressions:
+                      expr: key
+                      type: string
+                outputColumnNames: _col0
+                Operator:                Select Operator
+                  expressions:
+                        expr: UDFToInteger(_col0)
+                        type: int
+                        expr: null
+                        type: void
+                  outputColumnNames: _col0, _col1
+                  Operator:                  File Output Operator
+                    compressed: false
+                    GlobalTableId: 1
+                    table:
+                      table descs
+                        input format: org.apache.hadoop.mapred.TextInputFormat
+                        output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                        serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                        name: insert1
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src [default_db/src]
+
+  Stage: Stage-4
+    Conditional Operator
+
+  Stage: Stage-3
+    Move Operator
+      files:
+          hdfs directory: true
+          destination: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/488198054/10000
+
+  Stage: Stage-0
+    Move Operator
+      tables:
+          replace: true
+          table:
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: insert1
+
+  Stage: Stage-2
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1700894681/10002 
+            Operator:            Reduce Output Operator
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: 
+              output value names: _col0, _col1
+              Map-reduce partition columns:
+                    expr: rand()
+                    type: double
+              tag: -1
+              value expressions:
+                    expr: key
+                    type: int
+                    expr: value
+                    type: string
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1700894681/10002 [file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1700894681/10002]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          File Output Operator
+            compressed: false
+            GlobalTableId: 0
+            table:
+              table descs
+                input format: org.apache.hadoop.mapred.TextInputFormat
+                output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                name: insert1
+
+query: insert overwrite table insert1(key) select key from src where key > 10
+Output: default_db/insert1
+query: select * from insert1
+Input: default_db/insert1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/376138673/10000
+238	NULL
+86	NULL
+311	NULL
+27	NULL
+165	NULL
+409	NULL
+255	NULL
+278	NULL
+98	NULL
+484	NULL
+265	NULL
+193	NULL
+401	NULL
+150	NULL
+273	NULL
+224	NULL
+369	NULL
+66	NULL
+128	NULL
+213	NULL
+146	NULL
+406	NULL
+429	NULL
+374	NULL
+152	NULL
+469	NULL
+145	NULL
+495	NULL
+37	NULL
+327	NULL
+281	NULL
+277	NULL
+209	NULL
+15	NULL
+82	NULL
+403	NULL
+166	NULL
+417	NULL
+430	NULL
+252	NULL
+292	NULL
+219	NULL
+287	NULL
+153	NULL
+193	NULL
+338	NULL
+446	NULL
+459	NULL
+394	NULL
+237	NULL
+482	NULL
+174	NULL
+413	NULL
+494	NULL
+207	NULL
+199	NULL
+466	NULL
+208	NULL
+174	NULL
+399	NULL
+396	NULL
+247	NULL
+417	NULL
+489	NULL
+162	NULL
+377	NULL
+397	NULL
+309	NULL
+365	NULL
+266	NULL
+439	NULL
+342	NULL
+367	NULL
+325	NULL
+167	NULL
+195	NULL
+475	NULL
+17	NULL
+113	NULL
+155	NULL
+203	NULL
+339	NULL
+455	NULL
+128	NULL
+311	NULL
+316	NULL
+57	NULL
+302	NULL
+205	NULL
+149	NULL
+438	NULL
+345	NULL
+129	NULL
+170	NULL
+20	NULL
+489	NULL
+157	NULL
+378	NULL
+221	NULL
+92	NULL
+111	NULL
+47	NULL
+72	NULL
+280	NULL
+35	NULL
+427	NULL
+277	NULL
+208	NULL
+356	NULL
+399	NULL
+169	NULL
+382	NULL
+498	NULL
+125	NULL
+386	NULL
+437	NULL
+469	NULL
+192	NULL
+286	NULL
+187	NULL
+176	NULL
+54	NULL
+459	NULL
+51	NULL
+138	NULL
+103	NULL
+239	NULL
+213	NULL
+216	NULL
+430	NULL
+278	NULL
+176	NULL
+289	NULL
+221	NULL
+65	NULL
+318	NULL
+332	NULL
+311	NULL
+275	NULL
+137	NULL
+241	NULL
+83	NULL
+333	NULL
+180	NULL
+284	NULL
+12	NULL
+230	NULL
+181	NULL
+67	NULL
+260	NULL
+404	NULL
+384	NULL
+489	NULL
+353	NULL
+373	NULL
+272	NULL
+138	NULL
+217	NULL
+84	NULL
+348	NULL
+466	NULL
+58	NULL
+411	NULL
+230	NULL
+208	NULL
+348	NULL
+24	NULL
+463	NULL
+431	NULL
+179	NULL
+172	NULL
+42	NULL
+129	NULL
+158	NULL
+119	NULL
+496	NULL
+322	NULL
+197	NULL
+468	NULL
+393	NULL
+454	NULL
+100	NULL
+298	NULL
+199	NULL
+191	NULL
+418	NULL
+96	NULL
+26	NULL
+165	NULL
+327	NULL
+230	NULL
+205	NULL
+120	NULL
+131	NULL
+51	NULL
+404	NULL
+43	NULL
+436	NULL
+156	NULL
+469	NULL
+468	NULL
+308	NULL
+95	NULL
+196	NULL
+288	NULL
+481	NULL
+457	NULL
+98	NULL
+282	NULL
+197	NULL
+187	NULL
+318	NULL
+318	NULL
+409	NULL
+470	NULL
+137	NULL
+369	NULL
+316	NULL
+169	NULL
+413	NULL
+85	NULL
+77	NULL
+490	NULL
+87	NULL
+364	NULL
+179	NULL
+118	NULL
+134	NULL
+395	NULL
+282	NULL
+138	NULL
+238	NULL
+419	NULL
+15	NULL
+118	NULL
+72	NULL
+90	NULL
+307	NULL
+19	NULL
+435	NULL
+277	NULL
+273	NULL
+306	NULL
+224	NULL
+309	NULL
+389	NULL
+327	NULL
+242	NULL
+369	NULL
+392	NULL
+272	NULL
+331	NULL
+401	NULL
+242	NULL
+452	NULL
+177	NULL
+226	NULL
+497	NULL
+402	NULL
+396	NULL
+317	NULL
+395	NULL
+58	NULL
+35	NULL
+336	NULL
+95	NULL
+11	NULL
+168	NULL
+34	NULL
+229	NULL
+233	NULL
+143	NULL
+472	NULL
+322	NULL
+498	NULL
+160	NULL
+195	NULL
+42	NULL
+321	NULL
+430	NULL
+119	NULL
+489	NULL
+458	NULL
+78	NULL
+76	NULL
+41	NULL
+223	NULL
+492	NULL
+149	NULL
+449	NULL
+218	NULL
+228	NULL
+138	NULL
+453	NULL
+30	NULL
+209	NULL
+64	NULL
+468	NULL
+76	NULL
+74	NULL
+342	NULL
+69	NULL
+230	NULL
+33	NULL
+368	NULL
+103	NULL
+296	NULL
+113	NULL
+216	NULL
+367	NULL
+344	NULL
+167	NULL
+274	NULL
+219	NULL
+239	NULL
+485	NULL
+116	NULL
+223	NULL
+256	NULL
+263	NULL
+70	NULL
+487	NULL
+480	NULL
+401	NULL
+288	NULL
+191	NULL
+244	NULL
+438	NULL
+128	NULL
+467	NULL
+432	NULL
+202	NULL
+316	NULL
+229	NULL
+469	NULL
+463	NULL
+280	NULL
+35	NULL
+283	NULL
+331	NULL
+235	NULL
+80	NULL
+44	NULL
+193	NULL
+321	NULL
+335	NULL
+104	NULL
+466	NULL
+366	NULL
+175	NULL
+403	NULL
+483	NULL
+53	NULL
+105	NULL
+257	NULL
+406	NULL
+409	NULL
+190	NULL
+406	NULL
+401	NULL
+114	NULL
+258	NULL
+90	NULL
+203	NULL
+262	NULL
+348	NULL
+424	NULL
+12	NULL
+396	NULL
+201	NULL
+217	NULL
+164	NULL
+431	NULL
+454	NULL
+478	NULL
+298	NULL
+125	NULL
+431	NULL
+164	NULL
+424	NULL
+187	NULL
+382	NULL
+70	NULL
+397	NULL
+480	NULL
+291	NULL
+24	NULL
+351	NULL
+255	NULL
+104	NULL
+70	NULL
+163	NULL
+438	NULL
+119	NULL
+414	NULL
+200	NULL
+491	NULL
+237	NULL
+439	NULL
+360	NULL
+248	NULL
+479	NULL
+305	NULL
+417	NULL
+199	NULL
+444	NULL
+120	NULL
+429	NULL
+169	NULL
+443	NULL
+323	NULL
+325	NULL
+277	NULL
+230	NULL
+478	NULL
+178	NULL
+468	NULL
+310	NULL
+317	NULL
+333	NULL
+493	NULL
+460	NULL
+207	NULL
+249	NULL
+265	NULL
+480	NULL
+83	NULL
+136	NULL
+353	NULL
+172	NULL
+214	NULL
+462	NULL
+233	NULL
+406	NULL
+133	NULL
+175	NULL
+189	NULL
+454	NULL
+375	NULL
+401	NULL
+421	NULL
+407	NULL
+384	NULL
+256	NULL
+26	NULL
+134	NULL
+67	NULL
+384	NULL
+379	NULL
+18	NULL
+462	NULL
+492	NULL
+100	NULL
+298	NULL
+341	NULL
+498	NULL
+146	NULL
+458	NULL
+362	NULL
+186	NULL
+285	NULL
+348	NULL
+167	NULL
+18	NULL
+273	NULL
+183	NULL
+281	NULL
+344	NULL
+97	NULL
+469	NULL
+315	NULL
+84	NULL
+28	NULL
+37	NULL
+448	NULL
+152	NULL
+348	NULL
+307	NULL
+194	NULL
+414	NULL
+477	NULL
+222	NULL
+126	NULL
+90	NULL
+169	NULL
+403	NULL
+400	NULL
+200	NULL
+97	NULL
+query: drop table insert1
+query: drop table insert1
+query: drop table insert1
+query: drop table insert1
+query: drop table insert1
+query: drop table insert1
+query: drop table insert1
+query: drop table insert1
+query: drop table insert1

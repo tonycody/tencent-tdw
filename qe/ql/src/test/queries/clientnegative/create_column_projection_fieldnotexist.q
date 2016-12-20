@@ -1,0 +1,1 @@
+create table testcolp6(a int, b int, c int) stored as columnfile projection(a,c),(b,e);

@@ -1,0 +1,7 @@
+query: drop table altern1
+query: create table altern1(a int, b int, ds string) partition by list(ds)(
+partition p1 values in('x','6')
+)
+query: alter table altern1 replace columns(a int, b int, ds string)
+Replace columns is not supported for this table. this table is partitioned.
+FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask

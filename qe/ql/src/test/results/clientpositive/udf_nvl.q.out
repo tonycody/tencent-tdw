@@ -1,0 +1,21 @@
+query: SELECT
+  nvl(null,"konten"),
+  nvl("konten", "aa"),
+  nvl (null, null)
+ FROM src LIMIT 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/1106146297/10000
+konten	konten	NULL
+query: SELECT
+  nvl(null,3),
+  nvl(2, 1),
+  nvl (null, null)
+ FROM src LIMIT 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/804911530/10000
+3	2	NULL
+query: SELECT
+  nvl(null,3.4),
+  nvl(2.5, 1.1),
+  nvl (null, null)
+ FROM src LIMIT 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/1607852702/10000
+3.4	2.5	NULL

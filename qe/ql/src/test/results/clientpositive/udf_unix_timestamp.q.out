@@ -1,0 +1,32 @@
+query: SELECT
+  '2009-03-20 11:30:01',
+  unix_timestamp('2009-03-20 11:30:01')
+FROM src LIMIT 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1296066324/10000
+2009-03-20 11:30:01	1237519801
+query: SELECT
+  '2009-03-20',
+  unix_timestamp('2009-03-20', 'yyyy-MM-dd')
+FROM src LIMIT 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_1284874091/10000
+2009-03-20	1237478400
+query: SELECT
+  '2009 Mar 20 11:30:01 am',
+  unix_timestamp('2009 Mar 20 11:30:01 am', 'yyyy MMM dd h:mm:ss a')
+FROM src LIMIT 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_858276790/10000
+2009 Mar 20 11:30:01 am	NULL
+query: SELECT
+  'random_string',
+  unix_timestamp('random_string')
+FROM src LIMIT 1
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201405041001_0.13193289634227046_-1_750213505/10000
+random_string	NULL
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 

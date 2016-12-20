@@ -1,0 +1,53 @@
+query: SELECT
+  tz_offset("America/Los_Angeles"),
+  tz_offset("US/Michigan"),
+  tz_offset(sessiontimezone()),
+  tz_offset("GMT-8"),
+  tz_offset("dfafasdfasf"),
+  tz_offset("GMT-8:00"),
+  tz_offset("-08:00"),
+  tz_offset("08:00"),
+  tz_offset("+08:00"),
+  tz_offset("-8:00")
+FROM src LIMIT 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1363078416/10000
+-08:00	-05:00	-08:00	-08:00	+00:00	-08:00	-08:00	+00:00	+08:00	-08:00
+query: CREATE TABLE test_tz_offset(tstr STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/test_udf_tz_offset' OVERWRITE INTO TABLE test_tz_offset
+query: SELECT * 
+FROM test_tz_offset
+Input: default_db/test_tz_offset
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1805043784/10000
+Canada/Central
+US/Hawaii
+Europe/London
+Pacific/Auckland
+GMT+06:00
+GMT-8:00
+05:00
+-09:00
++4:00
+GMT-6
+query: SELECT 
+  tz_offset(test_tz_offset.tstr)
+FROM test_tz_offset
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/540433195/10000
+-06:00
+-10:00
++00:00
++12:00
++06:00
+-08:00
++00:00
+-09:00
++04:00
+-06:00
+query: DROP TABLE test_tz_offset
+query: DROP TABLE test_tz_offset
+query: DROP TABLE test_tz_offset
+query: DROP TABLE test_tz_offset
+query: DROP TABLE test_tz_offset
+query: DROP TABLE test_tz_offset
+query: DROP TABLE test_tz_offset
+query: DROP TABLE test_tz_offset
+query: DROP TABLE test_tz_offset

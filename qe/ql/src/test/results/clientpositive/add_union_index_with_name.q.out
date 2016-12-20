@@ -1,0 +1,23 @@
+query: explain alter table altertable add index idx_ab(a,b)
+ABSTRACT SYNTAX TREE:
+  (TOK_ALTERTABLE_ADDINDEX altertable (TOK_INDEXNAME idx_ab) (TOK_INDEXFIELD a b))
+
+STAGE DEPENDENCIES:
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-0
+      Alter Table Operator:
+        Alter Table
+          type: unknown
+          old name: altertable
+
+query: explain alter table altertable add index idx_ab(a,b)
+query: explain alter table altertable add index idx_ab(a,b)
+query: explain alter table altertable add index idx_ab(a,b)
+query: explain alter table altertable add index idx_ab(a,b)
+query: explain alter table altertable add index idx_ab(a,b)
+query: explain alter table altertable add index idx_ab(a,b)
+query: explain alter table altertable add index idx_ab(a,b)
+query: explain alter table altertable add index idx_ab(a,b)

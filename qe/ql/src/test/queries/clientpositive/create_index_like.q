@@ -1,0 +1,1 @@
+explain create table likeindex like  nameindex;

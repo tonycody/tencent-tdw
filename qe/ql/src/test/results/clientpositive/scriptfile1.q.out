@@ -1,0 +1,24 @@
+query: DROP TABLE dest1
+query: CREATE TABLE dest1(key INT, value STRING)
+query: FROM (   FROM src  SELECT TRANSFORM(src.key, src.value)         USING 'testgrep' AS (tkey, tvalue)  CLUSTER BY tkey) tmap INSERT OVERWRITE TABLE dest1 SELECT tmap.tkey, tmap.tvalue
+Output: default_db/dest1
+query: SELECT dest1.* FROM dest1
+Input: default_db/dest1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/883917959/10000
+10	val_10
+100	val_100
+100	val_100
+103	val_103
+103	val_103
+104	val_104
+104	val_104
+105	val_105
+310	val_310
+query: SELECT dest1.* FROM dest1
+query: SELECT dest1.* FROM dest1
+query: SELECT dest1.* FROM dest1
+query: SELECT dest1.* FROM dest1
+query: SELECT dest1.* FROM dest1
+query: SELECT dest1.* FROM dest1
+query: SELECT dest1.* FROM dest1
+query: SELECT dest1.* FROM dest1

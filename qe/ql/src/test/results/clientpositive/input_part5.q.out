@@ -1,0 +1,170 @@
+query: drop table tmptable
+query: create table tmptable(key string, value string, hr string, ds string)
+query: EXPLAIN
+insert overwrite table tmptable
+SELECT x.* FROM SRCPART x WHERE x.ds = '2008-04-08' and x.key < 100
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB SRCPART) x)) (TOK_INSERT (TOK_DESTINATION (TOK_TABDEST (TOK_TAB tmptable))) (TOK_SELECT (TOK_SELEXPR (TOK_ALLCOLREF x))) (TOK_WHERE (and (= (. (TOK_TABLE_OR_COL x) ds) '2008-04-08') (< (. (TOK_TABLE_OR_COL x) key) 100)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-4
+    type:;depends on:Stage-1;consists of:Stage-3,Stage-2;
+  Stage-3
+    type:;
+  Stage-0
+    type:;depends on:Stage-3,Stage-2;
+  Stage-2
+    type:;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/srcpart#x 
+          Operator:          TableScan
+            alias: default_db/srcpart#x
+            Operator:            Filter Operator
+              predicate:
+                  expr: ((ds = '2008-04-08') and (key < 100))
+                  type: boolean
+              Operator:              Select Operator
+                expressions:
+                      expr: key
+                      type: string
+                      expr: value
+                      type: string
+                      expr: ds
+                      type: string
+                      expr: hr
+                      type: string
+                outputColumnNames: _col0, _col1, _col2, _col3
+                Operator:                File Output Operator
+                  compressed: false
+                  GlobalTableId: 1
+                  table:
+                    table descs
+                      input format: org.apache.hadoop.mapred.TextInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                      serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                      name: tmptable
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp1 [default_db/srcpart#x]
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp2 [default_db/srcpart#x]
+
+  Stage: Stage-4
+    Conditional Operator
+
+  Stage: Stage-3
+    Move Operator
+      files:
+          hdfs directory: true
+          destination: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1227845850/10000
+
+  Stage: Stage-0
+    Move Operator
+      tables:
+          replace: true
+          table:
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: tmptable
+
+  Stage: Stage-2
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1705247803/10002 
+            Operator:            Reduce Output Operator
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: 
+              output value names: _col0, _col1, _col2, _col3
+              Map-reduce partition columns:
+                    expr: rand()
+                    type: double
+              tag: -1
+              value expressions:
+                    expr: key
+                    type: string
+                    expr: value
+                    type: string
+                    expr: hr
+                    type: string
+                    expr: ds
+                    type: string
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1705247803/10002 [file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1705247803/10002]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          File Output Operator
+            compressed: false
+            GlobalTableId: 0
+            table:
+              table descs
+                input format: org.apache.hadoop.mapred.TextInputFormat
+                output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                name: tmptable
+
+query: insert overwrite table tmptable
+SELECT x.* FROM SRCPART x WHERE x.ds = '2008-04-08' and x.key < 100
+Output: default_db/tmptable
+query: select * from tmptable x sort by x.key,x.value,x.ds,x.hr
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1629338769/10000
+0	val_0	2008-04-08	04
+0	val_0	2008-04-08	09
+0	val_0	2008-04-08	18
+10	val_10	2008-04-08	09
+12	val_12	2008-04-08	21
+15	val_15	2008-04-08	02
+15	val_15	2008-04-08	09
+17	val_17	2008-04-08	04
+19	val_19	2008-04-08	09
+20	val_20	2008-04-08	04
+24	val_24	2008-04-08	18
+26	val_26	2008-04-08	22
+27	val_27	2008-04-08	00
+35	val_35	2008-04-08	05
+37	val_37	2008-04-08	02
+4	val_4	2008-04-08	05
+42	val_42	2008-04-08	18
+43	val_43	2008-04-08	13
+47	val_47	2008-04-08	05
+51	val_51	2008-04-08	05
+51	val_51	2008-04-08	13
+54	val_54	2008-04-08	05
+57	val_57	2008-04-08	04
+58	val_58	2008-04-08	18
+65	val_65	2008-04-08	05
+66	val_66	2008-04-08	01
+67	val_67	2008-04-08	21
+72	val_72	2008-04-08	05
+72	val_72	2008-04-08	09
+77	val_77	2008-04-08	09
+8	val_8	2008-04-08	18
+82	val_82	2008-04-08	02
+83	val_83	2008-04-08	05
+84	val_84	2008-04-08	18
+85	val_85	2008-04-08	09
+86	val_86	2008-04-08	00
+87	val_87	2008-04-08	09
+90	val_90	2008-04-08	09
+92	val_92	2008-04-08	05
+95	val_95	2008-04-08	13
+96	val_96	2008-04-08	22
+98	val_98	2008-04-08	00
+98	val_98	2008-04-08	13
+query: drop table tmptable
+query: drop table tmptable
+query: drop table tmptable
+query: drop table tmptable
+query: drop table tmptable
+query: drop table tmptable
+query: drop table tmptable
+query: drop table tmptable
+query: drop table tmptable

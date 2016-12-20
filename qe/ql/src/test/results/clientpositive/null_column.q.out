@@ -1,0 +1,52 @@
+query: drop table temp_null
+query: drop table tt
+query: drop table tt_b
+query: create table temp_null(a int) stored as textfile
+query: load data local inpath '../data/files/test.dat' overwrite into table temp_null
+query: select null, null from temp_null
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201403182053_0.44802341312533844_-1_440459369/10000
+NULL	NULL
+NULL	NULL
+NULL	NULL
+NULL	NULL
+NULL	NULL
+NULL	NULL
+query: create table tt(a int, b string)
+query: insert overwrite table tt select null, null from temp_null
+Output: default_db/tt
+query: select * from tt
+Input: default_db/tt
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201403182053_0.44802341312533844_-1_2128351714/10000
+NULL	NULL
+NULL	NULL
+NULL	NULL
+NULL	NULL
+NULL	NULL
+NULL	NULL
+query: create table tt_b(a int, b string) row format serde "org.apache.hadoop.hive.serde2.lazybinary.LazyBinarySerDe"
+query: insert overwrite table tt_b select null, null from temp_null
+Output: default_db/tt_b
+query: select * from tt_b
+Input: default_db/tt_b
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201403182053_0.44802341312533844_-1_1115188086/10000
+NULL	NULL
+NULL	NULL
+NULL	NULL
+NULL	NULL
+NULL	NULL
+NULL	NULL
+query: drop table null_xx
+query: create table null_xx as select null, null from temp_null
+query: select * from null_xx
+Input: default_db/null_xx
+Output: file:/data/allison/tdw_src/src/qe/build/ql/tmp/allison_201403182053_0.44802341312533844_-1_751740458/10000
+NULL	NULL
+NULL	NULL
+NULL	NULL
+NULL	NULL
+NULL	NULL
+NULL	NULL
+query: drop table tt
+query: drop table tt_b
+query: drop table temp_null
+query: drop table null_xx

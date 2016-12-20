@@ -1,0 +1,1 @@
+explain create table uindex(a int, b string) index idx_ab(a,b) stored as formatfile;

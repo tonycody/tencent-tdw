@@ -1,0 +1,25 @@
+query: --
+drop table tstparttbl
+query: create table tstparttbl(a int, b int,ds string) partition by list(ds)(partition p1 values in('x','y'),
+partition p2 values in ("a","b"),
+partition default
+)
+query: alter table tstparttbl add partition p3 values less than('zz')
+FAILED: Error in metadata: Partition is not RANGE Type!
+FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask
+FAILED: Parse Error: line 2:12 cannot recognize input 'tstparttbl' in alter statement
+
+query: alter table tstparttbl add subpartition p3 values in ('zz')
+Failed with exception null
+FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask
+query: alter table tstparttbl add partition p3 values in ('x','y')
+FAILED: Error in metadata: table :tstparttblhave already contain a partition contain value:x
+FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask
+query: alter table tstparttbl add default partition
+FAILED: Error in metadata: table : default.tstparttbl already has a default pri partition!
+FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask
+query: show partitions tstparttbl
+pri partitions:
+p1
+p2
+default

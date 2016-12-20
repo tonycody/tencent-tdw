@@ -1,0 +1,30 @@
+query: explain create table sindex(a int, b string) index idx_b(b) stored as formatfile
+ABSTRACT SYNTAX TREE:
+  (TOK_CREATETABLE sindex TOK_LIKETABLE (TOK_TABCOLLIST (TOK_TABCOL a TOK_INT) (TOK_TABCOL b TOK_STRING)) TOK_TBLFORMATFILE (TOK_INDEX (TOK_INDEXNAME idx_b) (TOK_INDEXFIELD b)))
+
+STAGE DEPENDENCIES:
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-0
+      Create Table Operator:
+        Create Table
+          columns: a int, b string
+          if compressed: false
+          if not exists: false
+          input format: StorageEngineClient.FormatStorageInputFormat
+          # buckets: -1
+          output format: StorageEngineClient.FormatStorageHiveOutputFormat
+          serde name: StorageEngineClient.FormatStorageSerDe
+          name: sindex
+          isExternal: false
+
+query: explain create table sindex(a int, b string) index idx_b(b) stored as formatfile
+query: explain create table sindex(a int, b string) index idx_b(b) stored as formatfile
+query: explain create table sindex(a int, b string) index idx_b(b) stored as formatfile
+query: explain create table sindex(a int, b string) index idx_b(b) stored as formatfile
+query: explain create table sindex(a int, b string) index idx_b(b) stored as formatfile
+query: explain create table sindex(a int, b string) index idx_b(b) stored as formatfile
+query: explain create table sindex(a int, b string) index idx_b(b) stored as formatfile
+query: explain create table sindex(a int, b string) index idx_b(b) stored as formatfile

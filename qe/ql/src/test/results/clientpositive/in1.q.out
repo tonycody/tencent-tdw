@@ -1,0 +1,128 @@
+query: DROP TABLE nulltest
+query: CREATE TABLE nulltest(int_data1 INT, int_data2 BIGINT, boolean_data BOOLEAN, double_data DOUBLE, string_data STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/nulltest.txt' INTO TABLE nulltest
+query: SELECT * FROM nulltest WHERE int_data2 in (5, null)
+Input: default_db/nulltest
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1814837868/10000
+0	NULL	true	39.95053934832555	The
+2	5	true	22.15271891090531	Test
+1	5	true	NULL	Set
+2	NULL	false	NULL	Used
+1	5	true	46.927050000959326	Test
+0	NULL	false	NULL	Analysis
+0	NULL	NULL	5.1726951608379865	TDW
+2	NULL	false	NULL	RANK
+query: SELECT * FROM nulltest WHERE int_data2 not in (0, 1, 2)
+Input: default_db/nulltest
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1179724074/10000
+0	NULL	true	39.95053934832555	The
+1	9	NULL	16.91358120533963	TDW
+2	5	true	22.15271891090531	Test
+1	5	true	NULL	Set
+2	NULL	false	NULL	Used
+1	5	true	46.927050000959326	Test
+2	3	true	8.77171395741883	The
+0	NULL	false	NULL	Analysis
+0	NULL	NULL	5.1726951608379865	TDW
+2	NULL	false	NULL	RANK
+0	4	true	19.754128235118877	NULL
+1	8	NULL	5.621675730832165	etc
+query: SELECT * FROM nulltest WHERE int_data1 in(cast(5 as bigint), 4)
+Input: default_db/nulltest
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/262911939/10000
+query: SELECT * FROM nulltest WHERE int_data1 not in (cast(0 as bigint), cast(1 as bigint))
+Input: default_db/nulltest
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/373797375/10000
+2	5	true	22.15271891090531	Test
+2	NULL	false	NULL	Used
+2	3	true	8.77171395741883	The
+2	1	true	9.589949434284112	NULL
+2	0	true	32.91569954365889	Include
+2	NULL	false	NULL	RANK
+query: SELECT * FROM nulltest WHERE boolean_data in (false, NULL)
+Input: default_db/nulltest
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/915583810/10000
+1	9	NULL	16.91358120533963	TDW
+0	0	false	41.33606448637874	Data
+2	NULL	false	NULL	Used
+0	2	NULL	19.398344450148464	NULL
+0	NULL	false	NULL	Analysis
+1	1	false	32.92404678679056	Functions
+0	NULL	NULL	5.1726951608379865	TDW
+0	2	false	39.845454645318426	LAG
+1	0	false	3.1145951928143676	LEAD
+2	NULL	false	NULL	RANK
+1	8	NULL	5.621675730832165	etc
+query: SELECT * FROM nulltest WHERE boolean_data not in (true, null)
+Input: default_db/nulltest
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1939166349/10000
+0	0	false	41.33606448637874	Data
+2	NULL	false	NULL	Used
+0	NULL	false	NULL	Analysis
+1	1	false	32.92404678679056	Functions
+0	2	false	39.845454645318426	LAG
+1	0	false	3.1145951928143676	LEAD
+2	NULL	false	NULL	RANK
+query: SELECT * FROM nulltest WHERE double_data in (16.91358120533963, 32.92404678679056, null)
+Input: default_db/nulltest
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/34563835/10000
+1	9	NULL	16.91358120533963	TDW
+1	5	true	NULL	Set
+2	NULL	false	NULL	Used
+0	NULL	false	NULL	Analysis
+1	1	false	32.92404678679056	Functions
+2	NULL	false	NULL	RANK
+query: SELECT * FROM nulltest WHERE double_data not in (NULL)
+Input: default_db/nulltest
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/185715800/10000
+0	NULL	true	39.95053934832555	The
+1	9	NULL	16.91358120533963	TDW
+2	5	true	22.15271891090531	Test
+0	0	false	41.33606448637874	Data
+0	2	NULL	19.398344450148464	NULL
+1	5	true	46.927050000959326	Test
+2	3	true	8.77171395741883	The
+1	1	false	32.92404678679056	Functions
+2	1	true	9.589949434284112	NULL
+0	NULL	NULL	5.1726951608379865	TDW
+1	1	true	24.506909362217737	Which
+2	0	true	32.91569954365889	Include
+0	2	false	39.845454645318426	LAG
+1	0	false	3.1145951928143676	LEAD
+0	4	true	19.754128235118877	NULL
+1	8	NULL	5.621675730832165	etc
+query: SELECT * FROM nulltest WHERE string_data in ('The', null)
+Input: default_db/nulltest
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1110040931/10000
+0	NULL	true	39.95053934832555	The
+0	2	NULL	19.398344450148464	NULL
+2	3	true	8.77171395741883	The
+2	1	true	9.589949434284112	NULL
+0	4	true	19.754128235118877	NULL
+query: SELECT * FROM nulltest WHERE string_data not in ('TDW', null)
+Input: default_db/nulltest
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1700071971/10000
+0	NULL	true	39.95053934832555	The
+2	5	true	22.15271891090531	Test
+0	0	false	41.33606448637874	Data
+1	5	true	NULL	Set
+2	NULL	false	NULL	Used
+1	5	true	46.927050000959326	Test
+2	3	true	8.77171395741883	The
+0	NULL	false	NULL	Analysis
+1	1	false	32.92404678679056	Functions
+1	1	true	24.506909362217737	Which
+2	0	true	32.91569954365889	Include
+0	2	false	39.845454645318426	LAG
+1	0	false	3.1145951928143676	LEAD
+2	NULL	false	NULL	RANK
+1	8	NULL	5.621675730832165	etc
+query: drop table nulltest
+query: drop table nulltest
+query: drop table nulltest
+query: drop table nulltest
+query: drop table nulltest
+query: drop table nulltest
+query: drop table nulltest
+query: drop table nulltest
+query: drop table nulltest

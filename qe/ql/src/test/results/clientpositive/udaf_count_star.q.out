@@ -1,0 +1,15 @@
+query: DROP TABLE nulltest
+query: CREATE TABLE nulltest(int_data1 INT, int_data2 INT, boolean_data BOOLEAN, double_data DOUBLE, string_data STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/nulltest.txt' INTO TABLE nulltest
+query: SELECT COUNT(*),COUNT(1) FROM nulltest WHERE int_data1>4
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1790622047/10000
+0	0
+query: DROP TABLE nulltest
+query: DROP TABLE nulltest
+query: DROP TABLE nulltest
+query: DROP TABLE nulltest
+query: DROP TABLE nulltest
+query: DROP TABLE nulltest
+query: DROP TABLE nulltest
+query: DROP TABLE nulltest
+query: DROP TABLE nulltest

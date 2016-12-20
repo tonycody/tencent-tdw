@@ -1,0 +1,1 @@
+create table testfc(a int) compress stored as formatfile;

@@ -1,0 +1,38 @@
+// See README.txt for information and build instructions.
+
+//package tutorial;
+
+option java_package = "tdw";
+option java_outer_classname = "pb";
+
+message all_type_test {
+optional double doublev = 1;
+optional int32 int32v = 2;
+optional int64 int64v=3;
+optional uint32 uint32v=4;
+optional uint64 uint64v=5;
+optional sint32 sint32v=6;
+optional sint64 sint64v=7;
+optional fixed32 fixed32v=8;
+optional fixed64 fixed64v=9;
+optional sfixed32 sfixed32v=10;
+optional sfixed64 sfixed64v=11;
+optional bool boolv=12;
+optional string stringv=13;
+optional float floatv=14;
+
+//repeated double doubler = 21;
+//repeated int32 int32r = 22;
+//repeated int64 int64r=23;
+//repeated uint32 uint32r=24;
+//repeated uint64 uint64r=25;
+//repeated sint32 sint32r=26;
+//repeated sint64 sint64r=27;
+//repeated fixed32 fixed32r=28;
+//repeated fixed64 fixed64r=29;
+//repeated sfixed32 sfixed32r=30;
+//repeated sfixed64 sfixed64r=31;
+//repeated bool boolr=32;
+//repeated string stringr=33;
+//repeated float floatr=34;
+}

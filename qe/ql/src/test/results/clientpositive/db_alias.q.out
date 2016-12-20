@@ -1,0 +1,574 @@
+query: drop database db1
+query: drop database db2
+query: create database db1
+query: create database db2
+query: use db1
+query: create table kv(key string,value string) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' STORED AS TEXTFILE
+query: load data local inpath '../data/files/db1_kv.txt' into table kv
+query: select * from kv
+Input: db1/kv
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/511184244/10000
+1	db1_value_1
+2	db1_value_2
+3	db1_value_3
+4	db1_value_4
+1	db1_value_1
+12	db1_value_12
+3	db1_value_3
+14	db1_value_14
+21	db1_value_21
+22	db1_value_22
+23	db1_value_23
+24	db1_value_24
+21	db1_value_21
+212	db1_value_212
+23	db1_value_23
+214	db1_value_214
+query: use db2
+query: create table kv(key string,value string) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' STORED AS TEXTFILE
+query: load data local inpath '../data/files/db2_kv.txt' into table kv
+query: select * from kv
+Input: db2/kv
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/713816352/10000
+1	db2_value_1
+2	db2_value_2
+3	db2_value_3
+4	db2_value_4
+1	db2_value_1
+12	db2_value_12
+3	db2_value_3
+14	db2_value_14
+321	db2_value_321
+322	db2_value_322
+323	db2_value_323
+324	db2_value_324
+321	db2_value_321
+3212	db2_value_3212
+323	db2_value_323
+3214	db2_value_3214
+query: explain 
+select * from db1::kv join db2::kv on(db1::kv.key=db2::kv.key)
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_JOIN (TOK_TABREF (TOK_TAB kv db1)) (TOK_TABREF (TOK_TAB kv db2)) (= (. (TOK_TABLE_OR_COL kv db1) key) (. (TOK_TABLE_OR_COL kv db2) key)))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR TOK_ALLCOLREF))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        db1/kv 
+          Operator:          TableScan
+            alias: db1/kv
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: key
+                    type: string
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col0, _col1
+              Map-reduce partition columns:
+                    expr: key
+                    type: string
+              tag: 0
+              value expressions:
+                    expr: key
+                    type: string
+                    expr: value
+                    type: string
+        db2/kv 
+          Operator:          TableScan
+            alias: db2/kv
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: key
+                    type: string
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col0, _col1
+              Map-reduce partition columns:
+                    expr: key
+                    type: string
+              tag: 1
+              value expressions:
+                    expr: key
+                    type: string
+                    expr: value
+                    type: string
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/db1.db/kv [db1/kv]
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/db2.db/kv [db2/kv]
+      Reduce Operator Tree:
+        Operator:        Join Operator
+          condition map:
+               Inner Join 0 to 1
+          condition expressions:
+            0 {VALUE._col0} {VALUE._col1}
+            1 {VALUE._col0} {VALUE._col1}
+          handleSkewJoin: false
+          outputColumnNames: _col0, _col1, _col2, _col3
+          Operator:          Select Operator
+            expressions:
+                  expr: _col0
+                  type: string
+                  expr: _col1
+                  type: string
+                  expr: _col2
+                  type: string
+                  expr: _col3
+                  type: string
+            outputColumnNames: _col0, _col1, _col2, _col3
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 0
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.TextInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: select * from db1::kv join db2::kv on(db1::kv.key=db2::kv.key)
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1445690267/10000
+1	db1_value_1	1	db2_value_1
+1	db1_value_1	1	db2_value_1
+1	db1_value_1	1	db2_value_1
+1	db1_value_1	1	db2_value_1
+12	db1_value_12	12	db2_value_12
+14	db1_value_14	14	db2_value_14
+2	db1_value_2	2	db2_value_2
+3	db1_value_3	3	db2_value_3
+3	db1_value_3	3	db2_value_3
+3	db1_value_3	3	db2_value_3
+3	db1_value_3	3	db2_value_3
+4	db1_value_4	4	db2_value_4
+query: explain
+select b.value from db1::kv a join db2::kv b on(a.key=db2::kv.key)
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_JOIN (TOK_TABREF (TOK_TAB kv db1) a) (TOK_TABREF (TOK_TAB kv db2) b) (= (. (TOK_TABLE_OR_COL a) key) (. (TOK_TABLE_OR_COL kv db2) key)))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (. (TOK_TABLE_OR_COL b) value)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        db1/kv#a 
+          Operator:          TableScan
+            alias: db1/kv#a
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: key
+                    type: string
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              Map-reduce partition columns:
+                    expr: key
+                    type: string
+              tag: 0
+        db2/kv#b 
+          Operator:          TableScan
+            alias: db2/kv#b
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: key
+                    type: string
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col1
+              Map-reduce partition columns:
+                    expr: key
+                    type: string
+              tag: 1
+              value expressions:
+                    expr: value
+                    type: string
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/db1.db/kv [db1/kv#a]
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/db2.db/kv [db2/kv#b]
+      Reduce Operator Tree:
+        Operator:        Join Operator
+          condition map:
+               Inner Join 0 to 1
+          condition expressions:
+            0 
+            1 {VALUE._col1}
+          handleSkewJoin: false
+          outputColumnNames: _col3
+          Operator:          Select Operator
+            expressions:
+                  expr: _col3
+                  type: string
+            outputColumnNames: _col0
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 0
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.TextInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: select b.value from db1::kv a join db2::kv b on(a.key=db2::kv.key)
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1542818850/10000
+db2_value_1
+db2_value_1
+db2_value_1
+db2_value_1
+db2_value_12
+db2_value_14
+db2_value_2
+db2_value_3
+db2_value_3
+db2_value_3
+db2_value_3
+db2_value_4
+query: explain 
+select count(kv.value) from kv group by db2::kv.key
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB kv))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_FUNCTION count (. (TOK_TABLE_OR_COL kv) value)))) (TOK_GROUPBY (. (TOK_TABLE_OR_COL kv db2) key))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        db2/kv 
+          Operator:          TableScan
+            alias: db2/kv
+            Operator:            Select Operator
+              expressions:
+                    expr: key
+                    type: string
+                    expr: value
+                    type: string
+              outputColumnNames: key, value
+              Operator:              Group By Operator
+                aggregations:
+                      expr: count(value)
+                keys:
+                      expr: key
+                      type: string
+                mode: hash
+                outputColumnNames: _col0, _col1
+                Operator:                Reduce Output Operator
+                  key expressions:
+                        expr: _col0
+                        type: string
+                  key serialize infos:
+                    table descs
+                      input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                  sort order: +
+                  output key names: _col0
+                  output value names: _col0
+                  Map-reduce partition columns:
+                        expr: _col0
+                        type: string
+                  tag: -1
+                  value expressions:
+                        expr: _col1
+                        type: bigint
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/db2.db/kv [db2/kv]
+      Reduce Operator Tree:
+        Operator:        Group By Operator
+          aggregations:
+                expr: count(VALUE._col0)
+          keys:
+                expr: KEY._col0
+                type: string
+          mode: mergepartial
+          outputColumnNames: _col0, _col1
+          Operator:          Select Operator
+            expressions:
+                  expr: _col1
+                  type: bigint
+            outputColumnNames: _col0
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 0
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.TextInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: select count(kv.value) from kv group by db2::kv.key
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/495915915/10000
+2
+1
+1
+1
+2
+2
+1
+1
+1
+2
+1
+1
+query: explain select a.key,b.value from db1::kv a join db2::kv b on(a.key=b.key)
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_JOIN (TOK_TABREF (TOK_TAB kv db1) a) (TOK_TABREF (TOK_TAB kv db2) b) (= (. (TOK_TABLE_OR_COL a) key) (. (TOK_TABLE_OR_COL b) key)))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (. (TOK_TABLE_OR_COL a) key)) (TOK_SELEXPR (. (TOK_TABLE_OR_COL b) value)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        db1/kv#a 
+          Operator:          TableScan
+            alias: db1/kv#a
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: key
+                    type: string
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col0
+              Map-reduce partition columns:
+                    expr: key
+                    type: string
+              tag: 0
+              value expressions:
+                    expr: key
+                    type: string
+        db2/kv#b 
+          Operator:          TableScan
+            alias: db2/kv#b
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: key
+                    type: string
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col1
+              Map-reduce partition columns:
+                    expr: key
+                    type: string
+              tag: 1
+              value expressions:
+                    expr: value
+                    type: string
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/db1.db/kv [db1/kv#a]
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/db2.db/kv [db2/kv#b]
+      Reduce Operator Tree:
+        Operator:        Join Operator
+          condition map:
+               Inner Join 0 to 1
+          condition expressions:
+            0 {VALUE._col0}
+            1 {VALUE._col1}
+          handleSkewJoin: false
+          outputColumnNames: _col0, _col3
+          Operator:          Select Operator
+            expressions:
+                  expr: _col0
+                  type: string
+                  expr: _col3
+                  type: string
+            outputColumnNames: _col0, _col1
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 0
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.TextInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: select a.key,b.value from db1::kv a join db2::kv b on(a.key=b.key)
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1987002108/10000
+1	db2_value_1
+1	db2_value_1
+1	db2_value_1
+1	db2_value_1
+12	db2_value_12
+14	db2_value_14
+2	db2_value_2
+3	db2_value_3
+3	db2_value_3
+3	db2_value_3
+3	db2_value_3
+4	db2_value_4
+query: explain select a.key,b.value from kv a join kv b on(a.key=b.key)
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_JOIN (TOK_TABREF (TOK_TAB kv) a) (TOK_TABREF (TOK_TAB kv) b) (= (. (TOK_TABLE_OR_COL a) key) (. (TOK_TABLE_OR_COL b) key)))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (. (TOK_TABLE_OR_COL a) key)) (TOK_SELEXPR (. (TOK_TABLE_OR_COL b) value)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        db2/kv#a 
+          Operator:          TableScan
+            alias: db2/kv#a
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: key
+                    type: string
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col0
+              Map-reduce partition columns:
+                    expr: key
+                    type: string
+              tag: 0
+              value expressions:
+                    expr: key
+                    type: string
+        db2/kv#b 
+          Operator:          TableScan
+            alias: db2/kv#b
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: key
+                    type: string
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col1
+              Map-reduce partition columns:
+                    expr: key
+                    type: string
+              tag: 1
+              value expressions:
+                    expr: value
+                    type: string
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/db2.db/kv [db2/kv#a, db2/kv#b]
+      Reduce Operator Tree:
+        Operator:        Join Operator
+          condition map:
+               Inner Join 0 to 1
+          condition expressions:
+            0 {VALUE._col0}
+            1 {VALUE._col1}
+          handleSkewJoin: false
+          outputColumnNames: _col0, _col3
+          Operator:          Select Operator
+            expressions:
+                  expr: _col0
+                  type: string
+                  expr: _col3
+                  type: string
+            outputColumnNames: _col0, _col1
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 0
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.TextInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: select a.key,b.value from kv a join kv b on(a.key=b.key)
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/2012871206/10000
+1	db2_value_1
+1	db2_value_1
+1	db2_value_1
+1	db2_value_1
+12	db2_value_12
+14	db2_value_14
+2	db2_value_2
+3	db2_value_3
+3	db2_value_3
+3	db2_value_3
+3	db2_value_3
+321	db2_value_321
+321	db2_value_321
+321	db2_value_321
+321	db2_value_321
+3212	db2_value_3212
+3214	db2_value_3214
+322	db2_value_322
+323	db2_value_323
+323	db2_value_323
+323	db2_value_323
+323	db2_value_323
+324	db2_value_324
+4	db2_value_4
+query: drop table kv
+query: use db1
+query: drop table kv
+query: use default_db
+query: drop database db1
+query: drop database db2
+query: drop database db2
+query: drop database db2
+query: drop database db2
+query: drop database db2
+query: drop database db2
+query: drop database db2
+query: drop database db2
+query: drop database db2

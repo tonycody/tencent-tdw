@@ -1,0 +1,14 @@
+query: FROM src SELECT cast('-30.33' as DOUBLE) GROUP BY cast('-30.33' as DOUBLE) LIMIT 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/471754109/10000
+-30.33
+query: FROM src SELECT '-30.33' GROUP BY '-30.33' LIMIT 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/870337597/10000
+-30.33
+query: FROM src SELECT '-30.33' GROUP BY '-30.33' LIMIT 1
+query: FROM src SELECT '-30.33' GROUP BY '-30.33' LIMIT 1
+query: FROM src SELECT '-30.33' GROUP BY '-30.33' LIMIT 1
+query: FROM src SELECT '-30.33' GROUP BY '-30.33' LIMIT 1
+query: FROM src SELECT '-30.33' GROUP BY '-30.33' LIMIT 1
+query: FROM src SELECT '-30.33' GROUP BY '-30.33' LIMIT 1
+query: FROM src SELECT '-30.33' GROUP BY '-30.33' LIMIT 1
+query: FROM src SELECT '-30.33' GROUP BY '-30.33' LIMIT 1

@@ -1,0 +1,12 @@
+query: from src
+select transform('aa;') using '/bin/cat' as a  limit 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/1678505092/10000
+aa;
+query: from src
+select transform('bb') using '/bin/cat' as b limit 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/1133604061/10000
+bb
+query: from src
+select transform('cc') using '/bin/cat' as c limit 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/1029915396/10000
+cc

@@ -1,0 +1,20 @@
+query: SELECT commonStr("a,b,c,d","d,c",",") FROM src LIMIT 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/721206998/10000
+d,c
+query: SELECT commonStr("ac,bd,cf,dg","dg,cf,ak",",") FROM src LIMIT 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/20349620/10000
+dg,cf
+query: SELECT commonStr("ac|bd|cf|dg","dg|cf|ak","|") FROM src LIMIT 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/792286972/10000
+dg|cf
+query: SELECT commonStr("ac*ä¸­å½é£*ææ»*80å*test","ææ»*ac*ak*ä¸­å½é£","*") FROM src LIMIT 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1311990780/10000
+ææ»*ac*ä¸­å½é£
+query: SELECT commonStr("ac*ä¸­å½é£*ææ»*80å*test","ææ»*ac*ak*ä¸­å½é£","*") FROM src LIMIT 1
+query: SELECT commonStr("ac*ä¸­å½é£*ææ»*80å*test","ææ»*ac*ak*ä¸­å½é£","*") FROM src LIMIT 1
+query: SELECT commonStr("ac*ä¸­å½é£*ææ»*80å*test","ææ»*ac*ak*ä¸­å½é£","*") FROM src LIMIT 1
+query: SELECT commonStr("ac*ä¸­å½é£*ææ»*80å*test","ææ»*ac*ak*ä¸­å½é£","*") FROM src LIMIT 1
+query: SELECT commonStr("ac*ä¸­å½é£*ææ»*80å*test","ææ»*ac*ak*ä¸­å½é£","*") FROM src LIMIT 1
+query: SELECT commonStr("ac*ä¸­å½é£*ææ»*80å*test","ææ»*ac*ak*ä¸­å½é£","*") FROM src LIMIT 1
+query: SELECT commonStr("ac*ä¸­å½é£*ææ»*80å*test","ææ»*ac*ak*ä¸­å½é£","*") FROM src LIMIT 1
+query: SELECT commonStr("ac*ä¸­å½é£*ææ»*80å*test","ææ»*ac*ak*ä¸­å½é£","*") FROM src LIMIT 1

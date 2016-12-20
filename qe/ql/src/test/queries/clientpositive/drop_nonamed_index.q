@@ -1,0 +1,1 @@
+explain alter table altertable drop index a0;

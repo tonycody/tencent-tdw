@@ -1,0 +1,56 @@
+query: drop database rnm
+query: create database rnm
+query: use rnm
+query: create table subp(key int,value string)
+partition by list(key)
+subpartition by list(value)(
+subpartition sp1 values in('1','2'),
+subpartition default
+)
+(
+partition p1 values in(1,2),
+partition default
+)
+query: alter table subp rename to subp1
+query: describe extended subp1
+key	int	
+value	string	
+	 	 
+Detailed Table Information	Table(tableName:subp1, dbName:rnm, owner:root, createTime:1329297678, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:key, type:int, comment:null), FieldSchema(name:value, type:string, comment:null)], location:file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/rnm.db/subp1, inputFormat:org.apache.hadoop.mapred.TextInputFormat, outputFormat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe, parameters:{serialization.format=1}), bucketCols:[], sortCols:[], parameters:{}), priPartition:Partition(dbName:rnm, tableName:subp1, level:0, parType:list, parKey:FieldSchema(name:key, type:int, comment:null), parSpaces:{p1=[1, 2], default=[]}), subPartition:Partition(dbName:rnm, tableName:subp1, level:1, parType:list, parKey:FieldSchema(name:value, type:string, comment:null), parSpaces:{sp1=[1, 2], default=[]}), parameters:{last_modified_by=tdwadmin, last_modified_time=1329297678}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, vtables:null)	
+query: alter table subp1 add partition p2 values in(3)
+query: alter table subp1 add subpartition sp2 values in('3')
+query: describe extended subp1
+key	int	
+value	string	
+	 	 
+Detailed Table Information	Table(tableName:subp1, dbName:rnm, owner:root, createTime:1329297678, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:key, type:int, comment:null), FieldSchema(name:value, type:string, comment:null)], location:file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/rnm.db/subp1, inputFormat:org.apache.hadoop.mapred.TextInputFormat, outputFormat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe, parameters:{serialization.format=1}), bucketCols:[], sortCols:[], parameters:{}), priPartition:Partition(dbName:rnm, tableName:subp1, level:0, parType:list, parKey:FieldSchema(name:key, type:int, comment:null), parSpaces:{p1=[1, 2], p2=[3], default=[]}), subPartition:Partition(dbName:rnm, tableName:subp1, level:1, parType:list, parKey:FieldSchema(name:value, type:string, comment:null), parSpaces:{sp1=[1, 2], sp2=[3], default=[]}), parameters:{last_modified_by=tdwadmin, last_modified_time=1329297678}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, vtables:null)	
+query: create table subp(key int,value string)
+partition by list(key)
+subpartition by list(value)(
+subpartition sp1 values in('1','2'),
+subpartition default
+)
+(
+partition p1 values in(1,2),
+partition default
+)
+query: drop table subp
+query: alter table subp1 rename to subp
+query: describe extended subp
+key	int	
+value	string	
+	 	 
+Detailed Table Information	Table(tableName:subp, dbName:rnm, owner:root, createTime:1329297678, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:key, type:int, comment:null), FieldSchema(name:value, type:string, comment:null)], location:file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/rnm.db/subp, inputFormat:org.apache.hadoop.mapred.TextInputFormat, outputFormat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe, parameters:{serialization.format=1}), bucketCols:[], sortCols:[], parameters:{}), priPartition:Partition(dbName:rnm, tableName:subp, level:0, parType:list, parKey:FieldSchema(name:key, type:int, comment:null), parSpaces:{p1=[1, 2], p2=[3], default=[]}), subPartition:Partition(dbName:rnm, tableName:subp, level:1, parType:list, parKey:FieldSchema(name:value, type:string, comment:null), parSpaces:{sp1=[1, 2], sp2=[3], default=[]}), parameters:{last_modified_by=tdwadmin, last_modified_time=1329297678}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, vtables:null)	
+query: alter table subp add partition p3 values in(5)
+query: alter table subp add subpartition sp3 values in('5')
+query: drop table subp
+query: use default_db
+query: drop database rnm
+query: drop database rnm
+query: drop database rnm
+query: drop database rnm
+query: drop database rnm
+query: drop database rnm
+query: drop database rnm
+query: drop database rnm
+query: drop database rnm

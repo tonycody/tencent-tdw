@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="recordio" basedir="." default="jar">
+    <property name="hive.root" location="${basedir}/.."/>
+    <property name="build.dir.hive" location="${hive.root}/build"/>
+    <property name="build.dir" location="${build.dir.hive}/${ant.project.name}"/>
+
+    
+    <property name="src.dir" value="src"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="jar.dir" value="${hive.root}/lib"/>
+
+    <import file="../build-common.xml"/>
+
+    <path id="classpath">
+        <fileset dir="${hive.root}/lib" includes="**/*.jar"/>
+        <fileset dir="${hive.root}/testlibs" includes="**/*.jar"/>
+    </path>
+    
+    <!--
+    <target name="clean" description="Del all generated files">
+	    <delete dir="${classes.dir}" failonerror="false"/>
+	    <delete file="${ant.project.name}.jar"/>
+    </target>
+    -->
+    <target name="test">
+        <echo message="nothing to do"/> 
+    </target>
+    
+    <target name="compile" description="Compiles the task">
+	    <mkdir dir="${classes.dir}"/>
+	    <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+    </target>
+
+    <target name="jar" description="JARs the task" depends="compile">
+	    <jar destfile="${build.dir}/${ant.project.name}.jar" basedir="${classes.dir}"/>
+        <copy file="${build.dir}/${ant.project.name}.jar" todir="${jar.dir}"/>
+    </target>
+
+</project>

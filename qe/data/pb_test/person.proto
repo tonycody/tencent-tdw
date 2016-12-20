@@ -1,0 +1,15 @@
+// See README.txt for information and build instructions.
+
+//package tutorial;
+
+option java_package = "tdw";
+option java_outer_classname = "pb";
+
+message person {
+  optional string name = 1;
+  optional int32 id = 2;        // Unique ID number for this person.
+  optional string email = 3;
+
+
+  repeated string phone = 4;
+}

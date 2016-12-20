@@ -1,0 +1,5 @@
+query: DROP VIEW xxx3
+query: CREATE VIEW xxx3 AS SELECT * FROM src
+Output: file:/data/brant/trunk/build/ql/tmp/1256130313/10000
+query: ALTER TABLE xxx3 change xyz xyz int
+FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask

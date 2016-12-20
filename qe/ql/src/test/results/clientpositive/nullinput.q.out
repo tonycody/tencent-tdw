@@ -1,0 +1,15 @@
+query: create table tstnullinut(a string, b string)
+query: select x.* from tstnullinut x
+Input: default_db/tstnullinut
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1119257464/10000
+query: select x.a, count(1) from tstnullinut x group by x.a
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/2088828582/10000
+query: drop table tstnullinut
+query: drop table tstnullinut
+query: drop table tstnullinut
+query: drop table tstnullinut
+query: drop table tstnullinut
+query: drop table tstnullinut
+query: drop table tstnullinut
+query: drop table tstnullinut
+query: drop table tstnullinut

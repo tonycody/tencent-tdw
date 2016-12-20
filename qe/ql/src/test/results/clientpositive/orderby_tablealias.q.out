@@ -1,0 +1,17 @@
+query: DROP TABLE datatest
+query: CREATE TABLE datatest(int_data1 INT, int_data2 INT, boolean_data BOOLEAN, double_data DOUBLE, string_data STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/datatest.txt' INTO TABLE datatest
+query: SELECT datatest.int_data1 FROM datatest GROUP BY datatest.int_data1 ORDER BY datatest.int_data1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1655692361/10000
+0
+1
+2
+query: DROP TABLE datatest
+query: DROP TABLE datatest
+query: DROP TABLE datatest
+query: DROP TABLE datatest
+query: DROP TABLE datatest
+query: DROP TABLE datatest
+query: DROP TABLE datatest
+query: DROP TABLE datatest
+query: DROP TABLE datatest

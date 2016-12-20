@@ -1,0 +1,3 @@
+query: drop table nulltest1
+query: CREATE TABLE nulltest1(int_data1 INT, int_data2 INT, boolean_data BOOLEAN, double_data DOUBLE, string_data STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+FAILED: Error in semantic analysis: CREATE-TABLE-AS-SELECT cannot create index table.

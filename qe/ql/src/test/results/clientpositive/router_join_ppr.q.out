@@ -1,0 +1,830 @@
+query: EXPLAIN EXTENDED  FROM  src a RIGHT OUTER JOIN  srcpart b ON (a.key = b.key AND b.ds = '2008-04-08') SELECT a.key, a.value, b.key, b.value WHERE a.key > 10 AND a.key < 20 AND b.key > 15 AND b.key < 25
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_RIGHTOUTERJOIN (TOK_TABREF (TOK_TAB src) a) (TOK_TABREF (TOK_TAB srcpart) b) (AND (= (. (TOK_TABLE_OR_COL a) key) (. (TOK_TABLE_OR_COL b) key)) (= (. (TOK_TABLE_OR_COL b) ds) '2008-04-08')))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (. (TOK_TABLE_OR_COL a) key)) (TOK_SELEXPR (. (TOK_TABLE_OR_COL a) value)) (TOK_SELEXPR (. (TOK_TABLE_OR_COL b) key)) (TOK_SELEXPR (. (TOK_TABLE_OR_COL b) value))) (TOK_WHERE (AND (AND (AND (> (. (TOK_TABLE_OR_COL a) key) 10) (< (. (TOK_TABLE_OR_COL a) key) 20)) (> (. (TOK_TABLE_OR_COL b) key) 15)) (< (. (TOK_TABLE_OR_COL b) key) 25)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/src#a 
+          Operator:          TableScan
+            alias: default_db/src#a
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: key
+                    type: string
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                  properties:
+                    columns joinkey0
+                    serialization.sort.order +
+                    columns.types string
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col0, _col1
+              Map-reduce partition columns:
+                    expr: key
+                    type: string
+              tag: 0
+              value expressions:
+                    expr: key
+                    type: string
+                    expr: value
+                    type: string
+        default_db/srcpart#b 
+          Operator:          TableScan
+            alias: default_db/srcpart#b
+            Operator:            Filter Operator
+              isSamplingPred: false
+              predicate:
+                  expr: ((key > 15) and (key < 25))
+                  type: boolean
+              Operator:              Reduce Output Operator
+                key expressions:
+                      expr: key
+                      type: string
+                key serialize infos:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                    properties:
+                      columns joinkey0
+                      serialization.sort.order +
+                      columns.types string
+                sort order: +
+                output key names: reducesinkkey0
+                output value names: _col0, _col1, _col2
+                Map-reduce partition columns:
+                      expr: key
+                      type: string
+                tag: 1
+                value expressions:
+                      expr: key
+                      type: string
+                      expr: value
+                      type: string
+                      expr: ds
+                      type: string
+      Needs Tagging: true
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src [default_db/src#a]
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp1 [default_db/srcpart#b]
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp2 [default_db/srcpart#b]
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p1/sp1 [default_db/srcpart#b]
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p1/sp2 [default_db/srcpart#b]
+      Path -> Partition:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src 
+          Partition
+          
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              properties:
+                name src
+                columns.types string:string
+                serialization.ddl struct src { string key, string value}
+                serialization.format 1
+                columns key,value
+                bucket_count -1
+                serialization.lib org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                file.inputformat org.apache.hadoop.mapred.TextInputFormat
+                file.outputformat org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                location file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: src
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp1 
+          Partition
+          
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              properties:
+                name srcpart
+                columns.types string:string:string:string
+                serialization.ddl struct srcpart { string key, string value, string ds, string hr}
+                serialization.format 1
+                columns key,value,ds,hr
+                bucket_count -1
+                serialization.lib org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                file.inputformat org.apache.hadoop.mapred.TextInputFormat
+                file.outputformat org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                location file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: srcpart
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp2 
+          Partition
+          
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              properties:
+                name srcpart
+                columns.types string:string:string:string
+                serialization.ddl struct srcpart { string key, string value, string ds, string hr}
+                serialization.format 1
+                columns key,value,ds,hr
+                bucket_count -1
+                serialization.lib org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                file.inputformat org.apache.hadoop.mapred.TextInputFormat
+                file.outputformat org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                location file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: srcpart
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p1/sp1 
+          Partition
+          
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              properties:
+                name srcpart
+                columns.types string:string:string:string
+                serialization.ddl struct srcpart { string key, string value, string ds, string hr}
+                serialization.format 1
+                columns key,value,ds,hr
+                bucket_count -1
+                serialization.lib org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                file.inputformat org.apache.hadoop.mapred.TextInputFormat
+                file.outputformat org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                location file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: srcpart
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p1/sp2 
+          Partition
+          
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              properties:
+                name srcpart
+                columns.types string:string:string:string
+                serialization.ddl struct srcpart { string key, string value, string ds, string hr}
+                serialization.format 1
+                columns key,value,ds,hr
+                bucket_count -1
+                serialization.lib org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                file.inputformat org.apache.hadoop.mapred.TextInputFormat
+                file.outputformat org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                location file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: srcpart
+      Reduce Operator Tree:
+        Operator:        Join Operator
+          condition map:
+               Right Outer Join0 to 1
+          condition expressions:
+            0 {VALUE._col0} {VALUE._col1}
+            1 {VALUE._col0} {VALUE._col1}
+          filter predicates:
+            0 
+            1 {(VALUE._col2 = '2008-04-08')}
+          handleSkewJoin: false
+          outputColumnNames: _col0, _col1, _col2, _col3
+          Operator:          Filter Operator
+            isSamplingPred: false
+            predicate:
+                expr: ((((_col0 > 10) and (_col0 < 20)) and (_col2 > 15)) and (_col2 < 25))
+                type: boolean
+            Operator:            Select Operator
+              expressions:
+                    expr: _col0
+                    type: string
+                    expr: _col1
+                    type: string
+                    expr: _col2
+                    type: string
+                    expr: _col3
+                    type: string
+              outputColumnNames: _col0, _col1, _col2, _col3
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 0
+                directory: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/3510760/10001
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.TextInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                    properties:
+                      columns _col0,_col1,_col2,_col3
+                      serialization.format 1
+                      columns.types string:string:string:string
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: FROM   src a RIGHT OUTER JOIN  srcpart b ON (a.key = b.key AND b.ds = '2008-04-08') SELECT a.key, a.value, b.key, b.value WHERE a.key > 10 AND a.key < 20 AND b.key > 15 AND b.key < 25
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/827937610/10000
+17	val_17	17	val_17
+19	val_19	19	val_19
+query: EXPLAIN EXTENDED FROM  srcpart a RIGHT OUTER JOIN  src b ON (a.key = b.key AND a.ds = '2008-04-08') SELECT a.key, a.value, b.key, b.value WHERE a.key > 10 AND a.key < 20 AND b.key > 15 AND b.key < 25
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_RIGHTOUTERJOIN (TOK_TABREF (TOK_TAB srcpart) a) (TOK_TABREF (TOK_TAB src) b) (AND (= (. (TOK_TABLE_OR_COL a) key) (. (TOK_TABLE_OR_COL b) key)) (= (. (TOK_TABLE_OR_COL a) ds) '2008-04-08')))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (. (TOK_TABLE_OR_COL a) key)) (TOK_SELEXPR (. (TOK_TABLE_OR_COL a) value)) (TOK_SELEXPR (. (TOK_TABLE_OR_COL b) key)) (TOK_SELEXPR (. (TOK_TABLE_OR_COL b) value))) (TOK_WHERE (AND (AND (AND (> (. (TOK_TABLE_OR_COL a) key) 10) (< (. (TOK_TABLE_OR_COL a) key) 20)) (> (. (TOK_TABLE_OR_COL b) key) 15)) (< (. (TOK_TABLE_OR_COL b) key) 25)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/srcpart#a 
+          Operator:          TableScan
+            alias: default_db/srcpart#a
+            Operator:            Filter Operator
+              isSamplingPred: false
+              predicate:
+                  expr: (ds = '2008-04-08')
+                  type: boolean
+              Operator:              Reduce Output Operator
+                key expressions:
+                      expr: key
+                      type: string
+                key serialize infos:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                    properties:
+                      columns joinkey0
+                      serialization.sort.order +
+                      columns.types string
+                sort order: +
+                output key names: reducesinkkey0
+                output value names: _col0, _col1
+                Map-reduce partition columns:
+                      expr: key
+                      type: string
+                tag: 0
+                value expressions:
+                      expr: key
+                      type: string
+                      expr: value
+                      type: string
+        default_db/src#b 
+          Operator:          TableScan
+            alias: default_db/src#b
+            Operator:            Filter Operator
+              isSamplingPred: false
+              predicate:
+                  expr: ((key > 15) and (key < 25))
+                  type: boolean
+              Operator:              Reduce Output Operator
+                key expressions:
+                      expr: key
+                      type: string
+                key serialize infos:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                    properties:
+                      columns joinkey0
+                      serialization.sort.order +
+                      columns.types string
+                sort order: +
+                output key names: reducesinkkey0
+                output value names: _col0, _col1
+                Map-reduce partition columns:
+                      expr: key
+                      type: string
+                tag: 1
+                value expressions:
+                      expr: key
+                      type: string
+                      expr: value
+                      type: string
+      Needs Tagging: true
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp1 [default_db/srcpart#a]
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp2 [default_db/srcpart#a]
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src [default_db/src#b]
+      Path -> Partition:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp1 
+          Partition
+          
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              properties:
+                name srcpart
+                columns.types string:string:string:string
+                serialization.ddl struct srcpart { string key, string value, string ds, string hr}
+                serialization.format 1
+                columns key,value,ds,hr
+                bucket_count -1
+                serialization.lib org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                file.inputformat org.apache.hadoop.mapred.TextInputFormat
+                file.outputformat org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                location file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: srcpart
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp2 
+          Partition
+          
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              properties:
+                name srcpart
+                columns.types string:string:string:string
+                serialization.ddl struct srcpart { string key, string value, string ds, string hr}
+                serialization.format 1
+                columns key,value,ds,hr
+                bucket_count -1
+                serialization.lib org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                file.inputformat org.apache.hadoop.mapred.TextInputFormat
+                file.outputformat org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                location file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: srcpart
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src 
+          Partition
+          
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              properties:
+                name src
+                columns.types string:string
+                serialization.ddl struct src { string key, string value}
+                serialization.format 1
+                columns key,value
+                bucket_count -1
+                serialization.lib org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                file.inputformat org.apache.hadoop.mapred.TextInputFormat
+                file.outputformat org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                location file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: src
+      Reduce Operator Tree:
+        Operator:        Join Operator
+          condition map:
+               Right Outer Join0 to 1
+          condition expressions:
+            0 {VALUE._col0} {VALUE._col1}
+            1 {VALUE._col0} {VALUE._col1}
+          handleSkewJoin: false
+          outputColumnNames: _col0, _col1, _col4, _col5
+          Operator:          Filter Operator
+            isSamplingPred: false
+            predicate:
+                expr: ((((_col0 > 10) and (_col0 < 20)) and (_col4 > 15)) and (_col4 < 25))
+                type: boolean
+            Operator:            Select Operator
+              expressions:
+                    expr: _col0
+                    type: string
+                    expr: _col1
+                    type: string
+                    expr: _col4
+                    type: string
+                    expr: _col5
+                    type: string
+              outputColumnNames: _col0, _col1, _col2, _col3
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 0
+                directory: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1820779848/10001
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.TextInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                    properties:
+                      columns _col0,_col1,_col2,_col3
+                      serialization.format 1
+                      columns.types string:string:string:string
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: FROM   srcpart a RIGHT OUTER JOIN  src b ON (a.key = b.key AND a.ds = '2008-04-08') SELECT a.key, a.value, b.key, b.value WHERE a.key > 10 AND a.key < 20 AND b.key > 15 AND b.key < 25
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1669233799/10000
+17	val_17	17	val_17
+19	val_19	19	val_19
+query: EXPLAIN EXTENDED FROM  src a RIGHT OUTER JOIN  srcpart b ON (a.key = b.key) SELECT a.key, a.value, b.key, b.value WHERE a.key > 10 AND a.key < 20 AND b.key > 15 AND b.key < 25 AND b.ds = '2008-04-08'
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_RIGHTOUTERJOIN (TOK_TABREF (TOK_TAB src) a) (TOK_TABREF (TOK_TAB srcpart) b) (= (. (TOK_TABLE_OR_COL a) key) (. (TOK_TABLE_OR_COL b) key)))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (. (TOK_TABLE_OR_COL a) key)) (TOK_SELEXPR (. (TOK_TABLE_OR_COL a) value)) (TOK_SELEXPR (. (TOK_TABLE_OR_COL b) key)) (TOK_SELEXPR (. (TOK_TABLE_OR_COL b) value))) (TOK_WHERE (AND (AND (AND (AND (> (. (TOK_TABLE_OR_COL a) key) 10) (< (. (TOK_TABLE_OR_COL a) key) 20)) (> (. (TOK_TABLE_OR_COL b) key) 15)) (< (. (TOK_TABLE_OR_COL b) key) 25)) (= (. (TOK_TABLE_OR_COL b) ds) '2008-04-08')))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/src#a 
+          Operator:          TableScan
+            alias: default_db/src#a
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: key
+                    type: string
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                  properties:
+                    columns joinkey0
+                    serialization.sort.order +
+                    columns.types string
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col0, _col1
+              Map-reduce partition columns:
+                    expr: key
+                    type: string
+              tag: 0
+              value expressions:
+                    expr: key
+                    type: string
+                    expr: value
+                    type: string
+        default_db/srcpart#b 
+          Operator:          TableScan
+            alias: default_db/srcpart#b
+            Operator:            Filter Operator
+              isSamplingPred: false
+              predicate:
+                  expr: (((key > 15) and (key < 25)) and (ds = '2008-04-08'))
+                  type: boolean
+              Operator:              Reduce Output Operator
+                key expressions:
+                      expr: key
+                      type: string
+                key serialize infos:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                    properties:
+                      columns joinkey0
+                      serialization.sort.order +
+                      columns.types string
+                sort order: +
+                output key names: reducesinkkey0
+                output value names: _col0, _col1, _col2
+                Map-reduce partition columns:
+                      expr: key
+                      type: string
+                tag: 1
+                value expressions:
+                      expr: key
+                      type: string
+                      expr: value
+                      type: string
+                      expr: ds
+                      type: string
+      Needs Tagging: true
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src [default_db/src#a]
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp1 [default_db/srcpart#b]
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp2 [default_db/srcpart#b]
+      Path -> Partition:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src 
+          Partition
+          
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              properties:
+                name src
+                columns.types string:string
+                serialization.ddl struct src { string key, string value}
+                serialization.format 1
+                columns key,value
+                bucket_count -1
+                serialization.lib org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                file.inputformat org.apache.hadoop.mapred.TextInputFormat
+                file.outputformat org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                location file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: src
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp1 
+          Partition
+          
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              properties:
+                name srcpart
+                columns.types string:string:string:string
+                serialization.ddl struct srcpart { string key, string value, string ds, string hr}
+                serialization.format 1
+                columns key,value,ds,hr
+                bucket_count -1
+                serialization.lib org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                file.inputformat org.apache.hadoop.mapred.TextInputFormat
+                file.outputformat org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                location file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: srcpart
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp2 
+          Partition
+          
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              properties:
+                name srcpart
+                columns.types string:string:string:string
+                serialization.ddl struct srcpart { string key, string value, string ds, string hr}
+                serialization.format 1
+                columns key,value,ds,hr
+                bucket_count -1
+                serialization.lib org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                file.inputformat org.apache.hadoop.mapred.TextInputFormat
+                file.outputformat org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                location file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: srcpart
+      Reduce Operator Tree:
+        Operator:        Join Operator
+          condition map:
+               Right Outer Join0 to 1
+          condition expressions:
+            0 {VALUE._col0} {VALUE._col1}
+            1 {VALUE._col0} {VALUE._col1} {VALUE._col2}
+          handleSkewJoin: false
+          outputColumnNames: _col0, _col1, _col2, _col3, _col4
+          Operator:          Filter Operator
+            isSamplingPred: false
+            predicate:
+                expr: (((((_col0 > 10) and (_col0 < 20)) and (_col2 > 15)) and (_col2 < 25)) and (_col4 = '2008-04-08'))
+                type: boolean
+            Operator:            Select Operator
+              expressions:
+                    expr: _col0
+                    type: string
+                    expr: _col1
+                    type: string
+                    expr: _col2
+                    type: string
+                    expr: _col3
+                    type: string
+              outputColumnNames: _col0, _col1, _col2, _col3
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 0
+                directory: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/517894567/10001
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.TextInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                    properties:
+                      columns _col0,_col1,_col2,_col3
+                      serialization.format 1
+                      columns.types string:string:string:string
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: FROM   src a RIGHT OUTER JOIN  srcpart b ON (a.key = b.key) SELECT a.key, a.value, b.key, b.value WHERE a.key > 10 AND a.key < 20 AND b.key > 15 AND b.key < 25 AND b.ds = '2008-04-08'
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/999152958/10000
+17	val_17	17	val_17
+19	val_19	19	val_19
+query: EXPLAIN EXTENDED FROM  srcpart a RIGHT OUTER JOIN  src b ON (a.key = b.key) SELECT a.key, a.value, b.key, b.value WHERE a.key > 10 AND a.key < 20 AND b.key > 15 AND b.key < 25 AND a.ds = '2008-04-08'
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_RIGHTOUTERJOIN (TOK_TABREF (TOK_TAB srcpart) a) (TOK_TABREF (TOK_TAB src) b) (= (. (TOK_TABLE_OR_COL a) key) (. (TOK_TABLE_OR_COL b) key)))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (. (TOK_TABLE_OR_COL a) key)) (TOK_SELEXPR (. (TOK_TABLE_OR_COL a) value)) (TOK_SELEXPR (. (TOK_TABLE_OR_COL b) key)) (TOK_SELEXPR (. (TOK_TABLE_OR_COL b) value))) (TOK_WHERE (AND (AND (AND (AND (> (. (TOK_TABLE_OR_COL a) key) 10) (< (. (TOK_TABLE_OR_COL a) key) 20)) (> (. (TOK_TABLE_OR_COL b) key) 15)) (< (. (TOK_TABLE_OR_COL b) key) 25)) (= (. (TOK_TABLE_OR_COL a) ds) '2008-04-08')))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/srcpart#a 
+          Operator:          TableScan
+            alias: default_db/srcpart#a
+            Operator:            Reduce Output Operator
+              key expressions:
+                    expr: key
+                    type: string
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                  properties:
+                    columns joinkey0
+                    serialization.sort.order +
+                    columns.types string
+              sort order: +
+              output key names: reducesinkkey0
+              output value names: _col0, _col1, _col2
+              Map-reduce partition columns:
+                    expr: key
+                    type: string
+              tag: 0
+              value expressions:
+                    expr: key
+                    type: string
+                    expr: value
+                    type: string
+                    expr: ds
+                    type: string
+        default_db/src#b 
+          Operator:          TableScan
+            alias: default_db/src#b
+            Operator:            Filter Operator
+              isSamplingPred: false
+              predicate:
+                  expr: ((key > 15) and (key < 25))
+                  type: boolean
+              Operator:              Reduce Output Operator
+                key expressions:
+                      expr: key
+                      type: string
+                key serialize infos:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                    properties:
+                      columns joinkey0
+                      serialization.sort.order +
+                      columns.types string
+                sort order: +
+                output key names: reducesinkkey0
+                output value names: _col0, _col1
+                Map-reduce partition columns:
+                      expr: key
+                      type: string
+                tag: 1
+                value expressions:
+                      expr: key
+                      type: string
+                      expr: value
+                      type: string
+      Needs Tagging: true
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp1 [default_db/srcpart#a]
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp2 [default_db/srcpart#a]
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p1/sp1 [default_db/srcpart#a]
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p1/sp2 [default_db/srcpart#a]
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src [default_db/src#b]
+      Path -> Partition:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp1 
+          Partition
+          
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              properties:
+                name srcpart
+                columns.types string:string:string:string
+                serialization.ddl struct srcpart { string key, string value, string ds, string hr}
+                serialization.format 1
+                columns key,value,ds,hr
+                bucket_count -1
+                serialization.lib org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                file.inputformat org.apache.hadoop.mapred.TextInputFormat
+                file.outputformat org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                location file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: srcpart
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p0/sp2 
+          Partition
+          
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              properties:
+                name srcpart
+                columns.types string:string:string:string
+                serialization.ddl struct srcpart { string key, string value, string ds, string hr}
+                serialization.format 1
+                columns key,value,ds,hr
+                bucket_count -1
+                serialization.lib org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                file.inputformat org.apache.hadoop.mapred.TextInputFormat
+                file.outputformat org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                location file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: srcpart
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p1/sp1 
+          Partition
+          
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              properties:
+                name srcpart
+                columns.types string:string:string:string
+                serialization.ddl struct srcpart { string key, string value, string ds, string hr}
+                serialization.format 1
+                columns key,value,ds,hr
+                bucket_count -1
+                serialization.lib org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                file.inputformat org.apache.hadoop.mapred.TextInputFormat
+                file.outputformat org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                location file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: srcpart
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart/p1/sp2 
+          Partition
+          
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              properties:
+                name srcpart
+                columns.types string:string:string:string
+                serialization.ddl struct srcpart { string key, string value, string ds, string hr}
+                serialization.format 1
+                columns key,value,ds,hr
+                bucket_count -1
+                serialization.lib org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                file.inputformat org.apache.hadoop.mapred.TextInputFormat
+                file.outputformat org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                location file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/srcpart
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: srcpart
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src 
+          Partition
+          
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              properties:
+                name src
+                columns.types string:string
+                serialization.ddl struct src { string key, string value}
+                serialization.format 1
+                columns key,value
+                bucket_count -1
+                serialization.lib org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                file.inputformat org.apache.hadoop.mapred.TextInputFormat
+                file.outputformat org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                location file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/src
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: src
+      Reduce Operator Tree:
+        Operator:        Join Operator
+          condition map:
+               Right Outer Join0 to 1
+          condition expressions:
+            0 {VALUE._col0} {VALUE._col1} {VALUE._col2}
+            1 {VALUE._col0} {VALUE._col1}
+          handleSkewJoin: false
+          outputColumnNames: _col0, _col1, _col2, _col4, _col5
+          Operator:          Filter Operator
+            isSamplingPred: false
+            predicate:
+                expr: (((((_col0 > 10) and (_col0 < 20)) and (_col4 > 15)) and (_col4 < 25)) and (_col2 = '2008-04-08'))
+                type: boolean
+            Operator:            Select Operator
+              expressions:
+                    expr: _col0
+                    type: string
+                    expr: _col1
+                    type: string
+                    expr: _col4
+                    type: string
+                    expr: _col5
+                    type: string
+              outputColumnNames: _col0, _col1, _col2, _col3
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 0
+                directory: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/149942096/10001
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.TextInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                    properties:
+                      columns _col0,_col1,_col2,_col3
+                      serialization.format 1
+                      columns.types string:string:string:string
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: FROM   srcpart a RIGHT OUTER JOIN  src b ON (a.key = b.key) SELECT a.key, a.value, b.key, b.value WHERE a.key > 10 AND a.key < 20 AND b.key > 15 AND b.key < 25 AND a.ds = '2008-04-08'
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1221436282/10000
+17	val_17	17	val_17
+19	val_19	19	val_19
+query: FROM   srcpart a RIGHT OUTER JOIN  src b ON (a.key = b.key) SELECT a.key, a.value, b.key, b.value WHERE a.key > 10 AND a.key < 20 AND b.key > 15 AND b.key < 25 AND a.ds = '2008-04-08'
+query: FROM   srcpart a RIGHT OUTER JOIN  src b ON (a.key = b.key) SELECT a.key, a.value, b.key, b.value WHERE a.key > 10 AND a.key < 20 AND b.key > 15 AND b.key < 25 AND a.ds = '2008-04-08'
+query: FROM   srcpart a RIGHT OUTER JOIN  src b ON (a.key = b.key) SELECT a.key, a.value, b.key, b.value WHERE a.key > 10 AND a.key < 20 AND b.key > 15 AND b.key < 25 AND a.ds = '2008-04-08'
+query: FROM   srcpart a RIGHT OUTER JOIN  src b ON (a.key = b.key) SELECT a.key, a.value, b.key, b.value WHERE a.key > 10 AND a.key < 20 AND b.key > 15 AND b.key < 25 AND a.ds = '2008-04-08'
+query: FROM   srcpart a RIGHT OUTER JOIN  src b ON (a.key = b.key) SELECT a.key, a.value, b.key, b.value WHERE a.key > 10 AND a.key < 20 AND b.key > 15 AND b.key < 25 AND a.ds = '2008-04-08'
+query: FROM   srcpart a RIGHT OUTER JOIN  src b ON (a.key = b.key) SELECT a.key, a.value, b.key, b.value WHERE a.key > 10 AND a.key < 20 AND b.key > 15 AND b.key < 25 AND a.ds = '2008-04-08'
+query: FROM   srcpart a RIGHT OUTER JOIN  src b ON (a.key = b.key) SELECT a.key, a.value, b.key, b.value WHERE a.key > 10 AND a.key < 20 AND b.key > 15 AND b.key < 25 AND a.ds = '2008-04-08'
+query: FROM   srcpart a RIGHT OUTER JOIN  src b ON (a.key = b.key) SELECT a.key, a.value, b.key, b.value WHERE a.key > 10 AND a.key < 20 AND b.key > 15 AND b.key < 25 AND a.ds = '2008-04-08'

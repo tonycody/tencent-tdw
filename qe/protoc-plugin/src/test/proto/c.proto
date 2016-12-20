@@ -1,0 +1,6 @@
+package b;
+
+message MC {
+  required int32 X1 = 1;
+}
+

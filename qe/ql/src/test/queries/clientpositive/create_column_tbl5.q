@@ -1,0 +1,1 @@
+explain create table testColumn(a int, b int, c int, d int) stored as columnfile projection(a,c),(b,d);

@@ -1,0 +1,48 @@
+query: DROP TABLE covar_tab
+query: CREATE TABLE covar_tab (a INT, b INT, c INT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+STORED AS TEXTFILE
+query: LOAD DATA LOCAL INPATH '../data/files/covar_tab.txt' OVERWRITE
+INTO TABLE covar_tab
+query: DESCRIBE FUNCTION corr
+corr(x,y) - Returns the Pearson coefficient of correlation
+between a set of number pairs
+query: DESCRIBE FUNCTION EXTENDED corr
+corr(x,y) - Returns the Pearson coefficient of correlation
+between a set of number pairs
+The function takes as arguments any pair of numeric types and returns a double.
+Any pair with a NULL is ignored. If the function is applied to an empty set or
+a singleton set, NULL will be returned. Otherwise, it computes the following:
+   COVAR_POP(x,y)/(STDDEV_POP(x)*STDDEV_POP(y))
+where neither x nor y is null,
+COVAR_POP is the population covariance,
+and STDDEV_POP is the population standard deviation.
+query: SELECT corr(b, c) FROM covar_tab WHERE a < 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/838246061/10000
+NULL
+query: SELECT corr(b, c) FROM covar_tab WHERE a < 3
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1558111177/10000
+NULL
+query: SELECT corr(b, c) FROM covar_tab WHERE a = 3
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1932989272/10000
+NULL
+query: SELECT a, corr(b, c) FROM covar_tab GROUP BY a ORDER BY a
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1747649956/10000
+1	NULL
+2	NULL
+3	NULL
+4	NULL
+5	NULL
+6	NULL
+query: SELECT corr(b, c) FROM covar_tab
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/530836720/10000
+0.6633880657639323
+query: DROP TABLE covar_tab
+query: DROP TABLE covar_tab
+query: DROP TABLE covar_tab
+query: DROP TABLE covar_tab
+query: DROP TABLE covar_tab
+query: DROP TABLE covar_tab
+query: DROP TABLE covar_tab
+query: DROP TABLE covar_tab
+query: DROP TABLE covar_tab

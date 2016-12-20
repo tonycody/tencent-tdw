@@ -1,0 +1,180 @@
+query: drop table myinput1
+query: CREATE TABLE myinput1(key int, value int)
+query: LOAD DATA LOCAL INPATH '../data/files/in1.txt' INTO TABLE myinput1
+query: SELECT * FROM myinput1 a JOIN myinput1 b order by a.key, b.key
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1778200477/10000
+NULL	35	NULL	35
+NULL	35	48	NULL
+NULL	35	100	100
+48	NULL	NULL	35
+48	NULL	48	NULL
+48	NULL	100	100
+100	100	NULL	35
+100	100	48	NULL
+100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b order by a.key, b.key
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/2083098254/10000
+NULL	35	NULL	35
+NULL	35	48	NULL
+NULL	35	100	100
+48	NULL	NULL	35
+48	NULL	48	NULL
+48	NULL	100	100
+100	100	NULL	35
+100	100	48	NULL
+100	100	100	100
+query: SELECT * FROM myinput1 a RIGHT OUTER JOIN myinput1 b order by a.key, b.key
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1527323239/10000
+NULL	35	NULL	35
+NULL	35	48	NULL
+NULL	35	100	100
+48	NULL	NULL	35
+48	NULL	48	NULL
+48	NULL	100	100
+100	100	NULL	35
+100	100	48	NULL
+100	100	100	100
+query: SELECT * FROM myinput1 a JOIN myinput1 b ON a.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1138723578/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a JOIN myinput1 b ON a.key = b.key
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/296659250/10000
+48	NULL	48	NULL
+100	100	100	100
+query: SELECT * FROM myinput1 a JOIN myinput1 b ON a.value = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/2076949280/10000
+NULL	35	NULL	35
+100	100	100	100
+query: SELECT * FROM myinput1 a JOIN myinput1 b ON a.value = b.value and a.key=b.key
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/206860487/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b ON a.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1558185491/10000
+NULL	35	NULL	NULL
+48	NULL	NULL	NULL
+100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b ON a.value = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/253848367/10000
+48	NULL	NULL	NULL
+NULL	35	NULL	35
+100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b ON a.key = b.key
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/743454653/10000
+NULL	35	NULL	NULL
+48	NULL	48	NULL
+100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b ON a.key = b.key and a.value=b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1920564776/10000
+NULL	35	NULL	NULL
+48	NULL	NULL	NULL
+100	100	100	100
+query: SELECT * FROM myinput1 a RIGHT OUTER JOIN myinput1 b ON a.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1428683434/10000
+NULL	NULL	48	NULL
+NULL	NULL	NULL	35
+100	100	100	100
+query: SELECT * FROM myinput1 a RIGHT OUTER JOIN myinput1 b ON a.key = b.key
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/740770532/10000
+NULL	NULL	NULL	35
+48	NULL	48	NULL
+100	100	100	100
+query: SELECT * FROM myinput1 a RIGHT OUTER JOIN myinput1 b ON a.value = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1007642969/10000
+NULL	NULL	48	NULL
+NULL	35	NULL	35
+100	100	100	100
+query: SELECT * FROM myinput1 a RIGHT OUTER JOIN myinput1 b ON a.key=b.key and a.value = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/2084290546/10000
+NULL	NULL	NULL	35
+NULL	NULL	48	NULL
+100	100	100	100
+query: SELECT * FROM myinput1 a FULL OUTER JOIN myinput1 b ON a.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1633593573/10000
+NULL	35	NULL	NULL
+NULL	NULL	48	NULL
+NULL	NULL	NULL	35
+48	NULL	NULL	NULL
+100	100	100	100
+query: SELECT * FROM myinput1 a FULL OUTER JOIN myinput1 b ON a.key = b.key
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/117340433/10000
+NULL	35	NULL	NULL
+NULL	NULL	NULL	35
+48	NULL	48	NULL
+100	100	100	100
+query: SELECT * FROM myinput1 a FULL OUTER JOIN myinput1 b ON a.value = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/805034107/10000
+48	NULL	NULL	NULL
+NULL	NULL	48	NULL
+NULL	35	NULL	35
+100	100	100	100
+query: SELECT * FROM myinput1 a FULL OUTER JOIN myinput1 b ON a.value = b.value and a.key=b.key
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/475616283/10000
+48	NULL	NULL	NULL
+NULL	NULL	48	NULL
+NULL	35	NULL	NULL
+NULL	NULL	NULL	35
+100	100	100	100
+query: SELECT * from myinput1 a LEFT OUTER JOIN myinput1 b ON (a.value=b.value) RIGHT OUTER JOIN myinput1 c ON (b.value=c.value)
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/752878053/10000
+NULL	NULL	NULL	NULL	48	NULL
+NULL	35	NULL	35	NULL	35
+100	100	100	100	100	100
+query: SELECT * from myinput1 a RIGHT OUTER JOIN myinput1 b ON (a.value=b.value) LEFT OUTER JOIN myinput1 c ON (b.value=c.value)
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1062309078/10000
+NULL	NULL	48	NULL	NULL	NULL
+NULL	35	NULL	35	NULL	35
+100	100	100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b RIGHT OUTER JOIN myinput1 c ON a.value = b.value and b.value = c.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1801274988/10000
+NULL	NULL	NULL	NULL	48	NULL
+NULL	35	NULL	35	NULL	35
+100	100	100	100	100	100
+query: SELECT /*+ MAPJOIN(a) */ * FROM myinput1 a JOIN myinput1 b ON a.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/617613539/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(a) */ * FROM myinput1 a JOIN myinput1 b ON a.key = b.key
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/339540417/10000
+48	NULL	48	NULL
+100	100	100	100
+query: SELECT /*+ MAPJOIN(a) */ * FROM myinput1 a JOIN myinput1 b ON a.value = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/210443197/10000
+NULL	35	NULL	35
+100	100	100	100
+query: SELECT /*+ MAPJOIN(b) */ * FROM myinput1 a JOIN myinput1 b ON a.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1259074953/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(b) */ * FROM myinput1 a JOIN myinput1 b ON a.key = b.key
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/278470782/10000
+48	NULL	48	NULL
+100	100	100	100
+query: SELECT /*+ MAPJOIN(b) */ * FROM myinput1 a JOIN myinput1 b ON a.value = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/2027207333/10000
+NULL	35	NULL	35
+100	100	100	100
+query: SELECT /*+ MAPJOIN(b) */ * FROM myinput1 a JOIN myinput1 b ON a.value = b.value and a.key = b.key
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/653768186/10000
+100	100	100	100
+query: SELECT * from myinput1 a LEFT OUTER JOIN myinput1 b ON (a.value=b.value) RIGHT OUTER JOIN myinput1 c ON (b.value=c.value)
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/639200638/10000
+NULL	NULL	NULL	NULL	48	NULL
+NULL	35	NULL	35	NULL	35
+100	100	100	100	100	100
+query: SELECT * from myinput1 a RIGHT OUTER JOIN myinput1 b ON (a.value=b.value) LEFT OUTER JOIN myinput1 c ON (b.value=c.value)
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/953318356/10000
+NULL	NULL	48	NULL	NULL	NULL
+NULL	35	NULL	35	NULL	35
+100	100	100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b RIGHT OUTER JOIN myinput1 c ON a.value = b.value and b.value = c.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1267059081/10000
+NULL	NULL	NULL	NULL	48	NULL
+NULL	35	NULL	35	NULL	35
+100	100	100	100	100	100
+query: DROP TABLE myinput1
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 

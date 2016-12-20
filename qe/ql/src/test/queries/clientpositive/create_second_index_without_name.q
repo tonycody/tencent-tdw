@@ -1,0 +1,1 @@
+explain create table sindex(a int, b string) index(b) stored as formatfile;

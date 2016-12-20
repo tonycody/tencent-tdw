@@ -1,0 +1,152 @@
+query: DROP TABLE T1
+query: CREATE TABLE T1(key STRING, value STRING) STORED AS TEXTFILE
+query: LOAD DATA LOCAL INPATH '../data/files/kv1.txt' INTO TABLE T1
+query: LOAD DATA LOCAL INPATH '../data/files/kv2.txt' INTO TABLE T1
+query: DROP TABLE T2
+query: CREATE TABLE T2(key STRING, value STRING)
+query: EXPLAIN 
+INSERT OVERWRITE TABLE T2 SELECT * FROM (SELECT * FROM T1 DISTRIBUTE BY key SORT BY key, value) T LIMIT 20
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_SUBQUERY (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB T1))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR TOK_ALLCOLREF)) (TOK_DISTRIBUTEBY (TOK_TABLE_OR_COL key)) (TOK_SORTBY (TOK_TABSORTCOLNAMEASC (TOK_TABLE_OR_COL key)) (TOK_TABSORTCOLNAMEASC (TOK_TABLE_OR_COL value))))) T)) (TOK_INSERT (TOK_DESTINATION (TOK_TABDEST (TOK_TAB T2))) (TOK_SELECT (TOK_SELEXPR TOK_ALLCOLREF)) (TOK_LIMIT 20)))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-2
+    type:;depends on:Stage-1;
+  Stage-0
+    type:;depends on:Stage-2;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        t:default_db/t1 
+          Operator:          TableScan
+            alias: default_db/t1
+            Operator:            Select Operator
+              expressions:
+                    expr: key
+                    type: string
+                    expr: value
+                    type: string
+              outputColumnNames: _col0, _col1
+              Operator:              Reduce Output Operator
+                key expressions:
+                      expr: _col0
+                      type: string
+                      expr: _col1
+                      type: string
+                key serialize infos:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+                sort order: ++
+                output key names: reducesinkkey0, reducesinkkey1
+                output value names: _col0, _col1
+                Map-reduce partition columns:
+                      expr: _col0
+                      type: string
+                tag: -1
+                value expressions:
+                      expr: _col0
+                      type: string
+                      expr: _col1
+                      type: string
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/t1 [t:default_db/t1]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          Select Operator
+            expressions:
+                  expr: _col0
+                  type: string
+                  expr: _col1
+                  type: string
+            outputColumnNames: _col0, _col1
+            Operator:            Limit
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 0
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+
+  Stage: Stage-2
+    Map Reduce
+      Alias -> Map Operator Tree:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/235921979/10002 
+            Operator:            Reduce Output Operator
+              key serialize infos:
+                table descs
+                  input format: org.apache.hadoop.mapred.SequenceFileInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat
+              sort order: 
+              output value names: _col0, _col1
+              tag: -1
+              value expressions:
+                    expr: _col0
+                    type: string
+                    expr: _col1
+                    type: string
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/235921979/10002 [file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/235921979/10002]
+      Reduce Operator Tree:
+        Operator:        Extract
+          Operator:          Limit
+            Operator:            File Output Operator
+              compressed: false
+              GlobalTableId: 1
+              table:
+                table descs
+                  input format: org.apache.hadoop.mapred.TextInputFormat
+                  output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+                  serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+                  name: t2
+
+  Stage: Stage-0
+    Move Operator
+      tables:
+          replace: true
+          table:
+            table descs
+              input format: org.apache.hadoop.mapred.TextInputFormat
+              output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+              serde: org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe
+              name: t2
+
+query: INSERT OVERWRITE TABLE T2 SELECT * FROM (SELECT * FROM T1 DISTRIBUTE BY key SORT BY key, value) T LIMIT 20
+Output: default_db/t2
+query: SELECT * FROM T2 SORT BY key, value
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/254042706/10000
+0	val_0
+0	val_0
+0	val_0
+0	val_1
+0	val_1
+1	val_2
+10	val_10
+10	val_11
+100	val_100
+100	val_100
+100	val_101
+100	val_101
+101	val_102
+102	val_103
+103	val_103
+103	val_103
+104	val_104
+104	val_104
+104	val_105
+104	val_105
+query: DROP TABLE T1
+query: DROP TABLE T2
+query: DROP TABLE T2
+query: DROP TABLE T2
+query: DROP TABLE T2
+query: DROP TABLE T2
+query: DROP TABLE T2
+query: DROP TABLE T2
+query: DROP TABLE T2
+query: DROP TABLE T2

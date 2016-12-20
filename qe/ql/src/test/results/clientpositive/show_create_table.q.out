@@ -1,0 +1,147 @@
+query: create database show_create_table
+query: use show_create_table
+query: CREATE TABLE column_storage(a int, b int, c int, d int)
+ STORED AS COLUMNFILE PROJECTION(a,c),(b,d) COMPRESS
+query: SHOW CREATE TABLE column_storage
+CREATE TABLE column_storage(
+    a INT,
+    b INT,
+    c INT,
+    d INT
+)
+STORED AS COLUMNFILE PROJECTION ( a , c ), ( b , d ) COMPRESS;
+query: CREATE TABLE format_storage(a int, b int)
+ STORED AS FORMATFILE COMPRESS
+query: SHOW CREATE TABLE format_storage
+CREATE TABLE format_storage(
+    a INT,
+    b INT
+)
+STORED AS FORMATFILE COMPRESS;
+query: create table hash_table2 (col_name1 int, col_name2 int) 
+ partition by list(col_name1) subpartition by hashkey(col_name2) 
+ (partition par_name1 values in (1,3,5), partition default)
+query: SHOW CREATE TABLE hash_table2
+CREATE TABLE hash_table2(
+    col_name1 INT,
+    col_name2 INT
+)
+PARTITION BY LIST( col_name1 )
+SUBPARTITION BY HASHKEY( col_name2 )
+(
+    PARTITION par_name1 VALUES IN ( 1 , 3 , 5 ),
+    PARTITION default
+);
+query: create table hash_table1 (col_name1 int, col_name2 int) partition by hashkey(col_name2)
+query: SHOW CREATE TABLE hash_table1
+CREATE TABLE hash_table1(
+    col_name1 INT,
+    col_name2 INT
+)
+PARTITION BY HASHKEY( col_name2 );
+query: CREATE TABLE part_test(
+ Col_nam1 int,
+ Col_nam2 int
+ )
+ PARTITION BY RANGE(Col_nam1)
+ SUBPARTITION BY LIST(Col_nam2)
+ (
+ SUBPARTITION par_name1 VALUES IN (1,2,3),
+ SUBPARTITION par_name2 VALUES IN (4,5),
+ SUBPARTITION default
+ )
+ (
+ PARTITION par_name1 VALUES LESS THAN (2),
+ PARTITION par_name2 VALUES LESS THAN (5),
+ PARTITION default
+ )
+query: SHOW CREATE TABLE part_test
+CREATE TABLE part_test(
+    col_nam1 INT,
+    col_nam2 INT
+)
+PARTITION BY RANGE( col_nam1 )
+SUBPARTITION BY LIST( col_nam2 )(
+    SUBPARTITION par_name1 VALUES IN ( 1 , 2 , 3 ),
+    SUBPARTITION par_name2 VALUES IN ( 4 , 5 ),
+    SUBPARTITION default
+)
+(
+    PARTITION par_name1 VALUES LESS THAN ( 2 ),
+    PARTITION par_name2 VALUES LESS THAN ( 5 ),
+    PARTITION default
+);
+query: CREATE EXTERNAL TABLE ptest(a TINYINT, b SMALLINT, c int, d BIGINT , e FLOAT , f DOUBLE , g STRING )
+ ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+ LOCATION '/tmp'
+query: SHOW CREATE TABLE ptest
+CREATE EXTERNAL TABLE ptest(
+    a TINYINT,
+    b SMALLINT,
+    c INT,
+    d BIGINT,
+    e FLOAT,
+    f DOUBLE,
+    g STRING
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+LOCATION 'file:/tmp';
+query: DROP TABLE dest3
+query: CREATE EXTERNAL TABLE dest3(
+    a ARRAY<INT>,
+    b ARRAY<STRING>,
+    c MAP<STRING,STRING>,
+    d INT,
+    e STRING
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '1'
+COLLECTION ITEMS TERMINATED BY '2'
+MAP KEYS TERMINATED BY '3'
+LINES TERMINATED BY '10'
+LOCATION '/tmp'
+query: SHOW CREATE TABLE dest3
+CREATE EXTERNAL TABLE dest3(
+    a ARRAY<INT>,
+    b ARRAY<STRING>,
+    c MAP<STRING,STRING>,
+    d INT,
+    e STRING
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '1'
+COLLECTION ITEMS TERMINATED BY '2'
+MAP KEYS TERMINATED BY '3'
+LINES TERMINATED BY '10'
+LOCATION 'file:/tmp';
+query: DROP TABLE index_t
+query: CREATE TABLE index_t(
+    key INT,
+    value STRING
+)
+STORED AS FORMATFILE
+query: ALTER TABLE index_t ADD INDEX i ( key )
+query: ALTER TABLE index_t ADD INDEX value1 ( value )
+query: ALTER TABLE index_t ADD INDEX value3 ( value )
+query: ALTER TABLE index_t ADD INDEX key4 ( key , value )
+query: SHOW CREATE TABLE index_t
+CREATE TABLE index_t(
+    key INT,
+    value STRING
+)
+STORED AS FORMATFILE;
+ALTER TABLE index_t ADD INDEX i ( key );
+ALTER TABLE index_t ADD INDEX value1 ( value );
+ALTER TABLE index_t ADD INDEX value3 ( value );
+ALTER TABLE index_t ADD INDEX key4 ( key , value );
+query: use default_db
+query: drop database show_create_table
+query: drop database show_create_table
+query: drop database show_create_table
+query: drop database show_create_table
+query: drop database show_create_table
+query: drop database show_create_table
+query: drop database show_create_table
+query: drop database show_create_table
+query: drop database show_create_table

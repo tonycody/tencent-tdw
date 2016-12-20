@@ -1,0 +1,5 @@
+query: -- Can't combine IF NOT EXISTS and OR REPLACE.
+drop view v
+query: create view v as select * from srcpart
+Output: file:/data/brant/trunk/build/ql/tmp/1679420813/10000
+FAILED: Error in semantic analysis: Can't combine IF NOT EXISTS and OR REPLACE.

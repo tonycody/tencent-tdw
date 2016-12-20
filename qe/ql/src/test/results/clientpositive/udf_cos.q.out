@@ -1,0 +1,8 @@
+query: SELECT cos(null)
+FROM src LIMIT 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/1184322846/10000
+NULL
+query: SELECT cos(0.98), cos(1.57), cos(-0.5)
+FROM src LIMIT 1
+Output: file:/data/tdwadmin/payniexiao/src/qe/build/ql/tmp/1513310806/10000
+0.5570225467662173	7.963267107332633E-4	0.8775825618903728

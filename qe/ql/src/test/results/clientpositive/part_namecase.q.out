@@ -1,0 +1,133 @@
+query: drop table part_case
+query: create table part_case(
+key int,
+value string
+) 
+partition by list(value)(
+partition p1 values in('1','2'),
+partition P2 values in('3'),
+partition DEfaulT
+)
+query: explain
+select a.key from
+part_case partition(P1) a
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB part_case (TOK_PARTITIONREF P1)) a)) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (. (TOK_TABLE_OR_COL a) key)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/part_case#a 
+          Operator:          TableScan
+            alias: default_db/part_case#a
+            Operator:            Select Operator
+              expressions:
+                    expr: key
+                    type: int
+              outputColumnNames: _col0
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 0
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.TextInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/part_case/p1 [default_db/part_case#a]
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: explain
+select a.key from
+part_case partition(defAult) a
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB part_case (TOK_PARTITIONREF defAult)) a)) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (. (TOK_TABLE_OR_COL a) key)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/part_case#a 
+          Operator:          TableScan
+            alias: default_db/part_case#a
+            Operator:            Select Operator
+              expressions:
+                    expr: key
+                    type: int
+              outputColumnNames: _col0
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 0
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.TextInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/part_case/default [default_db/part_case#a]
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: explain
+select a.key from
+part_case partition(p2) a
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB part_case (TOK_PARTITIONREF p2)) a)) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (. (TOK_TABLE_OR_COL a) key)))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/part_case#a 
+          Operator:          TableScan
+            alias: default_db/part_case#a
+            Operator:            Select Operator
+              expressions:
+                    expr: key
+                    type: int
+              outputColumnNames: _col0
+              Operator:              File Output Operator
+                compressed: false
+                GlobalTableId: 0
+                table:
+                  table descs
+                    input format: org.apache.hadoop.mapred.TextInputFormat
+                    output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/part_case/p2 [default_db/part_case#a]
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: drop table part_case
+query: drop table part_case
+query: drop table part_case
+query: drop table part_case
+query: drop table part_case
+query: drop table part_case
+query: drop table part_case
+query: drop table part_case
+query: drop table part_case

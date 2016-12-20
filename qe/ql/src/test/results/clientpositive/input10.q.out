@@ -1,0 +1,42 @@
+query: CREATE TABLE TEST10(key INT, value STRING, ds STRING, hr INT) 
+partition by list(ds) subpartition by range(hr) 
+(subpartition sp1 values less than (12),
+subpartition sp2 values less than (24))
+(partition p1 values in ('2008-04-08'),
+partition p2 values in ('2008-04-09'))
+STORED AS TEXTFILE
+query: EXPLAIN
+DESCRIBE TEST10
+ABSTRACT SYNTAX TREE:
+  (TOK_DESCTABLE (TOK_TABTYPE TEST10))
+
+STAGE DEPENDENCIES:
+  Stage-0
+    type:root stage;
+  Stage-1
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-0
+      Describe Table Operator:
+        Describe Table
+          table: TEST10
+
+  Stage: Stage-1
+    Fetch Operator
+      limit: -1
+
+query: DESCRIBE TEST10
+key	int	
+value	string	
+ds	string	
+hr	int	
+query: DROP TABLE TEST10
+query: DROP TABLE TEST10
+query: DROP TABLE TEST10
+query: DROP TABLE TEST10
+query: DROP TABLE TEST10
+query: DROP TABLE TEST10
+query: DROP TABLE TEST10
+query: DROP TABLE TEST10
+query: DROP TABLE TEST10

@@ -1,0 +1,1 @@
+explain create table pindex(a int, b int) index idx_a(a) stored as formatfile;

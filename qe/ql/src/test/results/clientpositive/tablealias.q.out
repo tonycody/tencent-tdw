@@ -1,0 +1,140 @@
+query: DROP TABLE nulltest
+query: CREATE TABLE nulltest(int_data1 INT, int_data2 INT, boolean_data BOOLEAN, double_data DOUBLE, string_data STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/nulltest.txt' INTO TABLE nulltest
+query: select n.int_data1, n.int_data2, sum(1) as play_cnt from nulltest n group by int_data1, int_data2
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/953282594/10000
+0	NULL	3
+0	0	1
+0	2	2
+0	4	1
+1	0	1
+1	1	2
+1	5	2
+1	8	1
+1	9	1
+2	NULL	2
+2	0	1
+2	1	1
+2	3	1
+2	5	1
+query: select nulltest.int_data1, nulltest.int_data2, sum(1) as play_cnt from nulltest n group by int_data1, int_data2
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/44110244/10000
+0	NULL	3
+0	0	1
+0	2	2
+0	4	1
+1	0	1
+1	1	2
+1	5	2
+1	8	1
+1	9	1
+2	NULL	2
+2	0	1
+2	1	1
+2	3	1
+2	5	1
+query: select n.int_data1, n.int_data2, sum(1) as play_cnt from nulltest n group by n.int_data1, n.int_data2
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/712757619/10000
+0	NULL	3
+0	0	1
+0	2	2
+0	4	1
+1	0	1
+1	1	2
+1	5	2
+1	8	1
+1	9	1
+2	NULL	2
+2	0	1
+2	1	1
+2	3	1
+2	5	1
+query: select int_data1, int_data2, sum(1) as play_cnt from nulltest n group by n.int_data1, n.int_data2
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1477783758/10000
+0	NULL	3
+0	0	1
+0	2	2
+0	4	1
+1	0	1
+1	1	2
+1	5	2
+1	8	1
+1	9	1
+2	NULL	2
+2	0	1
+2	1	1
+2	3	1
+2	5	1
+query: select int_data1, int_data2, sum(1) as play_cnt from nulltest n group by int_data1, int_data2
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1275744763/10000
+0	NULL	3
+0	0	1
+0	2	2
+0	4	1
+1	0	1
+1	1	2
+1	5	2
+1	8	1
+1	9	1
+2	NULL	2
+2	0	1
+2	1	1
+2	3	1
+2	5	1
+query: select dt.int_data1, dt.int_data2,dt.play_cnt from (select n.int_data1, n.int_data2, sum(1) as play_cnt from nulltest n group by n.int_data1, n.int_data2) dt
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1509676177/10000
+0	NULL	3
+0	0	1
+0	2	2
+0	4	1
+1	0	1
+1	1	2
+1	5	2
+1	8	1
+1	9	1
+2	NULL	2
+2	0	1
+2	1	1
+2	3	1
+2	5	1
+query: select dt.int_data1, dt.int_data2,dt.play_cnt, row_number() over(partition by dt.int_data1 order by dt.play_cnt desc) as ranking from (select n.int_data1, n.int_data2, sum(1) as play_cnt from nulltest n group by n.int_data1, n.int_data2) dt order by dt.int_data1, dt.int_data2
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/2000232528/10000
+0	NULL	3	1
+0	0	1	3
+0	2	2	2
+0	4	1	4
+1	0	1	4
+1	1	2	2
+1	5	2	1
+1	8	1	3
+1	9	1	5
+2	NULL	2	1
+2	0	1	3
+2	1	1	4
+2	3	1	5
+2	5	1	2
+query: select dt.int_data1, dt.int_data2,dt.play_cnt, row_number() over(partition by int_data1 order by play_cnt desc) as ranking from (select n.int_data1, n.int_data2, sum(1) as play_cnt from nulltest n group by n.int_data1, n.int_data2) dt order by dt.int_data1, dt.int_data2
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1375254506/10000
+0	NULL	3	1
+0	0	1	3
+0	2	2	2
+0	4	1	4
+1	0	1	4
+1	1	2	2
+1	5	2	1
+1	8	1	3
+1	9	1	5
+2	NULL	2	1
+2	0	1	3
+2	1	1	4
+2	3	1	5
+2	5	1	2
+query: DROP TABLE nulltest
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 

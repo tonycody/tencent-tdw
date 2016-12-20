@@ -1,0 +1,35 @@
+query: select cast('2011-05-06 07:08:09' as timestamp) > cast('2011-05-06 07:08:09' as timestamp) from src limit 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/813368296/10000
+false
+query: select cast('2011-05-06 07:08:09' as timestamp) < cast('2011-05-06 07:08:09' as timestamp) from src limit 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1397276244/10000
+false
+query: select cast('2011-05-06 07:08:09' as timestamp) = cast('2011-05-06 07:08:09' as timestamp) from src limit 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1906873435/10000
+true
+query: select cast('2011-05-06 07:08:09' as timestamp) <> cast('2011-05-06 07:08:09' as timestamp) from src limit 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1037613765/10000
+false
+query: select cast('2011-05-06 07:08:09' as timestamp) >= cast('2011-05-06 07:08:09' as timestamp) from src limit 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1734646386/10000
+true
+query: select cast('2011-05-06 07:08:09' as timestamp) <= cast('2011-05-06 07:08:09' as timestamp) from src limit 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1503866454/10000
+true
+query: select cast('2011-05-06 07:08:09' as timestamp) >= cast('2011-05-06 07:08:09.1' as timestamp) from src limit 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1644464070/10000
+false
+query: select cast('2011-05-06 07:08:09' as timestamp) < cast('2011-05-06 07:08:09.1' as timestamp) from src limit 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/331948704/10000
+true
+query: select cast('2011-05-06 07:08:09.1000' as timestamp) = cast('2011-05-06 07:08:09.1' as timestamp) from src limit 1
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/655388660/10000
+true
+query: select cast('2011-05-06 07:08:09.1000' as timestamp) = cast('2011-05-06 07:08:09.1' as timestamp) from src limit 1
+query: select cast('2011-05-06 07:08:09.1000' as timestamp) = cast('2011-05-06 07:08:09.1' as timestamp) from src limit 1
+query: select cast('2011-05-06 07:08:09.1000' as timestamp) = cast('2011-05-06 07:08:09.1' as timestamp) from src limit 1
+query: select cast('2011-05-06 07:08:09.1000' as timestamp) = cast('2011-05-06 07:08:09.1' as timestamp) from src limit 1
+query: select cast('2011-05-06 07:08:09.1000' as timestamp) = cast('2011-05-06 07:08:09.1' as timestamp) from src limit 1
+query: select cast('2011-05-06 07:08:09.1000' as timestamp) = cast('2011-05-06 07:08:09.1' as timestamp) from src limit 1
+query: select cast('2011-05-06 07:08:09.1000' as timestamp) = cast('2011-05-06 07:08:09.1' as timestamp) from src limit 1
+query: select cast('2011-05-06 07:08:09.1000' as timestamp) = cast('2011-05-06 07:08:09.1' as timestamp) from src limit 1

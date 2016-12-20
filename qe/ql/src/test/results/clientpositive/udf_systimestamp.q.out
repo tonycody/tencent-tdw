@@ -1,0 +1,40 @@
+query: -- we do not run it because the result may different from each run
+explain SELECT
+  systimestamp()
+ FROM src LIMIT 1
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB src))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR (TOK_FUNCTION systimestamp))) (TOK_LIMIT 1)))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/src 
+          Operator:          TableScan
+            alias: default_db/src
+            Operator:            Select Operator
+              expressions:
+                    expr: systimestamp
+                    type: string
+              outputColumnNames: _col0
+              Operator:              Limit
+                Operator:                File Output Operator
+                  compressed: false
+                  GlobalTableId: 0
+                  table:
+                    table descs
+                      input format: org.apache.hadoop.mapred.TextInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+      Path -> Alias:
+        file:/data/tdwadmin/payniexiao/src/qe/build/ql/test/data/warehouse/default_db/src [default_db/src]
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: 1
+

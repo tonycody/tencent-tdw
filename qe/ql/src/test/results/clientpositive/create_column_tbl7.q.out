@@ -1,0 +1,23 @@
+query: explain create table testc(f1 int, f2 int, f3 int, f4 int, f5 int, f6 int, f7 int, f8 int, f9 int, f10 int, 
+									 f11 int, f12 int, f13 int, f14 int, f15 int, f16 int, f17 int, f18 int, f19 int, f20 int) stored as columnfile
+ABSTRACT SYNTAX TREE:
+  (TOK_CREATETABLE testc TOK_LIKETABLE (TOK_TABCOLLIST (TOK_TABCOL f1 TOK_INT) (TOK_TABCOL f2 TOK_INT) (TOK_TABCOL f3 TOK_INT) (TOK_TABCOL f4 TOK_INT) (TOK_TABCOL f5 TOK_INT) (TOK_TABCOL f6 TOK_INT) (TOK_TABCOL f7 TOK_INT) (TOK_TABCOL f8 TOK_INT) (TOK_TABCOL f9 TOK_INT) (TOK_TABCOL f10 TOK_INT) (TOK_TABCOL f11 TOK_INT) (TOK_TABCOL f12 TOK_INT) (TOK_TABCOL f13 TOK_INT) (TOK_TABCOL f14 TOK_INT) (TOK_TABCOL f15 TOK_INT) (TOK_TABCOL f16 TOK_INT) (TOK_TABCOL f17 TOK_INT) (TOK_TABCOL f18 TOK_INT) (TOK_TABCOL f19 TOK_INT) (TOK_TABCOL f20 TOK_INT)) TOK_TBLCOLUMNFILE)
+
+STAGE DEPENDENCIES:
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-0
+      Create Table Operator:
+        Create Table
+          columns: f1 int, f2 int, f3 int, f4 int, f5 int, f6 int, f7 int, f8 int, f9 int, f10 int, f11 int, f12 int, f13 int, f14 int, f15 int, f16 int, f17 int, f18 int, f19 int, f20 int
+          if compressed: false
+          if not exists: false
+          input format: StorageEngineClient.ColumnStorageInputFormat
+          # buckets: -1
+          output format: StorageEngineClient.ColumnStorageHiveOutputFormat
+          serde name: StorageEngineClient.FormatStorageSerDe
+          name: testc
+          isExternal: false
+

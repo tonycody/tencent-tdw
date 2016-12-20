@@ -1,0 +1,5 @@
+query: -- Existing table is not a view
+create or replace view src as select ds, hr from srcpart
+Output: file:/data/brant/trunk/build/ql/tmp/566648913/10000
+FAILED: Error in metadata: Existing table is not a view
+FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask

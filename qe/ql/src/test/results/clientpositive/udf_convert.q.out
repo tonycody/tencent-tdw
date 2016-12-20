@@ -1,0 +1,33 @@
+query: CREATE TABLE test_convert (str STRING, des STRING, src STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/test_udf_convert' OVERWRITE INTO TABLE test_convert
+query: SELECT * 
+FROM test_convert
+Input: default_db/test_convert
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1108077060/10000
+jfklerjfkl	gbk	utf8
+djfkjinfvj	utf-8	GBK
+FJKEJF	GBK	UTF8
+233434	UTF-8	gbk
+fjekjfk	UNICODE	unicode
+dkkkfek	unicode	gbk
+	NULL	NULL
+query: SELECT 
+  convert(test_convert.str,test_convert.des, test_convert.src)
+FROM test_convert
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/403998422/10000
+jfklerjfkl
+djfkjinfvj
+FJKEJF
+233434
+fjekjfk
+NULL
+NULL
+query: DROP TABLE test_convert
+query: DROP TABLE test_convert
+query: DROP TABLE test_convert
+query: DROP TABLE test_convert
+query: DROP TABLE test_convert
+query: DROP TABLE test_convert
+query: DROP TABLE test_convert
+query: DROP TABLE test_convert
+query: DROP TABLE test_convert

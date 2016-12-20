@@ -1,0 +1,15 @@
+query: DROP TABLE testtbl
+query: CREATE TABLE testtbl(KEY INT, VALUE STRING) ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' WITH SERDEPROPERTIES("charset"="gbk")
+query: LOAD DATA LOCAL INPATH '../data/files/kv.txt' INTO TABLE testtbl
+query: TRUNCATE TABLE testtbl
+query: SELECT * FROM testtbl
+Input: default_db/testtbl
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/45395353/10000
+query: SELECT * FROM testtbl
+query: SELECT * FROM testtbl
+query: SELECT * FROM testtbl
+query: SELECT * FROM testtbl
+query: SELECT * FROM testtbl
+query: SELECT * FROM testtbl
+query: SELECT * FROM testtbl
+query: SELECT * FROM testtbl

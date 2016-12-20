@@ -1,0 +1,25 @@
+query: DROP TABLE columnTable_Bigdata
+query: CREATE table columnTable_Bigdata (key STRING, value STRING)
+ROW FORMAT SERDE
+  'org.apache.hadoop.hive.serde2.columnar.ColumnarSerDe'
+STORED AS
+  INPUTFORMAT 'org.apache.hadoop.hive.ql.io.RCFileInputFormat'
+  OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.RCFileOutputFormat'
+query: FROM (FROM src MAP src.key,src.value USING 'python ../data/scripts/dumpdata_script.py' AS (key,value) WHERE src.key = 10) subq
+INSERT OVERWRITE TABLE columnTable_Bigdata SELECT subq.key, subq.value
+Output: default_db/columntable_bigdata
+query: describe columnTable_Bigdata
+key	string	from deserializer
+value	string	from deserializer
+query: select count(columnTable_Bigdata.key) from columnTable_Bigdata
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1230234540/10000
+5005500
+query: DROP TABLE columnTable_Bigdata
+query: DROP TABLE columnTable_Bigdata
+query: DROP TABLE columnTable_Bigdata
+query: DROP TABLE columnTable_Bigdata
+query: DROP TABLE columnTable_Bigdata
+query: DROP TABLE columnTable_Bigdata
+query: DROP TABLE columnTable_Bigdata
+query: DROP TABLE columnTable_Bigdata
+query: DROP TABLE columnTable_Bigdata

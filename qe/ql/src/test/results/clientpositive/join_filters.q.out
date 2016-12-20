@@ -1,0 +1,313 @@
+query: CREATE TABLE myinput1(key int, value int)
+query: LOAD DATA LOCAL INPATH '../data/files/in3.txt' INTO TABLE myinput1
+query: SELECT * FROM myinput1 a JOIN myinput1 b on a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1863771088/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b on a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/6074200/10000
+100	100	100	100
+48	NULL	NULL	NULL
+NULL	40	NULL	NULL
+12	35	NULL	NULL
+query: SELECT * FROM myinput1 a RIGHT OUTER JOIN myinput1 b on a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/78866847/10000
+100	100	100	100
+NULL	NULL	48	NULL
+NULL	NULL	NULL	40
+NULL	NULL	12	35
+query: SELECT * FROM myinput1 a FULL OUTER JOIN myinput1 b on a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1904149632/10000
+100	100	100	100
+100	100	NULL	NULL
+NULL	NULL	48	NULL
+100	100	NULL	NULL
+NULL	NULL	NULL	40
+100	100	NULL	NULL
+NULL	NULL	12	35
+48	NULL	NULL	NULL
+48	NULL	NULL	NULL
+NULL	NULL	48	NULL
+48	NULL	NULL	NULL
+NULL	NULL	NULL	40
+48	NULL	NULL	NULL
+NULL	NULL	12	35
+NULL	40	NULL	NULL
+NULL	40	NULL	NULL
+NULL	NULL	48	NULL
+NULL	40	NULL	NULL
+NULL	NULL	NULL	40
+NULL	40	NULL	NULL
+NULL	NULL	12	35
+12	35	NULL	NULL
+12	35	NULL	NULL
+NULL	NULL	48	NULL
+12	35	NULL	NULL
+NULL	NULL	NULL	40
+12	35	NULL	NULL
+NULL	NULL	12	35
+query: SELECT * FROM myinput1 a JOIN myinput1 b ON a.key = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/381927518/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a JOIN myinput1 b ON a.key = b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/2101564101/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a JOIN myinput1 b ON a.value = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1406107958/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a JOIN myinput1 b ON a.value = b.value and a.key=b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1153880064/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b ON a.key = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/985089522/10000
+NULL	40	NULL	NULL
+12	35	NULL	NULL
+48	NULL	NULL	NULL
+100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b ON a.value = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/732449316/10000
+48	NULL	NULL	NULL
+12	35	NULL	NULL
+NULL	40	NULL	NULL
+100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b ON a.key = b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1344169570/10000
+NULL	40	NULL	NULL
+12	35	NULL	NULL
+48	NULL	NULL	NULL
+100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b ON a.key = b.key and a.value=b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/678916817/10000
+NULL	40	NULL	NULL
+12	35	NULL	NULL
+48	NULL	NULL	NULL
+100	100	100	100
+query: SELECT * FROM myinput1 a RIGHT OUTER JOIN myinput1 b ON a.key = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1534412614/10000
+NULL	NULL	48	NULL
+NULL	NULL	12	35
+NULL	NULL	NULL	40
+100	100	100	100
+query: SELECT * FROM myinput1 a RIGHT OUTER JOIN myinput1 b ON a.key = b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1590799609/10000
+NULL	NULL	NULL	40
+NULL	NULL	12	35
+NULL	NULL	48	NULL
+100	100	100	100
+query: SELECT * FROM myinput1 a RIGHT OUTER JOIN myinput1 b ON a.value = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1036722320/10000
+NULL	NULL	48	NULL
+NULL	NULL	12	35
+NULL	NULL	NULL	40
+100	100	100	100
+query: SELECT * FROM myinput1 a RIGHT OUTER JOIN myinput1 b ON a.key=b.key and a.value = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/818926254/10000
+NULL	NULL	NULL	40
+NULL	NULL	12	35
+NULL	NULL	48	NULL
+100	100	100	100
+query: SELECT * FROM myinput1 a FULL OUTER JOIN myinput1 b ON a.key = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/168122511/10000
+NULL	40	NULL	NULL
+NULL	NULL	48	NULL
+12	35	NULL	NULL
+NULL	NULL	12	35
+NULL	NULL	NULL	40
+48	NULL	NULL	NULL
+100	100	100	100
+query: SELECT * FROM myinput1 a FULL OUTER JOIN myinput1 b ON a.key = b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/564767424/10000
+NULL	40	NULL	NULL
+NULL	NULL	NULL	40
+12	35	NULL	NULL
+NULL	NULL	12	35
+48	NULL	NULL	NULL
+NULL	NULL	48	NULL
+100	100	100	100
+query: SELECT * FROM myinput1 a FULL OUTER JOIN myinput1 b ON a.value = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/2035274740/10000
+48	NULL	NULL	NULL
+NULL	NULL	48	NULL
+12	35	NULL	NULL
+NULL	NULL	12	35
+NULL	40	NULL	NULL
+NULL	NULL	NULL	40
+100	100	100	100
+query: SELECT * FROM myinput1 a FULL OUTER JOIN myinput1 b ON a.value = b.value and a.key=b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1227907853/10000
+48	NULL	NULL	NULL
+NULL	NULL	48	NULL
+12	35	NULL	NULL
+NULL	NULL	12	35
+NULL	40	NULL	NULL
+NULL	NULL	NULL	40
+100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b RIGHT OUTER JOIN myinput1 c ON a.value = b.value and b.value = c.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value AND c.key > 40 AND c.value > 50 AND c.key = c.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1653636550/10000
+NULL	NULL	NULL	NULL	48	NULL
+NULL	NULL	NULL	NULL	12	35
+NULL	NULL	NULL	NULL	NULL	40
+100	100	100	100	100	100
+query: SELECT * from myinput1 a LEFT OUTER JOIN myinput1 b ON (a.value=b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value) RIGHT OUTER JOIN myinput1 c ON (b.key=c.key AND c.key > 40 AND c.value > 50 AND c.key = c.value AND b.key > 40 AND b.value > 50 AND b.key = b.value)
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/126218206/10000
+NULL	NULL	NULL	NULL	NULL	40
+NULL	NULL	NULL	NULL	12	35
+NULL	NULL	NULL	NULL	48	NULL
+100	100	100	100	100	100
+query: SELECT * from myinput1 a RIGHT OUTER JOIN myinput1 b ON (a.value=b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value) LEFT OUTER JOIN myinput1 c ON (b.key=c.key AND c.key > 40 AND c.value > 50 AND c.key = c.value AND b.key > 40 AND b.value > 50 AND b.key = b.value)
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/130713552/10000
+NULL	NULL	NULL	40	NULL	NULL
+NULL	NULL	12	35	NULL	NULL
+NULL	NULL	48	NULL	NULL	NULL
+100	100	100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b RIGHT OUTER JOIN myinput1 c ON a.value = b.value and b.key = c.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value AND c.key > 40 AND c.value > 50 AND c.key = c.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1667639640/10000
+NULL	NULL	NULL	NULL	NULL	40
+NULL	NULL	NULL	NULL	12	35
+NULL	NULL	NULL	NULL	48	NULL
+100	100	100	100	100	100
+query: SELECT /*+ MAPJOIN(a) */ * FROM myinput1 a JOIN myinput1 b on a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/690788207/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(a) */ * FROM myinput1 a JOIN myinput1 b ON a.key = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/305743981/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(a) */ * FROM myinput1 a JOIN myinput1 b ON a.key = b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/73384504/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(a) */ * FROM myinput1 a JOIN myinput1 b ON a.value = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1904866868/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(a) */ * FROM myinput1 a JOIN myinput1 b ON a.value = b.value and a.key = b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1564701411/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(b) */ * FROM myinput1 a JOIN myinput1 b on a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/204043886/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(b) */ * FROM myinput1 a JOIN myinput1 b ON a.key = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/117394384/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(b) */ * FROM myinput1 a JOIN myinput1 b ON a.key = b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/2008890250/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(b) */ * FROM myinput1 a JOIN myinput1 b ON a.value = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1924076675/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(b) */ * FROM myinput1 a JOIN myinput1 b ON a.value = b.value and a.key = b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1181930683/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a JOIN myinput1 b on a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/864662522/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b on a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/773927093/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a RIGHT OUTER JOIN myinput1 b on a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/2839477/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a FULL OUTER JOIN myinput1 b on a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/2095107945/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a JOIN myinput1 b ON a.key = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/452617165/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a JOIN myinput1 b ON a.key = b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/862692783/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a JOIN myinput1 b ON a.value = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/719790232/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a JOIN myinput1 b ON a.value = b.value and a.key=b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/414556099/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b ON a.key = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/121159932/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b ON a.value = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1491254090/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b ON a.key = b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/186696122/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b ON a.key = b.key and a.value=b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1872185741/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a RIGHT OUTER JOIN myinput1 b ON a.key = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/2103022532/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a RIGHT OUTER JOIN myinput1 b ON a.key = b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/853569235/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a RIGHT OUTER JOIN myinput1 b ON a.value = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1749747885/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a RIGHT OUTER JOIN myinput1 b ON a.key=b.key and a.value = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/819091501/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a FULL OUTER JOIN myinput1 b ON a.key = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/2016741020/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a FULL OUTER JOIN myinput1 b ON a.key = b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/580024897/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a FULL OUTER JOIN myinput1 b ON a.value = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/670784839/10000
+100	100	100	100
+query: SELECT * FROM myinput1 a FULL OUTER JOIN myinput1 b ON a.value = b.value and a.key=b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/399724333/10000
+100	100	100	100
+query: SELECT * from myinput1 a LEFT OUTER JOIN myinput1 b ON (a.value=b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value) RIGHT OUTER JOIN myinput1 c ON (b.value=c.value AND c.key > 40 AND c.value > 50 AND c.key = c.value AND b.key > 40 AND b.value > 50 AND b.key = b.value)
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/2063750076/10000
+100	100	100	100	100	100
+query: SELECT * from myinput1 a RIGHT OUTER JOIN myinput1 b ON (a.value=b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value) LEFT OUTER JOIN myinput1 c ON (b.value=c.value AND c.key > 40 AND c.value > 50 AND c.key = c.value AND b.key > 40 AND b.value > 50 AND b.key = b.value)
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1439608634/10000
+100	100	100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b RIGHT OUTER JOIN myinput1 c ON a.value = b.value and b.value = c.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value AND c.key > 40 AND c.value > 50 AND c.key = c.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/2078164584/10000
+100	100	100	100	100	100
+query: SELECT * from myinput1 a LEFT OUTER JOIN myinput1 b ON (a.value=b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value) RIGHT OUTER JOIN myinput1 c ON (b.key=c.key AND c.key > 40 AND c.value > 50 AND c.key = c.value AND b.key > 40 AND b.value > 50 AND b.key = b.value)
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1534125507/10000
+100	100	100	100	100	100
+query: SELECT * from myinput1 a RIGHT OUTER JOIN myinput1 b ON (a.value=b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value) LEFT OUTER JOIN myinput1 c ON (b.key=c.key AND c.key > 40 AND c.value > 50 AND c.key = c.value AND b.key > 40 AND b.value > 50 AND b.key = b.value)
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/860238105/10000
+100	100	100	100	100	100
+query: SELECT * FROM myinput1 a LEFT OUTER JOIN myinput1 b RIGHT OUTER JOIN myinput1 c ON a.value = b.value and b.key = c.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value AND c.key > 40 AND c.value > 50 AND c.key = c.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/741511095/10000
+100	100	100	100	100	100
+query: SELECT /*+ MAPJOIN(a) */ * FROM myinput1 a JOIN myinput1 b on a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/800660629/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(a) */ * FROM myinput1 a JOIN myinput1 b ON a.key = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1121306415/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(a) */ * FROM myinput1 a JOIN myinput1 b ON a.key = b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/983248846/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(a) */ * FROM myinput1 a JOIN myinput1 b ON a.value = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/687032339/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(a) */ * FROM myinput1 a JOIN myinput1 b ON a.value = b.value and a.key = b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1573483935/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(b) */ * FROM myinput1 a JOIN myinput1 b on a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1671615636/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(b) */ * FROM myinput1 a JOIN myinput1 b ON a.key = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1179928049/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(b) */ * FROM myinput1 a JOIN myinput1 b ON a.key = b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/978409836/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(b) */ * FROM myinput1 a JOIN myinput1 b ON a.value = b.value AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/152655139/10000
+100	100	100	100
+query: SELECT /*+ MAPJOIN(b) */ * FROM myinput1 a JOIN myinput1 b ON a.value = b.value and a.key = b.key AND a.key > 40 AND a.value > 50 AND a.key = a.value AND b.key > 40 AND b.value > 50 AND b.key = b.value
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1760204220/10000
+100	100	100	100
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 

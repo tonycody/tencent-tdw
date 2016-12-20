@@ -1,0 +1,51 @@
+query: DROP TABLE k
+query: CREATE TABLE k(k INT)
+query: EXPLAIN SELECT * FROM k WHERE k>0
+ABSTRACT SYNTAX TREE:
+  (TOK_QUERY (TOK_FROM (TOK_TABREF (TOK_TAB k))) (TOK_INSERT (TOK_DESTINATION (TOK_DIR TOK_TMP_FILE)) (TOK_SELECT (TOK_SELEXPR TOK_ALLCOLREF)) (TOK_WHERE (> (TOK_TABLE_OR_COL k) 0))))
+
+STAGE DEPENDENCIES:
+  Stage-1
+    type:root stage;
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-1
+    Map Reduce
+      Alias -> Map Operator Tree:
+        default_db/k 
+          Operator:          TableScan
+            alias: default_db/k
+            Operator:            Filter Operator
+              predicate:
+                  expr: (k > 0)
+                  type: boolean
+              Operator:              Select Operator
+                expressions:
+                      expr: k
+                      type: int
+                outputColumnNames: _col0
+                Operator:                File Output Operator
+                  compressed: false
+                  GlobalTableId: 0
+                  table:
+                    table descs
+                      input format: org.apache.hadoop.mapred.TextInputFormat
+                      output format: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+      Path -> Alias:
+        file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/k [default_db/k]
+
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+
+query: DROP TABLE k
+query: DROP TABLE k
+query: DROP TABLE k
+query: DROP TABLE k
+query: DROP TABLE k
+query: DROP TABLE k
+query: DROP TABLE k
+query: DROP TABLE k
+query: DROP TABLE k

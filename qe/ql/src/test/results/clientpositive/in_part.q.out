@@ -1,0 +1,26 @@
+query: DROP TABLE nulltest
+query: DROP TABLE nulltestdata
+query: CREATE TABLE nulltest(int_data1 INT, int_data2 INT, boolean_data BOOLEAN, double_data DOUBLE, string_data STRING) PARTITION BY LIST(int_data1) (partition par_name1 values in (0), partition par_name2 values in (1),partition par_name3 values in (2),PARTITION DEFAULT) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: CREATE external TABLE nulltestdata(int_data1 INT, int_data2 INT, boolean_data BOOLEAN, double_data DOUBLE, string_data STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/nulltest.txt' INTO TABLE nulltestdata
+query: INSERT TABLE nulltest SELECT * FROM nulltestdata
+Output: default_db/nulltest
+query: SELECT * FROM nulltest WHERE int_data1 IN(1)
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/132546499/10000
+1	9	NULL	16.91358120533963	TDW
+1	5	true	NULL	Set
+1	5	true	46.927050000959326	Test
+1	1	false	32.92404678679056	Functions
+1	1	true	24.506909362217737	Which
+1	0	false	3.1145951928143676	LEAD
+1	8	NULL	5.621675730832165	etc
+query: DROP TABLE nulltest
+query: DROP TABLE nulltestdata
+query: DROP TABLE nulltestdata
+query: DROP TABLE nulltestdata
+query: DROP TABLE nulltestdata
+query: DROP TABLE nulltestdata
+query: DROP TABLE nulltestdata
+query: DROP TABLE nulltestdata
+query: DROP TABLE nulltestdata
+query: DROP TABLE nulltestdata

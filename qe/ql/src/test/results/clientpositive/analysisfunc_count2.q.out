@@ -1,0 +1,210 @@
+query: DROP TABLE nulltest
+query: CREATE TABLE nulltest(int_data1 INT, int_data2 INT, boolean_data BOOLEAN, double_data DOUBLE, string_data STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+query: LOAD DATA LOCAL INPATH '../data/files/nulltest.txt' INTO TABLE nulltest
+query: SELECT * FROM (SELECT int_data1 , int_data2, boolean_data, double_data, string_data, COUNT(boolean_data) OVER(partition by int_data1) FROM nulltest) tmp ORDER BY double_data, string_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/524228374/10000
+0	NULL	false	NULL	Analysis	5
+2	NULL	false	NULL	RANK	6
+1	5	true	NULL	Set	5
+2	NULL	false	NULL	Used	6
+1	0	false	3.1145951928143676	LEAD	5
+0	NULL	NULL	5.1726951608379865	TDW	5
+1	8	NULL	5.621675730832165	etc	5
+2	3	true	8.77171395741883	The	6
+2	1	true	9.589949434284112	NULL	6
+1	9	NULL	16.91358120533963	TDW	5
+0	2	NULL	19.398344450148464	NULL	5
+0	4	true	19.754128235118877	NULL	5
+2	5	true	22.15271891090531	Test	6
+1	1	true	24.506909362217737	Which	5
+2	0	true	32.91569954365889	Include	6
+1	1	false	32.92404678679056	Functions	5
+0	2	false	39.845454645318426	LAG	5
+0	NULL	true	39.95053934832555	The	5
+0	0	false	41.33606448637874	Data	5
+1	5	true	46.927050000959326	Test	5
+query: SELECT * FROM (SELECT int_data1 , int_data2, boolean_data, double_data, string_data, COUNT(distinct boolean_data) OVER(partition by int_data1) FROM nulltest) tmp ORDER BY double_data, string_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1932032060/10000
+0	NULL	false	NULL	Analysis	2
+2	NULL	false	NULL	RANK	2
+1	5	true	NULL	Set	2
+2	NULL	false	NULL	Used	2
+1	0	false	3.1145951928143676	LEAD	2
+0	NULL	NULL	5.1726951608379865	TDW	2
+1	8	NULL	5.621675730832165	etc	2
+2	3	true	8.77171395741883	The	2
+2	1	true	9.589949434284112	NULL	2
+1	9	NULL	16.91358120533963	TDW	2
+0	2	NULL	19.398344450148464	NULL	2
+0	4	true	19.754128235118877	NULL	2
+2	5	true	22.15271891090531	Test	2
+1	1	true	24.506909362217737	Which	2
+2	0	true	32.91569954365889	Include	2
+1	1	false	32.92404678679056	Functions	2
+0	2	false	39.845454645318426	LAG	2
+0	NULL	true	39.95053934832555	The	2
+0	0	false	41.33606448637874	Data	2
+1	5	true	46.927050000959326	Test	2
+query: SELECT * FROM (SELECT int_data1 , int_data2, boolean_data, double_data, string_data, COUNT(string_data) OVER(partition by boolean_data) FROM nulltest) tmp ORDER BY double_data, string_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/640564035/10000
+0	NULL	false	NULL	Analysis	7
+2	NULL	false	NULL	RANK	7
+1	5	true	NULL	Set	7
+2	NULL	false	NULL	Used	7
+1	0	false	3.1145951928143676	LEAD	7
+0	NULL	NULL	5.1726951608379865	TDW	3
+1	8	NULL	5.621675730832165	etc	3
+2	3	true	8.77171395741883	The	7
+2	1	true	9.589949434284112	NULL	7
+1	9	NULL	16.91358120533963	TDW	3
+0	2	NULL	19.398344450148464	NULL	3
+0	4	true	19.754128235118877	NULL	7
+2	5	true	22.15271891090531	Test	7
+1	1	true	24.506909362217737	Which	7
+2	0	true	32.91569954365889	Include	7
+1	1	false	32.92404678679056	Functions	7
+0	2	false	39.845454645318426	LAG	7
+0	NULL	true	39.95053934832555	The	7
+0	0	false	41.33606448637874	Data	7
+1	5	true	46.927050000959326	Test	7
+query: SELECT * FROM (SELECT int_data1 , int_data2, boolean_data, double_data, string_data, COUNT(distinct string_data) OVER(partition by boolean_data) FROM nulltest) tmp ORDER BY double_data, string_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1485119680/10000
+0	NULL	false	NULL	Analysis	7
+2	NULL	false	NULL	RANK	7
+1	5	true	NULL	Set	5
+2	NULL	false	NULL	Used	7
+1	0	false	3.1145951928143676	LEAD	7
+0	NULL	NULL	5.1726951608379865	TDW	2
+1	8	NULL	5.621675730832165	etc	2
+2	3	true	8.77171395741883	The	5
+2	1	true	9.589949434284112	NULL	5
+1	9	NULL	16.91358120533963	TDW	2
+0	2	NULL	19.398344450148464	NULL	2
+0	4	true	19.754128235118877	NULL	5
+2	5	true	22.15271891090531	Test	5
+1	1	true	24.506909362217737	Which	5
+2	0	true	32.91569954365889	Include	5
+1	1	false	32.92404678679056	Functions	7
+0	2	false	39.845454645318426	LAG	7
+0	NULL	true	39.95053934832555	The	5
+0	0	false	41.33606448637874	Data	7
+1	5	true	46.927050000959326	Test	5
+query: SELECT * FROM (SELECT int_data1 , int_data2, boolean_data, double_data, string_data, COUNT(int_data2) OVER(partition by boolean_data) FROM nulltest) tmp ORDER BY double_data, string_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1934606950/10000
+0	NULL	false	NULL	Analysis	4
+2	NULL	false	NULL	RANK	4
+1	5	true	NULL	Set	8
+2	NULL	false	NULL	Used	4
+1	0	false	3.1145951928143676	LEAD	4
+0	NULL	NULL	5.1726951608379865	TDW	3
+1	8	NULL	5.621675730832165	etc	3
+2	3	true	8.77171395741883	The	8
+2	1	true	9.589949434284112	NULL	8
+1	9	NULL	16.91358120533963	TDW	3
+0	2	NULL	19.398344450148464	NULL	3
+0	4	true	19.754128235118877	NULL	8
+2	5	true	22.15271891090531	Test	8
+1	1	true	24.506909362217737	Which	8
+2	0	true	32.91569954365889	Include	8
+1	1	false	32.92404678679056	Functions	4
+0	2	false	39.845454645318426	LAG	4
+0	NULL	true	39.95053934832555	The	8
+0	0	false	41.33606448637874	Data	4
+1	5	true	46.927050000959326	Test	8
+query: SELECT * FROM (SELECT int_data1 , int_data2, boolean_data, double_data, string_data, COUNT(distinct int_data2) OVER(partition by boolean_data) FROM nulltest) tmp ORDER BY double_data, string_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/633767676/10000
+0	NULL	false	NULL	Analysis	3
+2	NULL	false	NULL	RANK	3
+1	5	true	NULL	Set	5
+2	NULL	false	NULL	Used	3
+1	0	false	3.1145951928143676	LEAD	3
+0	NULL	NULL	5.1726951608379865	TDW	3
+1	8	NULL	5.621675730832165	etc	3
+2	3	true	8.77171395741883	The	5
+2	1	true	9.589949434284112	NULL	5
+1	9	NULL	16.91358120533963	TDW	3
+0	2	NULL	19.398344450148464	NULL	3
+0	4	true	19.754128235118877	NULL	5
+2	5	true	22.15271891090531	Test	5
+1	1	true	24.506909362217737	Which	5
+2	0	true	32.91569954365889	Include	5
+1	1	false	32.92404678679056	Functions	3
+0	2	false	39.845454645318426	LAG	3
+0	NULL	true	39.95053934832555	The	5
+0	0	false	41.33606448637874	Data	3
+1	5	true	46.927050000959326	Test	5
+query: SELECT * FROM (SELECT int_data1 , int_data2, boolean_data, double_data, string_data, COUNT(double_data) OVER(partition by int_data1) FROM nulltest) tmp ORDER BY double_data, string_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/218920778/10000
+0	NULL	false	NULL	Analysis	6
+2	NULL	false	NULL	RANK	4
+1	5	true	NULL	Set	6
+2	NULL	false	NULL	Used	4
+1	0	false	3.1145951928143676	LEAD	6
+0	NULL	NULL	5.1726951608379865	TDW	6
+1	8	NULL	5.621675730832165	etc	6
+2	3	true	8.77171395741883	The	4
+2	1	true	9.589949434284112	NULL	4
+1	9	NULL	16.91358120533963	TDW	6
+0	2	NULL	19.398344450148464	NULL	6
+0	4	true	19.754128235118877	NULL	6
+2	5	true	22.15271891090531	Test	4
+1	1	true	24.506909362217737	Which	6
+2	0	true	32.91569954365889	Include	4
+1	1	false	32.92404678679056	Functions	6
+0	2	false	39.845454645318426	LAG	6
+0	NULL	true	39.95053934832555	The	6
+0	0	false	41.33606448637874	Data	6
+1	5	true	46.927050000959326	Test	6
+query: SELECT * FROM (SELECT int_data1 , int_data2, boolean_data, double_data, string_data, COUNT(distinct double_data) OVER(partition by int_data1) FROM nulltest) tmp ORDER BY double_data, string_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1162194057/10000
+0	NULL	false	NULL	Analysis	6
+2	NULL	false	NULL	RANK	4
+1	5	true	NULL	Set	6
+2	NULL	false	NULL	Used	4
+1	0	false	3.1145951928143676	LEAD	6
+0	NULL	NULL	5.1726951608379865	TDW	6
+1	8	NULL	5.621675730832165	etc	6
+2	3	true	8.77171395741883	The	4
+2	1	true	9.589949434284112	NULL	4
+1	9	NULL	16.91358120533963	TDW	6
+0	2	NULL	19.398344450148464	NULL	6
+0	4	true	19.754128235118877	NULL	6
+2	5	true	22.15271891090531	Test	4
+1	1	true	24.506909362217737	Which	6
+2	0	true	32.91569954365889	Include	4
+1	1	false	32.92404678679056	Functions	6
+0	2	false	39.845454645318426	LAG	6
+0	NULL	true	39.95053934832555	The	6
+0	0	false	41.33606448637874	Data	6
+1	5	true	46.927050000959326	Test	6
+query: SELECT * FROM (SELECT int_data1 , int_data2, boolean_data, double_data, string_data, COUNT(distinct int_data2) OVER(partition by boolean_data), SUM(distinct int_data2) OVER(partition by boolean_data) FROM nulltest) tmp ORDER BY double_data, string_data
+Output: file:/data/tdwadmin/testroach/QE050/qe/build/ql/tmp/1568845316/10000
+0	NULL	false	NULL	Analysis	3	3
+2	NULL	false	NULL	RANK	3	3
+1	5	true	NULL	Set	5	13
+2	NULL	false	NULL	Used	3	3
+1	0	false	3.1145951928143676	LEAD	3	3
+0	NULL	NULL	5.1726951608379865	TDW	3	19
+1	8	NULL	5.621675730832165	etc	3	19
+2	3	true	8.77171395741883	The	5	13
+2	1	true	9.589949434284112	NULL	5	13
+1	9	NULL	16.91358120533963	TDW	3	19
+0	2	NULL	19.398344450148464	NULL	3	19
+0	4	true	19.754128235118877	NULL	5	13
+2	5	true	22.15271891090531	Test	5	13
+1	1	true	24.506909362217737	Which	5	13
+2	0	true	32.91569954365889	Include	5	13
+1	1	false	32.92404678679056	Functions	3	3
+0	2	false	39.845454645318426	LAG	3	3
+0	NULL	true	39.95053934832555	The	5	13
+0	0	false	41.33606448637874	Data	3	3
+1	5	true	46.927050000959326	Test	5	13
+query: DROP TABLE nulltest
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 
+query: 

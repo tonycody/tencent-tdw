@@ -1,0 +1,62 @@
+query: drop table table1
+query: drop table table2
+query: create table table1 (col_name1 int, col_name2 int) partition by list(col_name1) subpartition by hashkey(col_name2) (partition par_name1 values in (1,3,5), partition par_name2 values in (2,4,6), partition default)
+query: show partitions table1
+pri partitions:
+par_name1
+par_name2
+default
+sub partitions:
+hash(500)
+query: alter table table1 add partition par_name3 values in (7,8,9)
+query: show partitions table1
+pri partitions:
+par_name1
+par_name2
+par_name3
+default
+sub partitions:
+hash(500)
+query: alter table table1 drop partition (par_name3)
+query: show partitions table1
+pri partitions:
+par_name1
+par_name2
+default
+sub partitions:
+hash(500)
+query: create table table2 (col_name1 int, col_name2 int) partition by range(col_name1) subpartition by hashkey(col_name2) (partition par_name1 values less than (2), partition par_name2 values less than (5), partition default)
+query: show partitions table2
+pri partitions:
+par_name1
+par_name2
+default
+sub partitions:
+hash(500)
+query: alter table table2 add partition par_name3 values less than (9)
+query: show partitions table2
+pri partitions:
+par_name1
+par_name2
+par_name3
+default
+sub partitions:
+hash(500)
+query: alter table table2 drop partition (par_name3)
+query: show partitions table2
+pri partitions:
+par_name1
+par_name2
+default
+sub partitions:
+hash(500)
+query: drop table table1
+query: drop table table2
+query: drop table table2
+query: drop table table2
+query: drop table table2
+query: drop table table2
+query: drop table table2
+query: drop table table2
+query: drop table table2
+query: drop table table2

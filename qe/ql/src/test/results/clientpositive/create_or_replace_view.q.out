@@ -1,0 +1,55 @@
+query: drop view v
+query: create view v as select * from srcpart
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/2035702785/10000
+query: describe extended v
+key	string	
+value	string	
+ds	string	
+hr	string	
+	 	 
+Detailed Table Information	Table(tableName:v, dbName:default_db, owner:root, createTime:1329298192, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:key, type:string, comment:null), FieldSchema(name:value, type:string, comment:null), FieldSchema(name:ds, type:string, comment:null), FieldSchema(name:hr, type:string, comment:null)], location:null, inputFormat:null, outputFormat:null, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:null, parameters:{}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:select * from srcpart, viewExpandedText:select default_db::srcpart.key, default_db::srcpart.value, default_db::srcpart.ds, default_db::srcpart.hr from srcpart, tableType:VIRTUAL_VIEW, vtables:default_db::srcpart)	
+query: create or replace view v as select ds, hr from srcpart
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/187526171/10000
+query: describe extended v
+ds	string	
+hr	string	
+	 	 
+Detailed Table Information	Table(tableName:v, dbName:default_db, owner:root, createTime:1329298192, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:ds, type:string, comment:null), FieldSchema(name:hr, type:string, comment:null)], location:null, inputFormat:null, outputFormat:null, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:null, parameters:{}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:select ds, hr from srcpart, viewExpandedText:select default_db::srcpart.ds, default_db::srcpart.hr from srcpart, tableType:VIRTUAL_VIEW, vtables:default_db::srcpart)	
+query: -- altering partitioned view 1
+create or replace view v as select value, ds, hr from srcpart
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/188369539/10000
+query: select * from v where value='val_409' and ds='2008-04-08' and hr='11'
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1479115404/10000
+query: describe extended v
+value	string	
+ds	string	
+hr	string	
+	 	 
+Detailed Table Information	Table(tableName:v, dbName:default_db, owner:root, createTime:1329298192, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:value, type:string, comment:null), FieldSchema(name:ds, type:string, comment:null), FieldSchema(name:hr, type:string, comment:null)], location:null, inputFormat:null, outputFormat:null, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:null, parameters:{}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:select value, ds, hr from srcpart, viewExpandedText:select default_db::srcpart.value, default_db::srcpart.ds, default_db::srcpart.hr from srcpart, tableType:VIRTUAL_VIEW, vtables:default_db::srcpart)	
+query: drop view v
+query: -- updating to fix view with invalid definition
+
+create table srcpart_temp like srcpart
+query: create view v as select * from srcpart_temp
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/1443208654/10000
+query: drop table srcpart_temp
+query: -- v is now invalid
+
+create or replace view v as select * from srcpart
+Output: file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/tmp/27438661/10000
+query: describe extended v
+key	string	
+value	string	
+ds	string	
+hr	string	
+	 	 
+Detailed Table Information	Table(tableName:v, dbName:default_db, owner:root, createTime:1329298195, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:key, type:string, comment:null), FieldSchema(name:value, type:string, comment:null), FieldSchema(name:ds, type:string, comment:null), FieldSchema(name:hr, type:string, comment:null)], location:null, inputFormat:null, outputFormat:null, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:null, parameters:{}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{}, viewOriginalText:select * from srcpart, viewExpandedText:select default_db::srcpart.key, default_db::srcpart.value, default_db::srcpart.ds, default_db::srcpart.hr from srcpart, tableType:VIRTUAL_VIEW, vtables:default_db::srcpart)	
+query: drop view v
+query: drop view v
+query: drop view v
+query: drop view v
+query: drop view v
+query: drop view v
+query: drop view v
+query: drop view v
+query: drop view v

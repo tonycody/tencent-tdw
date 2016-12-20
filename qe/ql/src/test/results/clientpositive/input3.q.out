@@ -1,0 +1,114 @@
+query: DROP TABLE TEST3a
+query: DROP TABLE TEST3b
+query: DROP TABLE TEST3c
+query: DROP TABLE INPUT4
+query: CREATE TABLE TEST3a(A INT, B DOUBLE) STORED AS TEXTFILE
+query: DESCRIBE TEST3a
+a	int	
+b	double	
+query: CREATE TABLE TEST3b(A ARRAY<INT>, B DOUBLE, C MAP<DOUBLE, INT>) STORED AS TEXTFILE
+query: DESCRIBE TEST3b
+a	array<int>	
+b	double	
+c	map<double,int>	
+query: SHOW TABLES
+src
+src1
+src_json
+src_sequencefile
+src_thrift
+srcbucket
+srcpart
+table1
+test3a
+test3b
+testtbl
+query: EXPLAIN
+ALTER TABLE TEST3b ADD COLUMNS (X DOUBLE)
+ABSTRACT SYNTAX TREE:
+  (TOK_ALTERTABLE_ADDCOLS TEST3b (TOK_TABCOLLIST (TOK_TABCOL X TOK_DOUBLE)))
+
+STAGE DEPENDENCIES:
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-0
+      Alter Table Operator:
+        Alter Table
+          type: add columns
+          new columns: X double
+          old name: TEST3b
+
+query: ALTER TABLE TEST3b ADD COLUMNS (X DOUBLE)
+query: DESCRIBE TEST3b
+a	array<int>	
+b	double	
+c	map<double,int>	
+x	double	
+query: EXPLAIN
+ALTER TABLE TEST3b RENAME TO TEST3c
+ABSTRACT SYNTAX TREE:
+  (TOK_ALTERTABLE_RENAME TEST3b TEST3c)
+
+STAGE DEPENDENCIES:
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-0
+      Alter Table Operator:
+        Alter Table
+          type: rename
+          new name: TEST3c
+          old name: TEST3b
+
+query: ALTER TABLE TEST3b RENAME TO TEST3c
+query: DESCRIBE TEST3c
+a	array<int>	
+b	double	
+c	map<double,int>	
+x	double	
+query: SHOW TABLES
+src
+src1
+src_json
+src_sequencefile
+src_thrift
+srcbucket
+srcpart
+table1
+test3a
+test3c
+testtbl
+query: EXPLAIN
+ALTER TABLE TEST3c REPLACE COLUMNS (R1 INT, R2 DOUBLE)
+ABSTRACT SYNTAX TREE:
+  (TOK_ALTERTABLE_REPLACECOLS TEST3c (TOK_TABCOLLIST (TOK_TABCOL R1 TOK_INT) (TOK_TABCOL R2 TOK_DOUBLE)))
+
+STAGE DEPENDENCIES:
+  Stage-0
+    type:root stage;
+
+STAGE PLANS:
+  Stage: Stage-0
+      Alter Table Operator:
+        Alter Table
+          type: replace columns
+          new columns: R1 int, R2 double
+          old name: TEST3c
+
+query: ALTER TABLE TEST3c REPLACE COLUMNS (R1 INT, R2 DOUBLE)
+query: DESCRIBE EXTENDED TEST3c
+r1	int	
+r2	double	
+	 	 
+Detailed Table Information	Table(tableName:test3c, dbName:default_db, owner:root, createTime:1329299215, lastAccessTime:0, retention:0, sd:StorageDescriptor(cols:[FieldSchema(name:r1, type:int, comment:null), FieldSchema(name:r2, type:double, comment:null)], location:file:/data/tdwadmin/tdwqev1.0R020/qe/build/ql/test/data/warehouse/default_db/test3c, inputFormat:org.apache.hadoop.mapred.TextInputFormat, outputFormat:org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat, compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe, parameters:{serialization.format=1}), bucketCols:[], sortCols:[], parameters:{}), priPartition:null, subPartition:null, parameters:{last_modified_by=tdwadmin, last_modified_time=1329299216}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, vtables:null)	
+query: DESCRIBE EXTENDED TEST3c
+query: DESCRIBE EXTENDED TEST3c
+query: DESCRIBE EXTENDED TEST3c
+query: DESCRIBE EXTENDED TEST3c
+query: DESCRIBE EXTENDED TEST3c
+query: DESCRIBE EXTENDED TEST3c
+query: DESCRIBE EXTENDED TEST3c
+query: DESCRIBE EXTENDED TEST3c

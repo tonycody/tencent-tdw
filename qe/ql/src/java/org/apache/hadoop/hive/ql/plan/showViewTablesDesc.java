@@ -1,0 +1,52 @@
+/**
+* Tencent is pleased to support the open source community by making TDW available.
+* Copyright (C) 2014 THL A29 Limited, a Tencent company. All rights reserved.
+* Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
+* this file except in compliance with the License. You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software distributed 
+* under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+* OF ANY KIND, either express or implied. See the License for the specific language governing
+* permissions and limitations under the License.
+*/
+package org.apache.hadoop.hive.ql.plan;
+
+import java.io.Serializable;
+
+import org.apache.hadoop.fs.Path;
+
+public class showViewTablesDesc extends ddlDesc implements Serializable {
+  public String getSchema() {
+    return schema;
+  }
+
+  private static final long serialVersionUID = 1L;
+
+  private String view_name;
+  Path resFile;
+  private final String schema = "view_tables#string";
+
+  public showViewTablesDesc(String view_name, Path resFile) {
+    this.view_name = view_name;
+    this.resFile = resFile;
+  }
+
+  public String getView_name() {
+    return view_name;
+  }
+
+  public void setView_name(String viewName) {
+    view_name = viewName;
+  }
+
+  public Path getResFile() {
+    return resFile;
+  }
+
+  public void setResFile(Path resFile) {
+    this.resFile = resFile;
+  }
+
+}

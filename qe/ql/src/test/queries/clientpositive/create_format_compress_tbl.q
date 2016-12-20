@@ -1,0 +1,1 @@
+explain create table testFormatc(a int) stored as formatfile compress;

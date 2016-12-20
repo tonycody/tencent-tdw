@@ -1,0 +1,28 @@
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ(2.59)
+AC_INIT(protobuf-gen-tdw, 1.0)
+AM_INIT_AUTOMAKE(protobuf-gen-tdw, 1.0)
+
+# Checks for programs.
+AC_PROG_CXX
+AC_PROG_CC
+
+# Checks for libraries.
+
+# Checks for header files.
+AC_HEADER_STDC
+AC_CHECK_HEADERS([string.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_HEADER_STDBOOL
+AC_C_CONST
+AC_C_INLINE
+AC_TYPE_SIZE_T
+AC_C_VOLATILE
+
+# Checks for library functions.
+AC_CHECK_FUNCS([memmove strchr])
+
+AC_OUTPUT([Makefile src/Makefile])

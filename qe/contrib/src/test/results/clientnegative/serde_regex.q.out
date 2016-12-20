@@ -1,0 +1,3 @@
+query: DROP TABLE serde_regex
+FAILED: Parse Error: line 7:2 mismatched input 'user' expecting Identifier in column specification
+
